@@ -38,7 +38,7 @@ private:
 
 	State state = Begin;
 	DataManager::SpellShape shape = DataManager::SpellShape::Arrow;
-	DataManager::SpellElement element = DataManager::SpellElement::Fire;
+	DataManager::SpellElement element = DataManager::SpellElement::Water;
 
 	Quad* image;
 
