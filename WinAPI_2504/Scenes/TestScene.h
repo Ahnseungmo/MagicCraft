@@ -11,5 +11,5 @@ public:
 
 private:
 	Spell* spell;
-
+	RectCollider* SandBag;
 };

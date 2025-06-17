@@ -8,6 +8,34 @@ DataManager::~DataManager()
 {
 }
 
+const unordered_map<DataManager::SpellShape, string> DataManager::SpellShapeToString{
+	{DataManager::SpellShape::Arrow, "Arrow"},
+	{DataManager::SpellShape::Ball, "Ball"},
+	{DataManager::SpellShape::Lance, "Lance"},
+	{DataManager::SpellShape::Knife, "Knife"}
+};
+const unordered_map<DataManager::SpellElement, string> DataManager::SpellElementToString{
+	{DataManager::SpellElement::Fire, "Fire"},
+	{DataManager::SpellElement::Water, "Water"},
+	{DataManager::SpellElement::Ice, "Ice"},
+	{DataManager::SpellElement::Tunder, "Tunder"},
+	{DataManager::SpellElement::Dirt, "Dirt"}
+};
+
+const unordered_map<string, DataManager::SpellShape> DataManager::StringToSpellShape{
+	{"Arrow", SpellShape::Arrow},
+	{"Ball", SpellShape::Ball},
+	{"Lance", SpellShape::Lance},
+	{"Knife", SpellShape::Knife}
+};
+
+const unordered_map<string, DataManager::SpellElement> DataManager::StringToSpellElement{
+	{"Fire", SpellElement::Fire},
+	{"Water", SpellElement::Water},
+	{"Ice", SpellElement::Ice},
+	{"Tunder", SpellElement::Tunder},
+	{"Dirt", SpellElement::Dirt}
+};
 void DataManager::LoadData(const string& fileName)
 {
 	ifstream file(fileName);
@@ -42,4 +70,101 @@ void DataManager::LoadData(const string& fileName)
 		itemDatas[itemData.key] = itemData;
 	}
 	file.close();
+}
+
+vector<string> DataManager::GetSubdirectories(const string& path) {
+	vector<string> directories;
+	string searchPath = path + "/*";
+
+	WIN32_FIND_DATAA findData;
+	HANDLE hFind = FindFirstFileA(searchPath.c_str(), &findData);
+
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			if ((findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) &&
+				strcmp(findData.cFileName, ".") != 0 &&
+				strcmp(findData.cFileName, "..") != 0) {
+				directories.push_back(findData.cFileName);
+			}
+		} while (FindNextFileA(hFind, &findData));
+		FindClose(hFind);
+	}
+
+	return directories;
+}
+vector<string> GetFilesWithExtension(const string& folderPath, const string& extension) {
+	std::vector<std::string> matchedFiles;
+	std::string searchPath = folderPath + "/*";
+
+	WIN32_FIND_DATAA findData;
+	HANDLE hFind = FindFirstFileA(searchPath.c_str(), &findData);
+
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			if (!(findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+				std::string fileName = findData.cFileName;
+
+				size_t pos = fileName.rfind('.');
+				if (pos != string::npos) {
+					std::string fileExt = fileName.substr(pos);
+					if (_stricmp(fileExt.c_str(), extension.c_str()) == 0) {
+						matchedFiles.push_back(fileName);
+					}
+				}
+			}
+		} while (FindNextFileA(hFind, &findData));
+		FindClose(hFind);
+	}
+
+	return matchedFiles;
+}
+void DataManager::LoadFrames(string path)
+{
+	vector<string> shapes;
+	vector<string> elements;
+
+	shapes = GetSubdirectories(path);
+	elements = GetSubdirectories(path + "/" + shapes.at(0));
+	for (int i = 0; i < shapes.size();i++) {
+//		spellFrames.insert(make_pair(shapes.at(i), nullptr));
+		for (int j = 0; j < elements.size();j++) {
+
+			string filePath = path + "/" + shapes.at(i) + "/" + elements.at(j);
+			vector<string> fileNames;
+			fileNames = GetFilesWithExtension(filePath,".xml");
+			
+			for (int k = 0; k < fileNames.size();k++) {
+
+				tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
+				document->LoadFile((filePath + "/" + fileNames.at(k)).c_str());
+
+				tinyxml2::XMLElement* atlas = document->FirstChildElement();
+				string textureFile = filePath + "/" + atlas->Attribute("imagePath");
+
+				vector<Frame*> frames;
+				tinyxml2::XMLElement* sprite = atlas->FirstChildElement();
+
+				while (sprite != nullptr)
+				{
+					float x, y, w, h;
+					x = sprite->FloatAttribute("x");
+					y = sprite->FloatAttribute("y");
+					w = sprite->FloatAttribute("w");
+					h = sprite->FloatAttribute("h");
+
+					wstring file = Utility::ToWString(textureFile);
+					frames.push_back(new Frame(file, x, y, w, h));
+
+					sprite = sprite->NextSiblingElement();
+				}
+				SpellShape shapeEnum = StringToSpellShape.at(shapes[i]);
+				SpellElement elementEnum = StringToSpellElement.at(elements[j]);
+				spellFrames[shapeEnum][elementEnum].push_back(frames);
+				delete document;
+			}
+		}
+	}
+
+
+
 }
