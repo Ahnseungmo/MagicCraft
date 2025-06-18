@@ -70,6 +70,7 @@ void Spell::Spawn(Vector2 pos,Vector2 dir,Vector2 size)
 	localRotation.z = atan2f(dir.y,dir.x);
 	direction = dir;
 	SetLocalPosition(pos);
+	Translate(dir * Vector2(size.x / 2 * localScale.x, size.y / 2 * localScale.y));
 	state = Begin;
 	clips.at(state)->Play();
 	isActive = true;

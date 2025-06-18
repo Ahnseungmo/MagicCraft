@@ -10,21 +10,29 @@ TestScene::TestScene()
 	SandBag->SetLocalPosition(CENTER_X + CENTER_X / 2, CENTER_Y);
 	SandBag->UpdateWorld();
 
+	player = new Player();
+	player->SetLocalPosition(CENTER);
+	player->UpdateWorld();
 	
 }
 
 TestScene::~TestScene()
 {
 	delete spell;
+	delete player;
 }
 
 void TestScene::Update()
 {
+	player->Update();
+	Vector2 playerPos = player->GetGlobalPosition();
 	if (Input::Get()->IsKeyDown(VK_LBUTTON)) {
-		spell->Spawn(CENTER, (mousePos - CENTER).GetNormalized(), {32,10});
+		spell->SetLocalScale(1.0f, 1.0f);
+		spell->Spawn(playerPos, ((mousePos) - playerPos).GetNormalized(), {32,10});
 	}
 	if (Input::Get()->IsKeyDown(VK_RBUTTON)) {
-		spell->Spawn(CENTER, (mousePos - CENTER).GetNormalized(),{100,50});
+		spell->SetLocalScale(2.0f, 2.0f);
+		spell->Spawn(playerPos, ((mousePos) - playerPos).GetNormalized(), { 32,10 });
 	}
 	spell->Update();
 	if(spell->GetState() == Spell::State::Moving)
@@ -32,10 +40,17 @@ void TestScene::Update()
 		spell->Hit();
 	}
 
+
 }
 
 void TestScene::Render()
 {
 	spell->Render();
 	SandBag->Render();
+	player->Render();
+}
+
+void TestScene::GUIRender()
+{
+	player->Edit();
 }

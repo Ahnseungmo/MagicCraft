@@ -137,6 +137,10 @@ typedef function<void()> Event;
 #include "Objects/TileGame/Tank.h"
 
 #include "Objects/MagicCraft/Spell.h"
+#include "Objects/MagicCraft/Player.h"
+#include "Objects/MagicCraft/Wand.h"
+#include "Objects/MagicCraft/SpellManager.h"
+
 
 #include "Scenes/Scene.h"
 #include "Framework/Manager/SceneManager.h"
