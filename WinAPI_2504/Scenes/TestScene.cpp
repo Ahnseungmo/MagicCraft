@@ -59,19 +59,23 @@ void TestScene::Update()
 	Vector2 playerPos = player->GetGlobalPosition();
 	if (Input::Get()->IsKeyDown(VK_LBUTTON)) {
 //		spell->SetLocalScale(1.0f, 1.0f);
-		spell->Spawn(playerPos, ((mousePos) - playerPos).GetNormalized(), {32,10},SpellManager::Get()->GetSpellOptionData(0));
+		SpellManager::Get()->Spawn(playerPos, ((mousePos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(0));
+	//	spell->Spawn(playerPos, ((mousePos) - playerPos).GetNormalized(),SpellManager::Get()->GetSpellOptionData(0));
 	}
 	if (Input::Get()->IsKeyDown(VK_RBUTTON)) {
 //		spell->SetLocalScale(2.0f, 2.0f);
-		spell->Spawn(playerPos, ((mousePos) - playerPos).GetNormalized(), { 32,10 }, SpellManager::Get()->GetSpellOptionData(1));
+		SpellManager::Get()->Spawn(playerPos, ((mousePos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(1));
 	}
 	spell->Update();
+	SpellManager::Get()->Update();
+
 	if(spell->GetState() == Spell::State::Moving)
 	if (spell->IsRectCollision(SandBag, nullptr)) {
 		spell->Hit();
 	}
 	EnemyManager::Get()->Update();
-	EnemyManager::Get()->HitCheck(spell);
+	SpellManager::Get()->HitCheck();
+
 
 }
 
@@ -81,6 +85,7 @@ void TestScene::Render()
 	SandBag->Render();
 	player->Render();
 	EnemyManager::Get()->Render();
+	SpellManager::Get()->Render();
 }
 
 void TestScene::GUIRender()

@@ -155,9 +155,12 @@ enum Element {
 #include "Objects/TileGame/TileMap.h"
 #include "Objects/TileGame/Tank.h"
 
-
-#include "Objects/MagicCraft/SpellManager.h"
+//#include "Objects/MagicCraft/SpellO"
 #include "Objects/MagicCraft/Spell.h"
+#include "Objects/MagicCraft/SpellManager.h"
+
+
+
 #include "Objects/MagicCraft/Characters/Character.h"
 #include "Objects/MagicCraft/Characters/Player.h"
 #include "Objects/MagicCraft/Characters/Enemy.h"

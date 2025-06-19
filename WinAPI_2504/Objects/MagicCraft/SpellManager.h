@@ -1,23 +1,6 @@
 #pragma once
 
 
-class SpellOptionData {
-public:
-	Shape shape = Arrow;
-	Element element = Fire;
-
-	int cost = 0;
-	int duplication = 0;
-	int pierce = 0;
-	int reflect = 0;
-	float power = 0.0f;
-	float scale = 1.0f;
-	float homing = 0.0f;
-	float knockBack = 0.0f;
-	float lifeTime = 1.0f;
-	float speed = 0.0f;
-//	Spell* nextSpell = nullptr;
-};
 
 
 
@@ -28,6 +11,13 @@ public:
 
 	SpellManager();
 	~SpellManager();
+
+	void Update();
+	void Render();
+
+	void Spawn(Vector2 pos, Vector2 dir, SpellOptionData* data);
+
+	void HitCheck();
 
 
 	static const unordered_map<Shape, string> ShapeToString;
@@ -52,7 +42,9 @@ public:
 
 private:
 	const int SPELL_SLOT = 10;
+	const int SPELL_POOL = 50;
 
+	vector<Spell*> spells;
 	vector<SpellOptionData*> spellOptionDatas;
 
 };

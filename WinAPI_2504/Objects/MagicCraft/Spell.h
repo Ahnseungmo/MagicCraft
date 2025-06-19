@@ -18,7 +18,7 @@ public:
 
 //	void Spawn(Vector2 pos, Vector2 dir, Vector2 size);
 
-	void Spawn(Vector2 pos, Vector2 dir, Vector2 size, SpellOptionData* data);
+	void Spawn(Vector2 pos, Vector2 dir, SpellOptionData* data);
 
 	void Fire();
 

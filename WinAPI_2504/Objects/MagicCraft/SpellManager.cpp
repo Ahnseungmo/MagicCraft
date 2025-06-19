@@ -8,6 +8,11 @@ SpellManager::SpellManager()
 	for (int i = 0;i < SPELL_SLOT;i++) {
 		spellOptionDatas.push_back(new SpellOptionData());
 	}
+	spells.reserve(SPELL_POOL);
+	for (int i = 0; i < SPELL_POOL; i++) {
+		spells.push_back(new Spell());
+	}
+
 }
 
 SpellManager::~SpellManager()
@@ -16,7 +21,49 @@ SpellManager::~SpellManager()
 		delete data;
 	}
 	spellOptionDatas.clear();
+
+	for (auto& spell : spells) {
+		delete spell;
+	}
+	spells.clear();
+
 }
+
+void SpellManager::Update() {
+	for (auto& spell : spells) {
+		spell->Update();
+	}
+
+}
+
+void SpellManager::Render() {
+	for (auto& spell : spells) {
+		spell->Render();
+	}
+
+
+}
+void SpellManager::Spawn(Vector2 pos, Vector2 dir, SpellOptionData* data) {
+
+	for (auto& spell : spells) {
+		if (!spell->IsActive()) {
+
+			spell->Spawn(pos,dir,data);
+			return;
+		}
+	}
+
+}
+void SpellManager::HitCheck() {
+	for (auto& spell : spells) {
+		if (spell->IsActive()) {
+
+			EnemyManager::Get()->HitCheck(spell);
+		}
+	}
+}
+
+
 
 const unordered_map<Shape, string> SpellManager::ShapeToString{
 	{Shape::Arrow, "Arrow"},

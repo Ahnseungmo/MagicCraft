@@ -141,7 +141,7 @@ void Spell::Spawn(Vector2 pos,Vector2 dir,Vector2 size)
 }
 */
 
-void Spell::Spawn(Vector2 pos, Vector2 dir, Vector2 size, SpellOptionData* data)
+void Spell::Spawn(Vector2 pos, Vector2 dir, SpellOptionData* data)
 {
 	spellOptionData = data;
 	LoadClip();
@@ -153,7 +153,7 @@ void Spell::Spawn(Vector2 pos, Vector2 dir, Vector2 size, SpellOptionData* data)
 	localRotation.z = atan2f(dir.y, dir.x);
 	direction = dir;
 	SetLocalPosition(pos);
-	Translate(dir * Vector2(size.x / 2 * localScale.x, size.y / 2 * localScale.y));
+	Translate(dir * Vector2(Size().x / 2 * localScale.x, Size().y / 2 * localScale.y));
 	state = Begin;
 	clips.at(state)->Play();
 	isActive = true;
