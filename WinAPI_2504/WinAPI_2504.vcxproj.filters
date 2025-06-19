@@ -234,13 +234,22 @@
     <ClInclude Include="Objects\MagicCraft\Spell.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\MagicCraft\Player.h">
+    <ClInclude Include="Objects\MagicCraft\Characters\Player.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\MagicCraft\Wand.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\MagicCraft\SpellManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MagicCraft\Characters\Character.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MagicCraft\Characters\Enemy.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MagicCraft\Characters\EnemyManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -437,10 +446,19 @@
     <ClCompile Include="Objects\MagicCraft\Spell.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\MagicCraft\Player.cpp">
+    <ClCompile Include="Objects\MagicCraft\Characters\Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\MagicCraft\SpellManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MagicCraft\Characters\Character.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MagicCraft\Characters\Enemy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MagicCraft\Characters\EnemyManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -187,10 +187,13 @@
     <ClInclude Include="Objects\Collider\LineCollider.h" />
     <ClInclude Include="Objects\Collider\RectCollider.h" />
     <ClInclude Include="Objects\Flappy\Bird.h" />
-    <ClInclude Include="Objects\MagicCraft\Player.h" />
+    <ClInclude Include="Objects\MagicCraft\Characters\EnemyManager.h" />
+    <ClInclude Include="Objects\MagicCraft\Characters\Character.h" />
+    <ClInclude Include="Objects\MagicCraft\Characters\Player.h" />
     <ClInclude Include="Objects\MagicCraft\Spell.h" />
     <ClInclude Include="Objects\MagicCraft\SpellManager.h" />
     <ClInclude Include="Objects\MagicCraft\Wand.h" />
+    <ClInclude Include="Objects\MagicCraft\Characters\Enemy.h" />
     <ClInclude Include="Objects\Manger\DataManager.h" />
     <ClInclude Include="Objects\Manger\EventManager.h" />
     <ClInclude Include="Objects\Shooting\Bullet.h" />
@@ -265,7 +268,10 @@
     <ClCompile Include="Objects\Collider\LineCollider.cpp" />
     <ClCompile Include="Objects\Collider\RectCollider.cpp" />
     <ClCompile Include="Objects\Flappy\Bird.cpp" />
-    <ClCompile Include="Objects\MagicCraft\Player.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Characters\Character.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Characters\Enemy.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Characters\EnemyManager.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Characters\Player.cpp" />
     <ClCompile Include="Objects\MagicCraft\Spell.cpp" />
     <ClCompile Include="Objects\MagicCraft\SpellManager.cpp" />
     <ClCompile Include="Objects\Manger\DataManager.cpp" />

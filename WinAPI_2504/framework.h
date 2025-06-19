@@ -72,6 +72,25 @@ typedef XMFLOAT4X4 Float4x4;
 
 typedef function<void()> Event;
 
+enum Shape {
+	Arrow,
+	Ball,
+	Knife,
+	Lay,
+	Floor,
+	ShapeSize
+};
+
+enum Element {
+	Fire,
+	Water,
+	Ice,
+	Tunder,
+	Earth,
+	ElementSize
+};
+
+
 #include "Framework/Utilities/Utility.h"
 #include "Framework/Utilities/Singleton.h"
 #include "Framework/Utilities/Timer.h"
@@ -136,10 +155,14 @@ typedef function<void()> Event;
 #include "Objects/TileGame/TileMap.h"
 #include "Objects/TileGame/Tank.h"
 
-#include "Objects/MagicCraft/Spell.h"
-#include "Objects/MagicCraft/Player.h"
-#include "Objects/MagicCraft/Wand.h"
+
 #include "Objects/MagicCraft/SpellManager.h"
+#include "Objects/MagicCraft/Spell.h"
+#include "Objects/MagicCraft/Characters/Character.h"
+#include "Objects/MagicCraft/Characters/Player.h"
+#include "Objects/MagicCraft/Characters/Enemy.h"
+#include "Objects/MagicCraft/Characters/EnemyManager.h"
+#include "Objects/MagicCraft/Wand.h"
 
 
 #include "Scenes/Scene.h"

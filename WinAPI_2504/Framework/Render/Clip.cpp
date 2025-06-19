@@ -8,8 +8,11 @@ Clip::Clip(vector<Frame*> frames, bool isLoop, float speed)
 
 Clip::~Clip()
 {
+    /*
     for (Frame* frame : frames)
         delete frame;
+
+    */
 }
 
 void Clip::Update()
@@ -81,4 +84,12 @@ void Clip::SetEvent(Event event, int frameNum)
     }
 
     events[frameNum] = event;
+}
+
+void Clip::DeleteFreames()
+{
+    for (auto& frame : frames) {
+        delete frame;
+    }
+    frames.clear();
 }

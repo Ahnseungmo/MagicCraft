@@ -28,20 +28,6 @@ private:
 
 public:
 
-	enum SpellShape {
-		Arrow,
-		Ball,
-		Lance,
-		Knife
-	};
-	enum SpellElement {
-		Fire,
-		Water,
-		Ice,
-		Tunder,
-		Dirt
-	};
-
 	void LoadData(const string& fileName);
 
 	vector<string> GetSubdirectories(const string& path);
@@ -50,16 +36,15 @@ public:
 	
 	ItemData GetItem(int key) { return itemDatas[key]; }
 	int GetItemCount() { return itemDatas.size(); }
-	vector<vector<Frame*>> GetSpellFrames(SpellShape shape, SpellElement element) { return spellFrames.at(shape).at(element); }
-	static const std::unordered_map<SpellShape, std::string> SpellShapeToString;
-	static const std::unordered_map<SpellElement, std::string> SpellElementToString;
-	static const std::unordered_map<std::string, SpellShape> StringToSpellShape;
-	static const std::unordered_map<std::string, SpellElement> StringToSpellElement;
+//	vector<vector<Frame*>> GetSpellFrames(SpellShape shape, SpellElement element) { return spellFrames.at(shape).at(element); }
+	vector<vector<Frame*>> GetSpellFrames(Shape shape, Element element) { return spellFrames.at(shape).at(element); }
+
 private:
 	unordered_map<int, ItemData> itemDatas;
-	unordered_map<SpellShape, unordered_map<SpellElement, vector<vector<Frame*>>>> spellFrames;
+//	unordered_map<SpellShape, unordered_map<SpellElement, vector<vector<Frame*>>>> spellFrames;
+	unordered_map<Shape, unordered_map<Element, vector<vector<Frame*>>>> spellFrames;
 
-
+	Shape shape;
 //	unordered_map<string,
 };
 

@@ -16,7 +16,9 @@ public:
 	void Update();
 	void Render();
 
-	void Spawn(Vector2 pos, Vector2 dir, Vector2 size);
+//	void Spawn(Vector2 pos, Vector2 dir, Vector2 size);
+
+	void Spawn(Vector2 pos, Vector2 dir, Vector2 size, SpellOptionData* data);
 
 	void Fire();
 
@@ -29,6 +31,8 @@ public:
 //	void LoadClip(State state, string path, string file, bool isLoop, float speed = 1.0f);
 
 	State GetState() { return state; }
+
+	int GetDamage() { return damage; }
 //	void LoadClip(string path, string file, bool isLoop, float speed = 1.0f);
 //	void Spawn(Vector2 pos, Vector2 dir);
 
@@ -37,14 +41,20 @@ public:
 private:
 
 	State state = Begin;
-	DataManager::SpellShape shape = DataManager::SpellShape::Arrow;
-	DataManager::SpellElement element = DataManager::SpellElement::Water;
+	SpellOptionData* spellOptionData;
+//	DataManager::SpellShape shape = DataManager::SpellShape::Arrow;
+//	DataManager::SpellElement element = DataManager::SpellElement::Water;
 
-	Quad* image;
 
 	unordered_map<State, Clip*> clips;
 
 	Vector2 direction = Vector2::Right();
+	vector<Vector2> shapeSizes;
+
 	float speed=400;
+	int damage = 1;
+	int pierce = 0;
+	float lifeTime = 0;
+
 
 };

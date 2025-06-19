@@ -1,32 +1,5 @@
 #pragma once
-enum Shape {
-	Arrow,
-	Ball,
-	Knife,
-	Lay,
-	Floor,
-	ShapeSize
-};
 
-enum Element {
-	Fire,
-	Water,
-	Ice,
-	Tunder,
-	Earth,
-	ElementSize
-};
-
-
-class ShapeData {
-public:
-
-};
-
-class ElementData {
-public:
-
-};
 
 class SpellOptionData {
 public:
@@ -40,10 +13,10 @@ public:
 	float power = 0.0f;
 	float scale = 1.0f;
 	float homing = 0.0f;
-	float nockBack = 0.0f;
+	float knockBack = 0.0f;
 	float lifeTime = 1.0f;
 	float speed = 0.0f;
-	Spell* nextSpell = nullptr;
+//	Spell* nextSpell = nullptr;
 };
 
 
@@ -57,13 +30,28 @@ public:
 	~SpellManager();
 
 
+	static const unordered_map<Shape, string> ShapeToString;
+	static const unordered_map<Element, string> ElementToString;
+	static const unordered_map<string, Shape> StringToShape;
+	static const unordered_map<string, Element> StringToElement;
+
 	void LoadShapeDatas();
 	void LoadElementDatas();
 
+	void SetOptionShape(SpellOptionData* data, Shape shape);
+	void SetOptionElement(SpellOptionData* data, Element element);
+	void SetOptionDuplication(SpellOptionData* data);
+	void SetOptionPierce(SpellOptionData* data);
+	void SetOptionUpScale(SpellOptionData* data);
+	void SetOptionHoming(SpellOptionData* data);
+	void SetOptionReflect(SpellOptionData* data);
+
+
+	SpellOptionData* GetSpellOptionData(int index) { return spellOptionDatas.at(index); }
+	void SetSpellOptionData(int index, SpellOptionData* data) { spellOptionDatas.at(index) = data; }
+
 private:
 	const int SPELL_SLOT = 10;
-	unordered_map<Shape, ShapeData*> shapeDatas;
-	unordered_map<Element, ElementData*> elementDatas;
 
 	vector<SpellOptionData*> spellOptionDatas;
 

@@ -8,34 +8,7 @@ DataManager::~DataManager()
 {
 }
 
-const unordered_map<DataManager::SpellShape, string> DataManager::SpellShapeToString{
-	{DataManager::SpellShape::Arrow, "Arrow"},
-	{DataManager::SpellShape::Ball, "Ball"},
-	{DataManager::SpellShape::Lance, "Lance"},
-	{DataManager::SpellShape::Knife, "Knife"}
-};
-const unordered_map<DataManager::SpellElement, string> DataManager::SpellElementToString{
-	{DataManager::SpellElement::Fire, "Fire"},
-	{DataManager::SpellElement::Water, "Water"},
-	{DataManager::SpellElement::Ice, "Ice"},
-	{DataManager::SpellElement::Tunder, "Tunder"},
-	{DataManager::SpellElement::Dirt, "Dirt"}
-};
 
-const unordered_map<string, DataManager::SpellShape> DataManager::StringToSpellShape{
-	{"Arrow", SpellShape::Arrow},
-	{"Ball", SpellShape::Ball},
-	{"Lance", SpellShape::Lance},
-	{"Knife", SpellShape::Knife}
-};
-
-const unordered_map<string, DataManager::SpellElement> DataManager::StringToSpellElement{
-	{"Fire", SpellElement::Fire},
-	{"Water", SpellElement::Water},
-	{"Ice", SpellElement::Ice},
-	{"Tunder", SpellElement::Tunder},
-	{"Dirt", SpellElement::Dirt}
-};
 void DataManager::LoadData(const string& fileName)
 {
 	ifstream file(fileName);
@@ -157,14 +130,11 @@ void DataManager::LoadFrames(string path)
 
 					sprite = sprite->NextSiblingElement();
 				}
-				SpellShape shapeEnum = StringToSpellShape.at(shapes[i]);
-				SpellElement elementEnum = StringToSpellElement.at(elements[j]);
+				Shape shapeEnum = SpellManager::StringToShape.at(shapes[i]);
+				Element elementEnum = SpellManager::StringToElement.at(elements[j]);
 				spellFrames[shapeEnum][elementEnum].push_back(frames);
 				delete document;
 			}
 		}
 	}
-
-
-
 }

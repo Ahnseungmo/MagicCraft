@@ -20,6 +20,8 @@ public:
 
     Frame* GetCurFrame() { return frames[curFrameNum]; }
 
+    void DeleteFreames();
+
 private:
     vector<Frame*> frames;
 

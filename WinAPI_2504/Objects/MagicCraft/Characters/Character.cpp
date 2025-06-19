@@ -1,6 +1,7 @@
 #include "Framework.h"
+#include "Framework.h"
 
-Player::Player() : CircleCollider(10)
+Character::Character() : CircleCollider(10)
 {
 	string path = "Resources/Textures/MagicCraft/Character/Player/";
 	LoadClip(path, "Move_Up.xml", true, 1.0f);
@@ -10,70 +11,81 @@ Player::Player() : CircleCollider(10)
 
 }
 
-Player::~Player()
+Character::~Character()
 {
 	for (auto& clip : clips) {
+		clip->DeleteFreames();
 		delete clip;
 	}
 	clips.clear();
 }
 
-void Player::Update()
+void Character::Update()
 {
-	isMove = false;
-	direction = Vector2(0, 0);
-	if (Input::Get()->IsKeyPress('W')) {
-		isMove = true;
-		direction += Vector2::Up();
-	}
-	if (Input::Get()->IsKeyPress('S')) {
-		isMove = true;
-		direction += Vector2::Down();
-	}
-	if (Input::Get()->IsKeyPress('D')) {
-		isMove = true;
-		direction += Vector2::Right();
-	}
-	if (Input::Get()->IsKeyPress('A')) {
-		isMove = true;
-		direction += Vector2::Left();
-	}
-
-
+	if (!isActive) return;
+	/*
 	Vector2 focusDirection = mousePos - GetGlobalPosition();
 	float angle = atan2(focusDirection.y, focusDirection.x);
 
 
 	// 라디안 기준 방향 구분 (각 범위는 45도(π/4) 기준)
-	if (angle >= -PI/4 && angle < PI/4) {
+	if (angle >= -PI / 4 && angle < PI / 4) {
 		dir = Right;
 	}
-	else if (angle >= PI/4 && angle < 3 * PI/4) {
+	else if (angle >= PI / 4 && angle < 3 * PI / 4) {
 		dir = Up;
 	}
-	else if (angle >= -3 * PI/4 && angle < -PI/4) {
+	else if (angle >= -3 * PI / 4 && angle < -PI / 4) {
 		dir = Down;
 	}
 	else {
 		dir = Left;
 	}
+	*/
 
+	if(hitTimer <= HIT_INTERVAL){
+		hitTimer += DELTA;
+	}
 
-
-	Translate(direction * speed * DELTA);
+	//Translate(direction * speed * DELTA);
 	UpdateWorld();
-	clips.at((int)dir)->Update();	
+	clips.at((int)dir)->Update();
 
 }
 
-void Player::Render()
+void Character::Render()
 {
-	CircleCollider::Render();
+	if (!isActive) return;
+	worldBuffer->Set(world);
+	worldBuffer->SetVS(0);
+
 	clips.at((int)dir)->Render();
+	CircleCollider::Render();
+}
+
+void Character::Spawn(Vector2 pos)
+{
+	SetLocalPosition(pos);
+	UpdateWorld();
+	isActive = true;
+}
+
+bool Character::Hit(float damage)
+{
+	if (hitTimer >= HIT_INTERVAL) {
+		hitTimer = 0;
+		hp -= damage;
+		if (hp <= 0) {
+			hp = 0;
+			isActive = false;
+		}
+		return true;
+	}
+	else return false;
 
 }
 
-void Player::LoadClip(string path, string file, bool isLoop, float speed)
+void Character::LoadClip(string path, string file, bool isLoop, float speed)
 {
 	tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
 	document->LoadFile((path + file).c_str());
@@ -101,15 +113,4 @@ void Player::LoadClip(string path, string file, bool isLoop, float speed)
 	clips.push_back(new Clip(frames, isLoop, speed));
 
 	delete document;
-}
-
-void Player::Edit()
-{
-
-	Vector2 focusDirection = mousePos - GetGlobalPosition();
-	float angle = atan2(focusDirection.y, focusDirection.x);
-	ImGui::DragFloat("Angle", &angle);
-	int a = (int)dir;
-	ImGui::DragInt("Dir", &a);
-
 }

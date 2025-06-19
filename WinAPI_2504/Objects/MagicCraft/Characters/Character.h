@@ -1,6 +1,6 @@
 #pragma once
 
-class Player : public CircleCollider {
+class Character : public CircleCollider{
 
 
 public:
@@ -10,17 +10,25 @@ public:
 		Down,
 		Left
 	};
-	Player();
-	~Player();
+	Character();
+	~Character();
 
 	void Update();
 	void Render();
+	void Spawn(Vector2 pos);
+
+	bool Hit(float damage);
 
 	void LoadClip(string path, string file, bool isLoop, float speed);
 
-	void Edit();
 
-private:
+protected:
+
+	float hp=100;
+
+	const float HIT_INTERVAL = 0.3f;
+	float hitTimer = HIT_INTERVAL;
+
 	Direction dir = Down;
 	Vector2 direction = Vector2::Down();
 	vector<Clip*> clips;
