@@ -9,6 +9,11 @@ Player::Player()
 	LoadClip(path, "Move_Down.xml", true, 1.0f);
 	LoadClip(path, "Move_Left.xml", true, 1.0f);
 
+	cameraTransform = new Transform();
+	cameraTransform->SetParent(this);
+	cameraTransform->SetLocalPosition(-CENTER_X,-CENTER_Y);
+	cameraTransform->UpdateWorld();
+
 }
 
 Player::~Player()
@@ -64,6 +69,7 @@ void Player::Update()
 
 	Translate(direction * speed * DELTA);
 	UpdateWorld();
+	cameraTransform->UpdateWorld();
 	clips.at((int)dir)->Update();	
 
 }

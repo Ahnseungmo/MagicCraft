@@ -167,6 +167,9 @@ enum Element {
 #include "Objects/MagicCraft/Characters/EnemyManager.h"
 #include "Objects/MagicCraft/Wand.h"
 
+#include "Objects/MagicCraft/UI/SpellCustomUI.h"
+#include "Objects/MagicCraft/UIManager.h"
+
 
 #include "Scenes/Scene.h"
 #include "Framework/Manager/SceneManager.h"

@@ -192,8 +192,10 @@
     <ClInclude Include="Objects\MagicCraft\Characters\Player.h" />
     <ClInclude Include="Objects\MagicCraft\Spell.h" />
     <ClInclude Include="Objects\MagicCraft\SpellManager.h" />
+    <ClInclude Include="Objects\MagicCraft\UIManager.h" />
     <ClInclude Include="Objects\MagicCraft\Wand.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\Enemy.h" />
+    <ClInclude Include="Objects\MagicCraft\UI\SpellCustomUI.h" />
     <ClInclude Include="Objects\Manger\DataManager.h" />
     <ClInclude Include="Objects\Manger\EventManager.h" />
     <ClInclude Include="Objects\Shooting\Bullet.h" />
@@ -274,6 +276,8 @@
     <ClCompile Include="Objects\MagicCraft\Characters\Player.cpp" />
     <ClCompile Include="Objects\MagicCraft\Spell.cpp" />
     <ClCompile Include="Objects\MagicCraft\SpellManager.cpp" />
+    <ClCompile Include="Objects\MagicCraft\UIManager.cpp" />
+    <ClCompile Include="Objects\MagicCraft\UI\SpellCustomUI.cpp" />
     <ClCompile Include="Objects\Manger\DataManager.cpp" />
     <ClCompile Include="Objects\Manger\EventManager.cpp" />
     <ClCompile Include="Objects\Shooting\Bullet.cpp" />

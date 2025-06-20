@@ -15,6 +15,9 @@ TestScene::TestScene()
 	player->SetLocalPosition(CENTER);
 	player->UpdateWorld();
 	
+	Environment::Get()->GetMainCamera()->SetTarget(player);
+	Environment::Get()->GetMainCamera()->SetParent(player->GetCameraTransform());
+
 	SpellOptionData* data = new SpellOptionData();
 	SpellManager::Get()->SetOptionShape(data, Arrow);
 	SpellManager::Get()->SetOptionElement(data, Fire);
@@ -45,12 +48,17 @@ TestScene::TestScene()
 
 	EnemyManager::Get()->Spawn({ 100,CENTER_Y });
 
+
+	book = new SpellCustomUI();
+	book->SetLocalPosition(CENTER);
+	book->UpdateWorld();
 }
 
 TestScene::~TestScene()
 {
 	delete spell;
 	delete player;
+	delete book;
 }
 
 void TestScene::Update()
@@ -76,6 +84,11 @@ void TestScene::Update()
 	EnemyManager::Get()->Update();
 	SpellManager::Get()->HitCheck();
 
+	if (Input::Get()->IsKeyDown(VK_TAB)) {
+		int state = book->IsActive();
+		book->SetActive((++state) % 2);
+	}
+	book->Update();
 
 }
 
@@ -86,10 +99,14 @@ void TestScene::Render()
 	player->Render();
 	EnemyManager::Get()->Render();
 	SpellManager::Get()->Render();
+
 }
 
 void TestScene::GUIRender()
 {
 	player->Edit();
 	EnemyManager::Get()->Edit();
+	
+	book->Render();
+//	SpellCustomUI
 }

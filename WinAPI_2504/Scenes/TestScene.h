@@ -16,4 +16,6 @@ private:
 	RectCollider* SandBag;
 
 	Player* player;
+
+	SpellCustomUI* book;
 };

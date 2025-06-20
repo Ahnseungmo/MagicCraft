@@ -9,13 +9,12 @@ public:
 	~Player();
 
 	void Update();
-	
-
 
 	void Edit();
+	Transform* GetCameraTransform() { return cameraTransform; };
 
 private:
-
+	Transform* cameraTransform ;
 
 
 };
