@@ -9,6 +9,10 @@ public:
 	void Update();
 	void Render();
 
+
+	void SetSelectOption(Option* option) { this->selectOption = option; }
+	Option* GetSelectOption() { return selectOption; }
 private:
 
+	Option* selectOption = nullptr;
 };

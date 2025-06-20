@@ -193,6 +193,8 @@
     <ClInclude Include="Objects\MagicCraft\Spell.h" />
     <ClInclude Include="Objects\MagicCraft\SpellManager.h" />
     <ClInclude Include="Objects\MagicCraft\UIManager.h" />
+    <ClInclude Include="Objects\MagicCraft\UI\Option.h" />
+    <ClInclude Include="Objects\MagicCraft\UI\OptionButton.h" />
     <ClInclude Include="Objects\MagicCraft\Wand.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\Enemy.h" />
     <ClInclude Include="Objects\MagicCraft\UI\SpellCustomUI.h" />
@@ -277,6 +279,8 @@
     <ClCompile Include="Objects\MagicCraft\Spell.cpp" />
     <ClCompile Include="Objects\MagicCraft\SpellManager.cpp" />
     <ClCompile Include="Objects\MagicCraft\UIManager.cpp" />
+    <ClCompile Include="Objects\MagicCraft\UI\Option.cpp" />
+    <ClCompile Include="Objects\MagicCraft\UI\OptionButton.cpp" />
     <ClCompile Include="Objects\MagicCraft\UI\SpellCustomUI.cpp" />
     <ClCompile Include="Objects\Manger\DataManager.cpp" />
     <ClCompile Include="Objects\Manger\EventManager.cpp" />

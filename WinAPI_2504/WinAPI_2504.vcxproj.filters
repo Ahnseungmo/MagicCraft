@@ -258,6 +258,12 @@
     <ClInclude Include="Objects\MagicCraft\UI\SpellCustomUI.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\MagicCraft\UI\OptionButton.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MagicCraft\UI\Option.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_2504.cpp">
@@ -471,6 +477,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\MagicCraft\UI\SpellCustomUI.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MagicCraft\UI\OptionButton.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MagicCraft\UI\Option.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

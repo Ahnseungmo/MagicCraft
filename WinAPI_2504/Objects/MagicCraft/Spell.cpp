@@ -148,12 +148,15 @@ void Spell::Spawn(Vector2 pos, Vector2 dir, SpellOptionData* data)
 	damage = data->power;
 	pierce = data->pierce;
 
+	SetLocalPosition(pos);
 	SetSize(shapeSizes.at(data->shape));
 	SetLocalScale(data->scale,data->scale);
 	localRotation.z = atan2f(dir.y, dir.x);
 	direction = dir;
-	SetLocalPosition(pos);
-	Translate(dir * Vector2(Size().x / 2 * localScale.x, Size().y / 2 * localScale.y));
+	UpdateWorld();
+
+
+	Translate(dir * Size().Magnitude() * 0.5);
 	state = Begin;
 	clips.at(state)->Play();
 	isActive = true;
