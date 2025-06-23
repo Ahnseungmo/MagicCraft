@@ -65,33 +65,28 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
-	player->Update();
-	Vector2 playerPos = player->GetGlobalPosition();
-	if (Input::Get()->IsKeyDown(VK_LBUTTON)) {
-//		spell->SetLocalScale(1.0f, 1.0f);
-		SpellManager::Get()->Spawn(playerPos, ((mousePos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(0));
-	//	spell->Spawn(playerPos, ((mousePos) - playerPos).GetNormalized(),SpellManager::Get()->GetSpellOptionData(0));
-	}
-	if (Input::Get()->IsKeyDown(VK_RBUTTON)) {
-//		spell->SetLocalScale(2.0f, 2.0f);
-		SpellManager::Get()->Spawn(playerPos, ((mousePos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(1));
-	}
-	spell->Update();
-	SpellManager::Get()->Update();
+	if (!UIManager::Get()->IsPause()) {
+		player->Update();
+		Vector2 playerPos = player->GetGlobalPosition();
+		if (Input::Get()->IsKeyDown(VK_LBUTTON)) {
+			SpellManager::Get()->Spawn(playerPos, ((mousePos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(0));
+		}
+		if (Input::Get()->IsKeyDown(VK_RBUTTON)) {
+			SpellManager::Get()->Spawn(playerPos, ((mousePos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(1));
+		}
+		spell->Update();
+		SpellManager::Get()->Update();
 
-	if(spell->GetState() == Spell::State::Moving)
-	if (spell->IsRectCollision(SandBag, nullptr)) {
-		spell->Hit();
+		if (spell->GetState() == Spell::State::Moving)
+			if (spell->IsRectCollision(SandBag, nullptr)) {
+				spell->Hit();
+			}
+		EnemyManager::Get()->Update();
+		SpellManager::Get()->HitCheck();
+
 	}
-	EnemyManager::Get()->Update();
-	SpellManager::Get()->HitCheck();
-	/*
-	if (Input::Get()->IsKeyDown(VK_TAB)) {
-		int state = book->IsActive();
-		book->SetActive((++state) % 2);
-	}
-	book->Update();
-*/
+
+	
 	UIManager::Get()->Update();
 }
 

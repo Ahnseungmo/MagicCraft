@@ -6,8 +6,18 @@ public:
 	SpellCustomUI();
 	~SpellCustomUI();
 
+	void InitSpellMarker();
+
+	void InitSpellSlot();
+
+	void InitSpellSampleSlot();
+
+	void InitOption();
+
 	void Update();
 	void Render();
+
+	void MarkerMovePosition(Button* marker, int index);
 
 
 private:
@@ -15,21 +25,44 @@ private:
 	Quad* pageLeft;
 	Quad* pageRight;
 
-//	Quad* select;
+	Quad* bookMarker;
+
 	OptionButton* slot;
 	OptionButton* slot2;
 
-	Option* optionPieace;
+	Option* optionPiercing;
+	Option* optionDuplication;
+	Option* optionHoming;
+	Option* optionReflect;
+	Option* optionUpScale;
 
-
-	const int OPTION_BUTTON_ROW = 5;
-	const int OPTION_BUTTON_COL = 3;
+	int selectedIndex = 0;
 
 	const int OPTION_SLOT_ROW = 5;
 	const int OPTION_SLOT_COL = 4;
 	const int OPTION_SLOT_PADDING = 5;
+
+	const int SAMPLE_SLOT_SIZE = 5;
+
+	const int OPTIONS_SIZE = 5;
+	const int SPELL_MARKERS_SIZE = 10;
+
+	const float MARKER_HOVER_TIME = 0.1f;
+
 	vector<OptionButton*> slots;
 	Transform* spellSlotsTransform;
+
+	vector<OptionButton*> sampleSlots;
+	Transform* spellSampleSlotsTransform;
+
+	Transform* spellMarkersTransform;
+
+
+	vector<Button*> spellMarkers;
+	vector<float> hoverTimers;
+
+	CircleUI* elementUI;
+	CircleUI* shapeUI;
 
 
 };

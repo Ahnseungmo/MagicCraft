@@ -22,7 +22,9 @@ void UIManager::Update()
 
 	if (Input::Get()->IsKeyDown(VK_TAB)) {
 		int state = book->IsActive();
-		book->SetActive((++state) % 2);
+		state = (++state) % 2;
+		book->SetActive(state);
+		UIManager::SetPause(state);
 	}
 
 
@@ -32,7 +34,7 @@ void UIManager::Update()
 
 
 	if (Input::Get()->IsKeyUp(VK_LBUTTON)) SetSelectOption(nullptr);
-
+	
 	if (selectOption != nullptr) selectOption->Update();
 }
 
