@@ -32,7 +32,7 @@ SpellCustomUI::SpellCustomUI() : RectCollider({500,500})
 	sampleSlots.at(4)->SetOption(new Option(optionReflect));
 	sampleSlots.at(4)->SetInfinity(true);
 
-	elementUI = new CircleUI(50);
+	elementUI = new CircleUI(70);
 	elementUI->SetParent(this);
 	elementUI->SetLocalPosition({120,150});
 
@@ -42,16 +42,18 @@ SpellCustomUI::SpellCustomUI() : RectCollider({500,500})
 	elementUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Earth.png"), Earth);
 	elementUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Tunder.png"), Tunder);
 	elementUI->ImageRePosition();
+	elementUI->SetBackGround(new Quad(L"Resources/Textures/MagicCraft/UI/Book/MagicCircle.png"));
 
-	shapeUI = new CircleUI(50);
+	shapeUI = new CircleUI(70);
 	shapeUI->SetParent(this);
 	shapeUI->SetLocalPosition({ 300,150 });
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Arrow.png"), Arrow);
-	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Knife.png"), Knife);
+	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Blade.png"), Knife);
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Floor.png"), Floor);
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Lay.png"), Lay);
-	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Ball.png"), Ball);
+	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Sphere.png"), Ball);
 	shapeUI->ImageRePosition();
+	shapeUI->SetBackGround(new Quad(L"Resources/Textures/MagicCraft/UI/Book/MagicCircle.png"));
 }
 
 void SpellCustomUI::InitSpellMarker()

@@ -15,10 +15,11 @@ CircleUI::~CircleUI()
 	indexImages.clear();
 
 	indexElement.clear();
-	for (auto& backGround : backGrounds) {
-		delete backGround;
+	for (auto& selectImage : selectImages) {
+		delete selectImage;
 	}
-	backGrounds.clear();
+	selectImages.clear();
+	delete backGround;
 }
 
 void CircleUI::Update()
@@ -54,22 +55,26 @@ void CircleUI::Update()
 				bestIndex = i;
 			}
 		}
+
+
 		if (Input::Get()->IsKeyPress(VK_LBUTTON)) {
 			for (int i = 0;i < imagesSize;i++) {
 				if (bestIndex == i) hoverTimer.at(i) += DELTA;
 				else hoverTimer.at(i) -= DELTA;
-				float scale =0;
-				scale = GameMath::Clamp(hoverTimer.at(i), 0.0f, HOVER_TIME);
-				indexImages.at(bestIndex)->SetLocalScale(Vector2(1.0f * scale,1.0f * scale));/////////////
+				hoverTimer.at(i) = GameMath::Clamp(hoverTimer.at(i), 0.0f, HOVER_TIME);
+				float scale = 1.0f + 1*(hoverTimer.at(i) / HOVER_TIME);
+				indexImages.at(i)->SetLocalScale(Vector2(1.0f * scale,1.0f * scale));
+				indexImages.at(i)->UpdateWorld();
 			}
 
-
-			
 		}
 		if (Input::Get()->IsKeyUp(VK_LBUTTON)) {
 			select = bestIndex;
 			selecting = false;
+			for (int i = 0; i < imagesSize; i++) hoverTimer.at(i) = 0;
 			for (auto& image : indexImages) {
+				image->SetLocalScale(Vector2(1.0f, 1.0f));
+				image->UpdateWorld();
 				image->SetActive(false);
 			}
 		}
@@ -116,9 +121,9 @@ void CircleUI::Update()
 	*/
 
 	UpdateWorld();
-
-	for (auto& backGround : backGrounds) {
-		backGround->UpdateWorld();
+	backGround->UpdateWorld();
+	for (auto& selectImage : selectImages) {
+		selectImage->UpdateWorld();
 	}
 
 	for (auto& indexImage : indexImages) {
@@ -130,13 +135,15 @@ void CircleUI::Update()
 void CircleUI::Render()
 {
 	if (!isActive) return;
+	if (backGround != nullptr) {
+		backGround->Render();
+	}
 
-	backGrounds.at(select)->Render();
+	selectImages.at(select)->Render();
 	for (auto& indexImage : indexImages) {
 		indexImage->Render();
 	}
 	CircleCollider::Render();
-
 }
 
 void CircleUI::InsertIndex(Quad* quad,int element) {
@@ -147,9 +154,10 @@ void CircleUI::InsertIndex(Quad* quad,int element) {
 	indexElement.push_back(element);
 	hoverTimer.push_back(0.0f);
 
-	backGrounds.push_back(new Quad(quad->GetMaterial()->GetBaseMap()->GetFile()));
-	backGrounds.back()->SetParent(this);
-	backGrounds.back()->UpdateWorld();
+	selectImages.push_back(new Quad(quad->GetMaterial()->GetBaseMap()->GetFile()));
+	selectImages.back()->SetLocalScale({ 2.0f,2.0f });
+	selectImages.back()->SetParent(this);
+	selectImages.back()->UpdateWorld();
 }
 
 
@@ -165,4 +173,9 @@ void CircleUI::ImageRePosition() {
 		indexImages.at(i)->SetLocalPosition(movePos);
 
 	}
+}
+void CircleUI::SetBackGround(Quad* quad) {
+	backGround = quad;
+	backGround->SetParent(this);
+	backGround->UpdateWorld();
 }

@@ -15,6 +15,7 @@ public:
 	void InsertIndex(Quad* quad, int element);
 
 	void ImageRePosition();
+	void SetBackGround(Quad* quad);
 	int GetSelect() { return select; }
 
 
@@ -23,7 +24,9 @@ private:
 
 	int select = 0;
 	bool selecting = false;
-	vector<Quad*> backGrounds;
+
+	Quad* backGround;
+	vector<Quad*> selectImages;
 	vector<Quad*> indexImages;
 	vector<int> indexElement;
 
