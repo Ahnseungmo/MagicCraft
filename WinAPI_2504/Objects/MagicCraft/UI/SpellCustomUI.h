@@ -25,8 +25,11 @@ private:
 	const int OPTION_BUTTON_ROW = 5;
 	const int OPTION_BUTTON_COL = 3;
 
+	const int OPTION_SLOT_ROW = 5;
+	const int OPTION_SLOT_COL = 4;
+	const int OPTION_SLOT_PADDING = 5;
 	vector<OptionButton*> slots;
-
+	Transform* spellSlotsTransform;
 
 
 };

@@ -24,7 +24,7 @@ SpellCustomUI::SpellCustomUI() : RectCollider({500,500})
 	optionPieace->SetImage(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Piearce.png"));
 
 
-
+	/*
 
 
 
@@ -42,7 +42,28 @@ SpellCustomUI::SpellCustomUI() : RectCollider({500,500})
 
 	slot2->SetOption(new Option(optionPieace));
 
+	*/
+	spellSlotsTransform = new Transform;
+	spellSlotsTransform->SetParent(this);
+	spellSlotsTransform->SetLocalPosition({ (pageRight->GetSize() * 0.5).x ,0 });
+	spellSlotsTransform->UpdateWorld();
 
+	int spellSlotSize = OPTION_SLOT_ROW * OPTION_SLOT_COL;
+	slots.reserve(spellSlotSize);
+	//int xposShift = (slot->Size().x + OPTION_SLOT_PADDING) * (OPTION_SLOT_ROW - 1) / 2;
+	for (int i = 0; i < spellSlotSize; i++) {
+		OptionButton* slot = new OptionButton();
+		slot->SetParent(spellSlotsTransform);
+		int xposShift = (slot->Size().x + OPTION_SLOT_PADDING) * (OPTION_SLOT_ROW - 1) / 2;
+		slot->SetLocalPosition({ (slot->Size().x + OPTION_SLOT_PADDING) * (i%OPTION_SLOT_ROW) - xposShift, (slot->Size().y + OPTION_SLOT_PADDING) * -(i / OPTION_SLOT_ROW) });
+		slot->UpdateWorld();
+		slots.push_back(slot);
+	}
+	
+	slots.back()->SetOption(new Option(optionPieace));
+
+	slots.at(0)->SetOption(new Option(optionPieace));
+	slots.at(0)->SetInfinity(true);
 
 }
 
@@ -52,8 +73,10 @@ SpellCustomUI::~SpellCustomUI()
 
 	delete pageLeft;
 	delete pageRight;
-	delete slot;
-	delete slot2;
+
+	for (auto& slot : slots)
+		delete slot;
+	slots.clear();
 }
 
 void SpellCustomUI::Update()
@@ -62,8 +85,10 @@ void SpellCustomUI::Update()
 	backGround->UpdateWorld();
 	pageLeft->UpdateWorld();
 	pageRight->UpdateWorld();
-	slot->Update();
-	slot2->Update();
+	spellSlotsTransform->UpdateWorld();
+	for (auto& slot : slots)
+		slot->Update();
+
 
 }
 
@@ -73,8 +98,9 @@ void SpellCustomUI::Render()
 	backGround->Render();
 	pageLeft->Render();
 	pageRight->Render();
-	slot->Render();
-	slot2->Render();
+
+	for (auto& slot : slots)
+		slot->Render();
 
 
 }

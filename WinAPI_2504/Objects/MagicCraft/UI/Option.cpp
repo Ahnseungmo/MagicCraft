@@ -19,6 +19,7 @@ Option::~Option()
 
 void Option::Update()
 {
+
 	UpdateWorld();
 	image->UpdateWorld();
 }

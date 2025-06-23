@@ -21,26 +21,30 @@ OptionButton::~OptionButton()
 
 void OptionButton::Update()
 {
+
 	if (IsPointCollision(mousePos)) {
 		select->SetActive(true);
-		if (Input::Get()->IsKeyDown(VK_LBUTTON)) {
-			UIManager::Get()->SetSelectOption(option);
+		if (Input::Get()->IsKeyDown(VK_LBUTTON) && option) {
+			UIManager::Get()->SetSelectOption(new Option(option));
 
-			if(!infinity) option = nullptr;
+			if (!infinity) option = nullptr;
 		}
 		if (Input::Get()->IsKeyUp(VK_LBUTTON)) {
+
 			if (!infinity) {
 				delete option;
-				SetOption(new Option(UIManager::Get()->GetSelectOption()));
-	
+				Option* selOption = UIManager::Get()->GetSelectOption();
+				if (selOption != nullptr) SetOption(new Option(selOption));
+
 
 			}
-			UIManager::Get()->SetSelectOption(nullptr);
+
 		}
 	}
 	else {
 		select->SetActive(false);
 	}
+	
 
 
 
