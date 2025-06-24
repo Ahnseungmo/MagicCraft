@@ -25,11 +25,23 @@ void Button::SetImage(wstring path) {
 void Button::Update()
 {
 	if (!isActive) return;
-	if (Input::Get()->IsKeyUp(VK_LBUTTON)) {
-		if (IsPointCollision(mousePos)) {
-			if (OnClick) OnClick;
+
+	if (IsPointCollision(mousePos)) {
+		if (Input::Get()->IsKeyDown(VK_LBUTTON)) {
+			clickCheck = true;
 		}
+		if (clickCheck) {
+			if (Input::Get()->IsKeyUp(VK_LBUTTON)) {
+				clickCheck = false;
+				if (OnClick) OnClick;
+				if (OnClickInt) OnClickInt(intParameter);
+			}
+
+		}
+
 	}
+	else clickCheck = false;
+
 	UpdateWorld();
 	image->UpdateWorld();
 }

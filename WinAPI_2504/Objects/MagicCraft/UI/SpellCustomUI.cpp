@@ -67,9 +67,11 @@ void SpellCustomUI::InitSpellMarker()
 	hoverTimers.resize(SPELL_MARKERS_SIZE);
 	for (int i = 0;i < SPELL_MARKERS_SIZE;i++) {
 		Button* marker = new Button(L"Resources/Textures/MagicCraft/UI/Book/Marker.png");
+		marker->SetIntParameter(i);
 		marker->SetParent(spellMarkersTransform);
 		marker->SetLocalPosition({ 0,-(i * 50.0f) });
 		marker->UpdateWorld();
+		marker->SetOnClickInt(bind(&SpellCustomUI::MarkerClick,this,placeholders::_1));
 		spellMarkers.push_back(marker);
 		hoverTimers.at(i) = 0.0f;
 	}
@@ -195,14 +197,13 @@ void SpellCustomUI::Update()
 
 	spellMarkersTransform->UpdateWorld();
 
+
+
 	for (int i = 0;i < SPELL_MARKERS_SIZE;i++) {
 		if (spellMarkers.at(i)->IsPointCollision(mousePos)) {
 			hoverTimers.at(i) += DELTA;
 			if (hoverTimers.at(i) >= MARKER_HOVER_TIME) hoverTimers.at(i) = MARKER_HOVER_TIME;
 
-			if (Input::Get()->IsKeyUp(VK_LBUTTON)) {
-				selectedIndex = i;
-			}
 
 		}
 		else {
@@ -254,3 +255,9 @@ void SpellCustomUI::MarkerMovePosition(Button* marker,int index) {
 	marker->SetLocalPosition(movePos);
 
 }
+
+
+void SpellCustomUI::MarkerClick(int index) {
+	selectedIndex = index;
+}
+

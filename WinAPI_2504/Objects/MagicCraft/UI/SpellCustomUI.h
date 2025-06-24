@@ -19,6 +19,8 @@ public:
 
 	void MarkerMovePosition(Button* marker, int index);
 
+	void MarkerClick(int index);
+
 
 private:
 	Quad* backGround;
