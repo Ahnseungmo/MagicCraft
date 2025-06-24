@@ -1,13 +1,13 @@
 #include "Framework.h"
 
-SpellCustomUI::SpellCustomUI() : RectCollider({500,500})
+SpellCustomUI::SpellCustomUI() : RectCollider({ 500,500 })
 {
 	isActive = false;
 	backGround = new Quad(L"Resources/Textures/MagicCraft/UI/Book/BookCover.png");
 	backGround->SetParent(this);
 	pageLeft = new Quad(L"Resources/Textures/MagicCraft/UI/Book/BookPageLeft.png");
 	pageLeft->SetParent(this);
-	pageLeft->SetLocalPosition({ -(pageLeft->GetSize() * 0.5).x ,0});
+	pageLeft->SetLocalPosition({ -(pageLeft->GetSize() * 0.5).x ,0 });
 	pageRight = new Quad(L"Resources/Textures/MagicCraft/UI/Book/BookPageRight.png");
 	pageRight->SetParent(this);
 	pageRight->SetLocalPosition({ (pageRight->GetSize() * 0.5).x ,0 });
@@ -34,7 +34,7 @@ SpellCustomUI::SpellCustomUI() : RectCollider({500,500})
 
 	elementUI = new CircleUI(70);
 	elementUI->SetParent(this);
-	elementUI->SetLocalPosition({120,150});
+	elementUI->SetLocalPosition({ 120,150 });
 
 	elementUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Fire.png"), Fire);
 	elementUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Water.png"), Water);
@@ -57,11 +57,18 @@ SpellCustomUI::SpellCustomUI() : RectCollider({500,500})
 
 
 	spellSlotDatas.reserve(SPELL_MARKERS_SIZE);
-	for (int i = 0;i < SPELL_MARKERS_SIZE;i++){
+	for (int i = 0; i < SPELL_MARKERS_SIZE; i++) {
 		spellSlotDatas.push_back(new SpellSlotData());
 		spellSlotDatas.at(i)->options.resize(OPTION_SLOT_SIZE);
 	}
-		
+	ImGuiIO& io = ImGui::GetIO();
+//	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\malgun.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesKorean());
+	ImFont* font1 = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\malgun.ttf", 16.0f, NULL, io.Fonts->GetGlyphRangesKorean());
+	textBox = new TextBox();
+	textBox->SetFont(font1);
+	textBox->SetParent(this);
+	textBox->SetText(u8"텍스트박스 중앙 정렬 테스트");
+	textBox->SetLocalPosition({0,0});
 }
 
 void SpellCustomUI::InitSpellMarker()
@@ -206,14 +213,10 @@ void SpellCustomUI::Update()
 
 	spellMarkersTransform->UpdateWorld();
 
-
-
 	for (int i = 0;i < SPELL_MARKERS_SIZE;i++) {
 		if (spellMarkers.at(i)->IsPointCollision(mousePos)) {
 			hoverTimers.at(i) += DELTA;
 			if (hoverTimers.at(i) >= MARKER_HOVER_TIME) hoverTimers.at(i) = MARKER_HOVER_TIME;
-
-
 		}
 		else {
 			hoverTimers.at(i) -= DELTA;
@@ -223,7 +226,7 @@ void SpellCustomUI::Update()
 		MarkerMovePosition(spellMarkers.at(i), i);
 		spellMarkers.at(i)->Update();
 	}
-
+//	textBox->Update();
 	elementUI->Update();
 	shapeUI->Update();
 }
@@ -254,7 +257,7 @@ void SpellCustomUI::Render()
 	elementUI->Render();
 	shapeUI->Render();
 //	bookMarker->Render();
-
+	textBox->Render();
 }
 
 void SpellCustomUI::MarkerMovePosition(Button* marker,int index) {

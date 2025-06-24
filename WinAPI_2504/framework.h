@@ -22,6 +22,8 @@
 #define CAM Environment::Get()->GetMainCamera()
 
 #define DIALOG ImGuiFileDialog::Instance()
+#define U8STR(str) reinterpret_cast<const char*>(u8##str)
+
 
 #include <windows.h>
 #include <string>
@@ -156,6 +158,8 @@ enum Element {
 #include "Objects/TileGame/Tank.h"
 
 //#include "Objects/MagicCraft/SpellO"
+
+#include "Objects/MagicCraft/UI/TextBox.h"
 #include "Objects/MagicCraft/Spell.h"
 #include "Objects/MagicCraft/SpellManager.h"
 

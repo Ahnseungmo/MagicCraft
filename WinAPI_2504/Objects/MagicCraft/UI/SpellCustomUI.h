@@ -80,4 +80,6 @@ private:
 //	SpellSlotData* 
 	vector<SpellSlotData*> spellSlotDatas;
 
+	TextBox* textBox;
+
 };
