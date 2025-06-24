@@ -12,7 +12,7 @@ public:
 	void GUIRender() override;
 
 private:
-	Spell* spell;
+
 	RectCollider* SandBag;
 
 	Player* player;

@@ -34,7 +34,8 @@ void OptionButton::Update()
 			if (!infinity) {
 				Option* selOption = UIManager::Get()->GetSelectOption();
 				if (selOption != nullptr) {
-					delete option;
+//					delete option;
+					option = nullptr;
 					SetOption(new Option(selOption));
 
 				}

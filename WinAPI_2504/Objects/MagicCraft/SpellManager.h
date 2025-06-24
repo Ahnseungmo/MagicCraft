@@ -30,6 +30,7 @@ public:
 
 	void SetOptionShape(SpellOptionData* data, Shape shape);
 	void SetOptionElement(SpellOptionData* data, Element element);
+
 	void SetOptionDuplication(SpellOptionData* data);
 	void SetOptionPierce(SpellOptionData* data);
 	void SetOptionUpScale(SpellOptionData* data);

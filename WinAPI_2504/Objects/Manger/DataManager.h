@@ -31,6 +31,9 @@ public:
 	float lifeTime = 1.0f;
 	float speed = 0.0f;
 	//	Spell* nextSpell = nullptr;
+
+//	vector<Option*> options;
+
 };
 
 class DataManager : public Singleton<DataManager>

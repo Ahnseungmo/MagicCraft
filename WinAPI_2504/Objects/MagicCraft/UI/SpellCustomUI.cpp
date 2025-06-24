@@ -48,12 +48,20 @@ SpellCustomUI::SpellCustomUI() : RectCollider({500,500})
 	shapeUI->SetParent(this);
 	shapeUI->SetLocalPosition({ 300,150 });
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Arrow.png"), Arrow);
-	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Blade.png"), Knife);
+	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Blade.png"), Blade);
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Floor.png"), Floor);
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Lay.png"), Lay);
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Sphere.png"), Ball);
 	shapeUI->ImageRePosition();
 	shapeUI->SetBackGround(new Quad(L"Resources/Textures/MagicCraft/UI/Book/MagicCircle.png"));
+
+
+	spellSlotDatas.reserve(SPELL_MARKERS_SIZE);
+	for (int i = 0;i < SPELL_MARKERS_SIZE;i++){
+		spellSlotDatas.push_back(new SpellSlotData());
+		spellSlotDatas.at(i)->options.resize(OPTION_SLOT_SIZE);
+	}
+		
 }
 
 void SpellCustomUI::InitSpellMarker()
@@ -184,6 +192,7 @@ SpellCustomUI::~SpellCustomUI()
 void SpellCustomUI::Update()
 {
 	if (!isActive)return;
+	UpdateWorld();
 	backGround->UpdateWorld();
 	pageLeft->UpdateWorld();
 	pageRight->UpdateWorld();
@@ -225,7 +234,7 @@ void SpellCustomUI::Render()
 	backGround->Render();
 
 	for (int i = 0;i < SPELL_MARKERS_SIZE;i++) {
-		if (i == selectedIndex) continue;
+		if (i == selectdIndex) continue;
 		spellMarkers.at(i)->Render();
 	}
 
@@ -240,7 +249,7 @@ void SpellCustomUI::Render()
 		slot->Render();
 
 
-	spellMarkers.at(selectedIndex)->Render();
+	spellMarkers.at(selectdIndex)->Render();
 	
 	elementUI->Render();
 	shapeUI->Render();
@@ -258,6 +267,45 @@ void SpellCustomUI::MarkerMovePosition(Button* marker,int index) {
 
 
 void SpellCustomUI::MarkerClick(int index) {
-	selectedIndex = index;
+	SetSpellSlotData(selectdIndex);
+	CalSpellSlotData(selectdIndex);
+	selectdIndex = index;
+	LoadSpellSlotData(index);
 }
 
+void SpellCustomUI::SetSpellSlotData(int index) {
+	spellSlotDatas.at(index)->shape = shapeUI->GetSelect();
+	spellSlotDatas.at(index)->element = elementUI->GetSelect();
+	for (int i = 0;i < OPTION_SLOT_SIZE;i++){
+		spellSlotDatas.at(index)->options.at(i) = slots.at(i)->GetOption();
+	}
+}
+
+void SpellCustomUI::CalSpellSlotData(int index) {
+
+	SpellOptionData* data = new SpellOptionData();
+	SpellSlotData* slotData = spellSlotDatas.at(index);
+	SpellManager::Get()->SetOptionShape(data, (Shape)shapeUI->GetIndexElement(slotData->shape));
+	SpellManager::Get()->SetOptionElement(data, (Element)elementUI->GetIndexElement(slotData->element));
+	for (int i = 0;i < OPTION_SLOT_SIZE;i++) {
+		if(slotData->options.at(i) != nullptr)
+			slotData->options.at(i)->RunOption(data);
+	}
+
+	delete SpellManager::Get()->GetSpellOptionData(index);
+	SpellManager::Get()->SetSpellOptionData(index, data);
+
+
+}
+
+void SpellCustomUI::LoadSpellSlotData(int index) {
+	SpellSlotData* slotData = spellSlotDatas.at(index);
+
+	shapeUI->SetSelect(slotData->shape);
+	elementUI->SetSelect(slotData->element);
+
+	for (int i = 0;i < OPTION_SLOT_SIZE;i++) {
+		if (slotData->options.at(i)) slots.at(i)->SetOption(new Option(slotData->options.at(i)));
+		else slots.at(i)->DeleteOption();
+	}
+}

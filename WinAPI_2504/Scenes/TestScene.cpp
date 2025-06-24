@@ -6,7 +6,7 @@ TestScene::TestScene()
 	SpellManager::Get();
 	DataManager::Get()->LoadFrames("Resources/Textures/MagicCraft/Spell");
 
-	spell = new Spell();
+
 	SandBag = new RectCollider({ 100, 100 });
 	SandBag->SetLocalPosition(CENTER_X + CENTER_X / 2, CENTER_Y);
 	SandBag->UpdateWorld();
@@ -19,7 +19,8 @@ TestScene::TestScene()
 	Environment::Get()->GetMainCamera()->SetParent(player->GetCameraTransform());
 
 	SpellOptionData* data = new SpellOptionData();
-	SpellManager::Get()->SetOptionShape(data, Arrow);
+//	SpellManager::Get()->SetOptionShape(data, Arrow);
+	SpellManager::Get()->SetOptionShape(data, Blade);
 	SpellManager::Get()->SetOptionElement(data, Fire);
 	SpellManager::Get()->SetOptionHoming(data);
 	SpellManager::Get()->SetOptionHoming(data);
@@ -57,7 +58,7 @@ TestScene::TestScene()
 
 TestScene::~TestScene()
 {
-	delete spell;
+
 	delete player;
 	delete book;
 	UIManager::Get()->Delete();
@@ -68,19 +69,15 @@ void TestScene::Update()
 	if (!UIManager::Get()->IsPause()) {
 		player->Update();
 		Vector2 playerPos = player->GetGlobalPosition();
+		Vector2 targetPos = mousePos + player->GetCameraTransform()->GetGlobalPosition();
 		if (Input::Get()->IsKeyDown(VK_LBUTTON)) {
-			SpellManager::Get()->Spawn(playerPos, ((mousePos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(0));
+			SpellManager::Get()->Spawn(playerPos, ((targetPos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(0));
 		}
 		if (Input::Get()->IsKeyDown(VK_RBUTTON)) {
-			SpellManager::Get()->Spawn(playerPos, ((mousePos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(1));
+			SpellManager::Get()->Spawn(playerPos, ((targetPos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(1));
 		}
-		spell->Update();
-		SpellManager::Get()->Update();
 
-		if (spell->GetState() == Spell::State::Moving)
-			if (spell->IsRectCollision(SandBag, nullptr)) {
-				spell->Hit();
-			}
+		SpellManager::Get()->Update();
 		EnemyManager::Get()->Update();
 		SpellManager::Get()->HitCheck();
 
@@ -92,7 +89,7 @@ void TestScene::Update()
 
 void TestScene::Render()
 {
-	spell->Render();
+
 	SandBag->Render();
 	player->Render();
 	EnemyManager::Get()->Render();
@@ -108,4 +105,10 @@ void TestScene::GUIRender()
 //	book->Render();
 //	SpellCustomUI
 	UIManager::Get()->Render();
+	Vector2 playerPos = player->GetGlobalPosition();
+	Vector2 targetPos = mousePos + player->GetCameraTransform()->GetGlobalPosition();
+
+	ImGui::DragFloat("mouse x", &targetPos.x);
+	ImGui::DragFloat("mouse y", &targetPos.y);
+
 }

@@ -6,6 +6,9 @@ UIManager::UIManager()
 	book->SetLocalPosition(CENTER);
 	book->UpdateWorld();
 	mouseTransform = new Transform();
+	book->SetActive(false);
+	bookState = false;
+
 }
 
 UIManager::~UIManager()
@@ -19,16 +22,29 @@ UIManager::~UIManager()
 void UIManager::Update()
 {
 	mouseTransform->SetLocalPosition(mousePos);
-
+	
 	if (Input::Get()->IsKeyDown(VK_TAB)) {
-		int state = book->IsActive();
-		state = (++state) % 2;
-		book->SetActive(state);
-		UIManager::SetPause(state);
+
+		bookState = !bookState;
+		if (!bookState) {
+			int selectdIndex = book->GetSelectIndex();
+			book->SetSpellSlotData(selectdIndex);
+			book->CalSpellSlotData(selectdIndex);
+		}
+		UIManager::SetPause(bookState);
 	}
 
+	if (bookState) bookPositionTime += DELTA;
+	else bookPositionTime -= DELTA;
+	bookPositionTime = GameMath::Clamp(bookPositionTime,0.0f,BOOK_POSITION_TIMER);
+	if (bookPositionTime <= 0) {
+		book->SetActive(false);
 
+	}
+	else book->SetActive(true);
 
+	Vector2 bookMovePos = GameMath::Lerp(bookPosition.at(0), bookPosition.at(1), bookPositionTime/ BOOK_POSITION_TIMER);
+	book->SetLocalPosition(bookMovePos);
 	mouseTransform->UpdateWorld();
 	book->Update();
 

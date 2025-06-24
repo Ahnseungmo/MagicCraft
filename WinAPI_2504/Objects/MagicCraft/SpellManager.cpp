@@ -69,7 +69,7 @@ const unordered_map<Shape, string> SpellManager::ShapeToString{
 	{Shape::Arrow, "Arrow"},
 	{Shape::Ball, "Ball"},
 	{Shape::Lay, "Lay"},
-	{Shape::Knife, "Knife"},
+	{Shape::Blade, "Blade"},
 	{Shape::Floor, "Floor" }
 
 };
@@ -85,7 +85,7 @@ const unordered_map<string,Shape> SpellManager::StringToShape{
 	{"Arrow", Shape::Arrow},
 	{"Ball", Shape::Ball},
 	{"Lay", Shape::Lay},
-	{"Knife", Shape::Knife},
+	{"Blade", Shape::Blade},
 	{"Floor", Shape::Floor}
 };
 
@@ -100,6 +100,7 @@ const unordered_map<string, Element> SpellManager::StringToElement{
 
 void SpellManager::SetOptionShape(SpellOptionData* data, Shape shape)
 {
+	data->shape = shape;
 	switch (shape)
 	{
 	case Arrow:
@@ -114,7 +115,7 @@ void SpellManager::SetOptionShape(SpellOptionData* data, Shape shape)
 		data->power = 2.0f;
 		data->cost = 20;
 		break;
-	case Knife:
+	case Blade:
 		data->speed = 1.0f;
 		data->lifeTime = 1;
 		data->power = 2.0f;
@@ -130,7 +131,7 @@ void SpellManager::SetOptionShape(SpellOptionData* data, Shape shape)
 	case Floor:
 		data->speed = 0;
 		data->lifeTime = 4.0f;
-		data->power = 0.5;
+		data->power = 0.5f;
 		data->cost = 10;
 		data->pierce = -1;
 		break;

@@ -26,13 +26,15 @@ public:
 
 	void Disappear();
 
+	void SetSpellOptionData(SpellOptionData* data);
+
 	void LoadClip();
 
 //	void LoadClip(State state, string path, string file, bool isLoop, float speed = 1.0f);
 
 	State GetState() { return state; }
 
-	int GetDamage() { return damage; }
+	float GetDamage() { return damage; }
 //	void LoadClip(string path, string file, bool isLoop, float speed = 1.0f);
 //	void Spawn(Vector2 pos, Vector2 dir);
 
@@ -41,7 +43,9 @@ public:
 private:
 
 	State state = Begin;
-	SpellOptionData* spellOptionData;
+//	SpellOptionData* spellOptionData;
+	SpellOptionData spellOptionData;
+
 //	DataManager::SpellShape shape = DataManager::SpellShape::Arrow;
 //	DataManager::SpellElement element = DataManager::SpellElement::Water;
 
@@ -50,9 +54,9 @@ private:
 
 	Vector2 direction = Vector2::Right();
 	vector<Vector2> shapeSizes;
-
-	float speed=400;
-	int damage = 1;
+	const int BASE_SPEED = 400.0f;
+	float speed= BASE_SPEED;
+	float damage = 1;
 	int pierce = 0;
 	float lifeTime = 0;
 

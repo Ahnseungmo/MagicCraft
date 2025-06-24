@@ -23,7 +23,7 @@ Spell::Spell()
 		case Ball:
 			shapeSizes.at(i) = Vector2(32, 32);
 			break;
-		case Knife:
+		case Blade:
 			shapeSizes.at(i) = Vector2(16, 32);
 			break;
 		case Lay:
@@ -63,7 +63,7 @@ void Spell::Update()
 			break;
 		case Spell::Moving:
 
-			if (spellOptionData->homing != 0) {
+			if (spellOptionData.homing != 0) {
 				Enemy* target = EnemyManager::Get()->nearEnemy(GetGlobalPosition());
 				if (target != nullptr) {
 					Vector2 toTarget = target->GetGlobalPosition() - GetGlobalPosition();
@@ -81,7 +81,7 @@ void Spell::Update()
 						deltaAngle += 2 * PI;
 
 					// 회전 제한
-					float maxTurnAngle = spellOptionData->homing * PI * DELTA;
+					float maxTurnAngle = spellOptionData.homing * PI * DELTA;
 					float clampedDelta = GameMath::Clamp(deltaAngle, -maxTurnAngle, maxTurnAngle);
 
 					float newAngle = currentAngle + clampedDelta;
@@ -105,7 +105,7 @@ void Spell::Update()
 		}
 	}
 	if(state == Moving) lifeTime += DELTA;
-	if (lifeTime > spellOptionData->lifeTime)
+	if (lifeTime > spellOptionData.lifeTime)
 	{
 		lifeTime = 0;
 		clips.at(state)->Stop();
@@ -143,14 +143,14 @@ void Spell::Spawn(Vector2 pos,Vector2 dir,Vector2 size)
 
 void Spell::Spawn(Vector2 pos, Vector2 dir, SpellOptionData* data)
 {
-	spellOptionData = data;
+	SetSpellOptionData(data);
 	LoadClip();
-	damage = data->power;
-	pierce = data->pierce;
+	damage = spellOptionData.power;
+	pierce = spellOptionData.pierce;
 
 	SetLocalPosition(pos);
-	SetSize(shapeSizes.at(data->shape));
-	SetLocalScale(data->scale,data->scale);
+	SetSize(shapeSizes.at(spellOptionData.shape));
+	SetLocalScale(spellOptionData.scale, spellOptionData.scale);
 	localRotation.z = atan2f(dir.y, dir.x);
 	direction = dir;
 	UpdateWorld();
@@ -161,6 +161,7 @@ void Spell::Spawn(Vector2 pos, Vector2 dir, SpellOptionData* data)
 	clips.at(state)->Play();
 	isActive = true;
 	lifeTime = 0;
+	speed = BASE_SPEED * spellOptionData.speed;
 }
 
 void Spell::Fire()
@@ -185,7 +186,21 @@ void Spell::Disappear()
 	isActive = false;
 }
 
+void Spell::SetSpellOptionData(SpellOptionData* data) {
+	spellOptionData.shape = data->shape;
+	spellOptionData.element = data->element;
+	spellOptionData.cost = data->cost;
 
+	spellOptionData.duplication = data->duplication;
+	spellOptionData.homing = data->homing;
+	spellOptionData.knockBack = data->knockBack;
+	spellOptionData.lifeTime = data->lifeTime;
+	spellOptionData.pierce = data->pierce;
+	spellOptionData.power = data->power;
+	spellOptionData.reflect = data->reflect;
+	spellOptionData.scale = data->scale;
+	spellOptionData.speed = data->speed;
+}
 
 /*
 
@@ -229,8 +244,8 @@ void Spell::LoadClip(State state, string path, string file, bool isLoop, float s
 
 void Spell::LoadClip()
 {
-	Shape shape = spellOptionData->shape;
-	Element element = spellOptionData->element;
+	Shape shape = spellOptionData.shape;
+	Element element = spellOptionData.element;
 
 	vector<vector<Frame*>> frameDatas = DataManager::Get()->GetSpellFrames(shape, element);
 

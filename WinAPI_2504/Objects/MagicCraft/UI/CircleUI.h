@@ -17,7 +17,9 @@ public:
 	void ImageRePosition();
 	void SetBackGround(Quad* quad);
 	int GetSelect() { return select; }
-
+	int GetSelectElement() { return indexElement.at(select); }
+	int GetIndexElement(int i) { return indexElement.at(i); }
+	void SetSelect(int select) { this->select = select; }
 
 private:
 	const float HOVER_TIME = 0.1;

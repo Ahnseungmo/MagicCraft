@@ -1,4 +1,10 @@
 #pragma once
+class SpellSlotData{
+public:
+	int shape = 0;
+	int element = 0;
+	vector<Option*> options;
+};
 
 class SpellCustomUI : public RectCollider {
 
@@ -21,6 +27,11 @@ public:
 
 	void MarkerClick(int index);
 
+	void SetSpellSlotData(int index);
+	void CalSpellSlotData(int index);
+
+	void LoadSpellSlotData(int index);
+	int GetSelectIndex() { return selectdIndex; }
 
 private:
 	Quad* backGround;
@@ -38,10 +49,11 @@ private:
 	Option* optionReflect;
 	Option* optionUpScale;
 
-	int selectedIndex = 0;
+	int selectdIndex = 0;
 
 	const int OPTION_SLOT_ROW = 5;
 	const int OPTION_SLOT_COL = 4;
+	const int OPTION_SLOT_SIZE = OPTION_SLOT_COL * OPTION_SLOT_ROW;
 	const int OPTION_SLOT_PADDING = 5;
 
 	const int SAMPLE_SLOT_SIZE = 5;
@@ -65,6 +77,7 @@ private:
 
 	CircleUI* elementUI;
 	CircleUI* shapeUI;
-
+//	SpellSlotData* 
+	vector<SpellSlotData*> spellSlotDatas;
 
 };

@@ -9,6 +9,11 @@ public:
 	void Update();
 	void Render();
 	void SetOption(Option* option) { this->option = option; option->SetParent(this); option->Update(); }
+	Option* GetOption() { return option; }
+	void DeleteOption() {
+
+		option = nullptr;
+	}
 	bool GetInfinity() { return false; }
 	void SetInfinity(bool infinity) { this->infinity = infinity; }
 	void SetClickAble(bool isClickAble) { this->isClickAble = isClickAble; }
