@@ -1,0 +1,5 @@
+<TextureAtlas imagePath="Blade_Water_Begin.png" width="48" height="32">
+    <sprite n="Blade_Water_Begin0.png" x="0" y="0" w="16" h="32" pX="0" pY="0"/>
+    <sprite n="Blade_Water_Begin1.png" x="16" y="0" w="16" h="32" pX="0" pY="0"/>
+    <sprite n="Blade_Water_Begin2.png" x="32" y="0" w="16" h="32" pX="0" pY="0"/>
+</TextureAtlas>

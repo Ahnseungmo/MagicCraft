@@ -30,6 +30,7 @@ public:
 
 	void LoadClip();
 
+
 //	void LoadClip(State state, string path, string file, bool isLoop, float speed = 1.0f);
 
 	State GetState() { return state; }
