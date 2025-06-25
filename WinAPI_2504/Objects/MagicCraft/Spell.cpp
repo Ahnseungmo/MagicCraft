@@ -255,7 +255,7 @@ void Spell::LoadClip()
 	clips.clear();
 
 	clips.insert(make_pair(Begin, new Clip(frameDatas.at(0), false, 2.0f)));
-	clips.insert(make_pair(Moving, new Clip(frameDatas.at(1), false, 2.0f)));
+	clips.insert(make_pair(Moving, new Clip(frameDatas.at(1), true, 2.0f)));
 	clips.insert(make_pair(End, new Clip(frameDatas.at(2), false, 2.0f)));
 
 	clips.at(Begin)->SetEvent((bind(&Spell::Fire, this)));

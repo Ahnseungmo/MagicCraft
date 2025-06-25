@@ -63,12 +63,29 @@ SpellCustomUI::SpellCustomUI() : RectCollider({ 500,500 })
 	}
 	ImGuiIO& io = ImGui::GetIO();
 //	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\malgun.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesKorean());
-	ImFont* font1 = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\malgun.ttf", 16.0f, NULL, io.Fonts->GetGlyphRangesKorean());
+	ImFont* font1 = io.Fonts->AddFontFromFileTTF("Resources/Font/DNFBitBitv2.ttf", 16.0f, NULL, io.Fonts->GetGlyphRangesKorean());
 	textBox = new TextBox();
 	textBox->SetFont(font1);
 	textBox->SetParent(this);
 	textBox->SetText(u8"텍스트박스 중앙 정렬 테스트");
 	textBox->SetLocalPosition({0,0});
+
+	textBox1 = new TextBox();
+	textBox1->SetFont(font1);
+	textBox1->SetParent(this);
+	textBox1->SetAlign(TextBox::Left);
+	textBox1->SetText(u8"텍스트박스1 중앙 정렬 테스트");
+	textBox1->SetLocalPosition({ 0,200 });
+
+
+	textBox2 = new TextBox();
+	textBox2->SetFont(font1);
+	textBox2->SetParent(this);
+	textBox2->SetAlign(TextBox::Right);
+	textBox2->SetText(u8"텍스트박스2 중앙 정렬 테스트");
+	textBox2->SetLocalPosition({ 0,-200 });
+
+
 }
 
 void SpellCustomUI::InitSpellMarker()
@@ -258,6 +275,10 @@ void SpellCustomUI::Render()
 	shapeUI->Render();
 //	bookMarker->Render();
 	textBox->Render();
+	textBox1->Render();
+	textBox2->Render();
+
+
 }
 
 void SpellCustomUI::MarkerMovePosition(Button* marker,int index) {

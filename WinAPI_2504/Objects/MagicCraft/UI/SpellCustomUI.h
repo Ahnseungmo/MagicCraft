@@ -81,5 +81,6 @@ private:
 	vector<SpellSlotData*> spellSlotDatas;
 
 	TextBox* textBox;
-
+	TextBox* textBox1;
+	TextBox* textBox2;
 };

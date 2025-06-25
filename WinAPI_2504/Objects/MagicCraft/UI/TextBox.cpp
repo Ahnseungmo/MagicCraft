@@ -35,7 +35,8 @@ void TextBox::Render()
 		ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_NoMove | 
 		ImGuiWindowFlags_NoScrollbar |
-		ImGuiWindowFlags_NoMouseInputs |
+		ImGuiWindowFlags_NoMouseInputs 
+		|
 		ImGuiWindowFlags_NoBackground
 		;
 
@@ -52,8 +53,10 @@ void TextBox::Render()
 		textBoxPos = ImVec2(pos.x - (textSize.x * 0.5), pos.y - (textSize.y * 0.5));
 		break;
 	case TextBox::Left:
+		textBoxPos = ImVec2(pos.x, pos.y - (textSize.y * 0.5));
 		break;
 	case TextBox::Right:
+		textBoxPos = ImVec2(pos.x - (textSize.x), pos.y - (textSize.y * 0.5));
 		break;
 	default:
 		textBoxPos = pos;

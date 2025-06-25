@@ -94,7 +94,7 @@ const unordered_map<string, Element> SpellManager::StringToElement{
 	{"Water", Element::Water},
 	{"Ice", Element::Ice},
 	{"Tunder", Element::Tunder},
-	{"Dirt", Element::Earth}
+	{"Earth", Element::Earth}
 };
 
 
@@ -153,6 +153,7 @@ void SpellManager::SetOptionElement(SpellOptionData* data, Element element)
 		break;
 	case Tunder:
 		data->speed *= 5.0f;
+		data->lifeTime *= 0.2;
 		break;
 	case Earth:
 		data->speed *= 0.8f;

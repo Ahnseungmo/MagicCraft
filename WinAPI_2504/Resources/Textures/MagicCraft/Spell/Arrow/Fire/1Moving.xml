@@ -1,9 +1,5 @@
-<TextureAtlas imagePath="Arrow_Fire_Moving.png" width="96" height="96">
+<TextureAtlas imagePath="Arrow_Fire_Moving.png" width="96" height="32">
     <sprite n="Arrow_Fire_Moving0.png" x="0" y="0" w="32" h="32" pX="0" pY="0"/>
     <sprite n="Arrow_Fire_Moving1.png" x="32" y="0" w="32" h="32" pX="0" pY="0"/>
     <sprite n="Arrow_Fire_Moving2.png" x="64" y="0" w="32" h="32" pX="0" pY="0"/>
-    <sprite n="Arrow_Fire_Moving3.png" x="0" y="32" w="32" h="32" pX="0" pY="0"/>
-    <sprite n="Arrow_Fire_Moving4.png" x="32" y="32" w="32" h="32" pX="0" pY="0"/>
-    <sprite n="Arrow_Fire_Moving5.png" x="64" y="32" w="32" h="32" pX="0" pY="0"/>
-    <sprite n="Arrow_Fire_Moving6.png" x="0" y="64" w="32" h="32" pX="0" pY="0"/>
 </TextureAtlas>

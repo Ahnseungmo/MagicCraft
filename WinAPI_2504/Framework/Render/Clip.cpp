@@ -26,6 +26,7 @@ void Clip::Update()
     frameTime -= intervalTime;
 
     curFrameNum++;
+    if (endEvent && curFrameNum == frames.size()) events[-1]();
 
     if (isLoop)
     {
@@ -68,10 +69,11 @@ void Clip::SetEvent(Event event, int frameNum)
 {
 	if (frameNum == -1)
 	{
-		frameNum = frames.size() - 1;
+//		frameNum = frames.size() - 1;
+        endEvent = true;
 	}
 
-    if (frameNum < 0 || frameNum >= frames.size())
+    else if (frameNum < 0 || frameNum >= frames.size())
     {
         assert(false && "Frame number out of range");
         return;

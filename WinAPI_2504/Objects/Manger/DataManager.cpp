@@ -98,8 +98,9 @@ void DataManager::LoadFrames(string path)
 	vector<string> elements;
 
 	shapes = GetSubdirectories(path);
-	elements = GetSubdirectories(path + "/" + shapes.at(0));
+
 	for (int i = 0; i < shapes.size();i++) {
+		elements = GetSubdirectories(path + "/" + shapes.at(i));
 //		spellFrames.insert(make_pair(shapes.at(i), nullptr));
 		for (int j = 0; j < elements.size();j++) {
 

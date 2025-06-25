@@ -33,6 +33,7 @@ private:
 
     bool isLoop;
     bool isPlay = true;
+    bool endEvent = false;
 
 	unordered_map<int, Event> events;
 };
