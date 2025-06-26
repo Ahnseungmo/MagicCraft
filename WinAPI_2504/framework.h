@@ -76,7 +76,7 @@ typedef function<void()> Event;
 
 enum Shape {
 	Arrow,
-	Ball,
+	Sphere,
 	Blade,
 	Lay,
 	Floor,

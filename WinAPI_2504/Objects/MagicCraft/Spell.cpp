@@ -20,7 +20,7 @@ Spell::Spell()
 		case Arrow:
 			shapeSizes.at(i) = Vector2(32, 16);
 			break;
-		case Ball:
+		case Sphere:
 			shapeSizes.at(i) = Vector2(32, 32);
 			break;
 		case Blade:

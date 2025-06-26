@@ -67,7 +67,7 @@ void SpellManager::HitCheck() {
 
 const unordered_map<Shape, string> SpellManager::ShapeToString{
 	{Shape::Arrow, "Arrow"},
-	{Shape::Ball, "Ball"},
+	{Shape::Sphere, "Sphere"},
 	{Shape::Lay, "Lay"},
 	{Shape::Blade, "Blade"},
 	{Shape::Floor, "Floor" }
@@ -83,7 +83,7 @@ const unordered_map<Element, string> SpellManager::ElementToString{
 
 const unordered_map<string,Shape> SpellManager::StringToShape{
 	{"Arrow", Shape::Arrow},
-	{"Ball", Shape::Ball},
+	{"Sphere", Shape::Sphere},
 	{"Lay", Shape::Lay},
 	{"Blade", Shape::Blade},
 	{"Floor", Shape::Floor}
@@ -109,7 +109,7 @@ void SpellManager::SetOptionShape(SpellOptionData* data, Shape shape)
 		data->power = 1.0f;
 		data->cost = 10;
 		break;
-	case Ball:
+	case Sphere:
 		data->speed = 0.8f;
 		data->lifeTime = 1;
 		data->power = 2.0f;

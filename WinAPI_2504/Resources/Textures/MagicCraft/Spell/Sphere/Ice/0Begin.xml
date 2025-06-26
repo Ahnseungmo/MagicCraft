@@ -1,0 +1,5 @@
+<TextureAtlas imagePath="Sphere_Ice_Begin.png" width="192" height="64">
+    <sprite n="Sphere_Ice_Begin0.png" x="0" y="0" w="64" h="64" pX="0" pY="0"/>
+    <sprite n="Sphere_Ice_Begin1.png" x="64" y="0" w="64" h="64" pX="0" pY="0"/>
+    <sprite n="Sphere_Ice_Begin2.png" x="128" y="0" w="64" h="64" pX="0" pY="0"/>
+</TextureAtlas>

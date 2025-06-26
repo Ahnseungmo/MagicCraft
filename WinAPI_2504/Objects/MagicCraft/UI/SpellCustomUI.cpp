@@ -51,7 +51,7 @@ SpellCustomUI::SpellCustomUI() : RectCollider({ 500,500 })
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Blade.png"), Blade);
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Floor.png"), Floor);
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Lay.png"), Lay);
-	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Sphere.png"), Ball);
+	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Sphere.png"), Sphere);
 	shapeUI->ImageRePosition();
 	shapeUI->SetBackGround(new Quad(L"Resources/Textures/MagicCraft/UI/Book/MagicCircle.png"));
 
