@@ -186,9 +186,6 @@
     <ClInclude Include="Scenes\TileGameScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\TileGame\TileMap.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Objects\TileGame\GameTile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -271,6 +268,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\MagicCraft\UI\TextBox.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MagicCraft\Map\GameMap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\TileGame\TileMap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MagicCraft\Map\Tile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -419,9 +425,6 @@
     <ClCompile Include="Scenes\TileGameScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\TileGame\TileMap.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Objects\TileGame\GameTile.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -501,6 +504,15 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\MagicCraft\UI\TextBox.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MagicCraft\Map\GameMap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\TileGame\TileMap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MagicCraft\Map\Tile.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
