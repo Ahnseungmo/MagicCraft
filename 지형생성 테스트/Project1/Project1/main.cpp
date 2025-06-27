@@ -9,14 +9,14 @@
 
 const int MAP_WIDTH = 150;
 const int MAP_HEIGHT = 100;
-const int ROOM_MAX = 10;
+const int ROOM_MAX = 30;
 const int ROOM_MIN_SIZE = 12;
 const int ROOM_MAX_SIZE = 20;
 const int MIN_OVERLAP = 3; // 방이 붙을 때 최소 겹치는 칸 수
 
+const int WATER = 2;
 const int WALL = 1;
 const int FLOOR = 0;
-
 // ANSI 색상 코드 배열 (12색)
 const char* COLORS[] = {
     "\033[31m", // 빨강
@@ -63,7 +63,10 @@ public:
                 if (map[y][x] == WALL) std::cout << "\033[0m#";
                 else {
                     int rid = room_id_map[y][x];
-                    if (rid >= 0) std::cout << COLORS[rid % COLOR_COUNT] << ".";
+                    if (rid >= 0) {
+                        if (map[y][x] == FLOOR) std::cout << COLORS[rid % COLOR_COUNT] << ".";
+                        else if (map[y][x] == WATER) std::cout << COLORS[rid % COLOR_COUNT] << "@";
+                    }
                     else std::cout << "\033[0m.";
                 }
             }
@@ -536,7 +539,7 @@ private:
                             }
                         }
                         if (!isConnectionArea) {
-                            local[y][x] = (cellDist(rng) < 45) ? FLOOR : WALL;
+                            local[y][x] = (cellDist(rng) < 45) ? FLOOR : WATER;
                         }
                     }
                 }
@@ -562,7 +565,7 @@ private:
                             for (int dx = -1; dx <= 1; ++dx)
                                 if (local[y + dy][x + dx] == FLOOR) ++cnt;
                         if (cnt >= 5) next[y][x] = FLOOR;
-                        else next[y][x] = WALL;
+                        else next[y][x] = WATER;
                     }
                 }
             }
