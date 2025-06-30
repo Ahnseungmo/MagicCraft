@@ -30,10 +30,10 @@ void Quad::MakeMesh()
 
 	vector<Vertex>& vertices = mesh->GetVertices();
 
-	vertices.emplace_back(-halfSize.x, +halfSize.y, startUV.x, startUV.y);
-	vertices.emplace_back(+halfSize.x, +halfSize.y, endUV.x, startUV.y);
-	vertices.emplace_back(-halfSize.x, -halfSize.y, startUV.x, endUV.y);
-	vertices.emplace_back(+halfSize.x, -halfSize.y, endUV.x, endUV.y);
+	vertices.emplace_back(-halfSize.x, +halfSize.y, zPos, startUV.x, startUV.y);
+	vertices.emplace_back(+halfSize.x, +halfSize.y, zPos, endUV.x, startUV.y);
+	vertices.emplace_back(-halfSize.x, -halfSize.y, zPos, startUV.x, endUV.y);
+	vertices.emplace_back(+halfSize.x, -halfSize.y, zPos, endUV.x, endUV.y);
 
 	vector<UINT>& indices = mesh->GetIndices();
 

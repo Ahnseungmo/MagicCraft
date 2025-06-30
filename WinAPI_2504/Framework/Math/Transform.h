@@ -44,11 +44,15 @@ public:
 	string GetTag() { return tag; }
 	void SetTag(string tag) { this->tag = tag; }
 
+	void SetZPos(float zPos) { this->zPos = zPos; }
+	float GetZPos() { return zPos; }
+
 protected:
 	string tag;
 
 	Vector2 localPosition;
 	Float3 localRotation;
+
 	Vector2 localScale = { 1, 1 };	
 	Vector2 pivot;
 
@@ -57,6 +61,8 @@ protected:
 
 	Matrix world;
 	Float4x4 matWorld;
+
+	float zPos = 0.0f;
 
 private:
 	Matrix S, R, T;

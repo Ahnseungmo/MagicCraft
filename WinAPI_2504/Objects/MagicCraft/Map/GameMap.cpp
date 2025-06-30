@@ -9,8 +9,10 @@ GameMap::GameMap()
 
 
 	tiles.reserve(tileCount.x * tileCount.y);
+	/*
 	float mapLeft = -tileSize.x * (tileCount.x/2);
 	float mapTop = -tileSize.y * (tileCount.y/2);
+
 	for (int y = 0;y < tileCount.y;y++) {
 		for (int x = 0;x < tileCount.x;x++) {
 			tiles.push_back(new Tile(tileSize));
@@ -19,7 +21,23 @@ GameMap::GameMap()
 			tiles.back()->UpdateWorld();
 		}
 	}
+	*/
 
+	float mapLeft = tileSize.x/2 ;
+	float mapBottom = tileSize.y/2 ;
+
+	for (int y = 0; y < tileCount.y; y++) {
+		vector<Tile::State> mapLineData;
+		for (int x = 0; x < tileCount.x; x++) {
+			tiles.push_back(new Tile(tileSize));
+			tiles.back()->SetParent(this);
+			tiles.back()->SetLocalPosition(mapLeft + tileSize.x * x, mapBottom + tileSize.y * y);
+			tiles.back()->UpdateWorld();
+			mapLineData.push_back(Tile::FLOOR);
+		}
+		mapData.push_back(mapLineData);
+	}
+	
 	instances.resize(size);
 	for (auto& tile : tiles) {
 
@@ -61,4 +79,11 @@ void GameMap::Render()
 	quad->GetMaterial()->Set();
 
 	quad->GetMesh()->DrawInstanced(size);
+}
+
+void GameMap::Generate()
+{
+
+	mapData[0][0] = Tile::FLOOR;
+
 }

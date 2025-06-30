@@ -18,6 +18,7 @@ Device::Device()
     swapChainDesc.OutputWindow = hWnd;
     swapChainDesc.Windowed = true;
 
+
     D3D11CreateDeviceAndSwapChain(
         nullptr,
         D3D_DRIVER_TYPE_HARDWARE,
@@ -35,7 +36,27 @@ Device::Device()
 
     ID3D11Texture2D* backBuffer;
     swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
-    device->CreateRenderTargetView(backBuffer, nullptr, &renderTargetView);        
+    device->CreateRenderTargetView(backBuffer, nullptr, &renderTargetView);       
+
+    D3D11_TEXTURE2D_DESC depthDesc = {};
+    depthDesc.Width = width;
+    depthDesc.Height = height;
+    depthDesc.MipLevels = 1;
+    depthDesc.ArraySize = 1;
+    depthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    depthDesc.SampleDesc.Count = 1;
+    depthDesc.Usage = D3D11_USAGE_DEFAULT;
+    depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
+    device->CreateTexture2D(&depthDesc, nullptr, &depthStencilBuffer);
+
+    D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+    dsvDesc.Format = depthDesc.Format;
+    dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+
+    device->CreateDepthStencilView(depthStencilBuffer, &dsvDesc, &depthStencilView);
+
+
 }
 
 Device::~Device()
@@ -45,14 +66,18 @@ Device::~Device()
 
     swapChain->Release();
     renderTargetView->Release();
+
+    if (depthStencilView) depthStencilView->Release();
+    if (depthStencilBuffer) depthStencilBuffer->Release();
 }
 
 void Device::Clear()
 {
-    deviceContext->OMSetRenderTargets(1, &renderTargetView, nullptr);
+    deviceContext->OMSetRenderTargets(1, &renderTargetView, depthStencilView);
 
     float clearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f };
     deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
+    deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 void Device::Present()

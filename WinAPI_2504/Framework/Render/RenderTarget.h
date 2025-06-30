@@ -17,12 +17,17 @@ private:
     void CreateSRV();
     void CreateProjection();
 
+    void CreateDSV();
+
 private:
     UINT width, height;
 
     ID3D11Texture2D* rtvTexture;
     ID3D11RenderTargetView* rtv;
     ID3D11ShaderResourceView* srv;
+
+    ID3D11Texture2D* dsvTexture = nullptr;
+    ID3D11DepthStencilView* dsv = nullptr;
 
     MatrixBuffer* projectionBuffer;
 };

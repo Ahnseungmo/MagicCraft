@@ -191,6 +191,7 @@
     <ClInclude Include="Objects\MagicCraft\Characters\Character.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\Player.h" />
     <ClInclude Include="Objects\MagicCraft\Map\GameMap.h" />
+    <ClInclude Include="Objects\MagicCraft\Map\MapData.h" />
     <ClInclude Include="Objects\MagicCraft\Map\Tile.h" />
     <ClInclude Include="Objects\MagicCraft\Spell.h" />
     <ClInclude Include="Objects\MagicCraft\SpellManager.h" />
@@ -228,6 +229,7 @@
     <ClInclude Include="Scenes\TutorialScene.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Scenes\ZPosTestScene.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WinAPI_2504.h" />
   </ItemGroup>
@@ -282,6 +284,7 @@
     <ClCompile Include="Objects\MagicCraft\Characters\EnemyManager.cpp" />
     <ClCompile Include="Objects\MagicCraft\Characters\Player.cpp" />
     <ClCompile Include="Objects\MagicCraft\Map\GameMap.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Map\MapData.cpp" />
     <ClCompile Include="Objects\MagicCraft\Map\Tile.cpp" />
     <ClCompile Include="Objects\MagicCraft\Spell.cpp" />
     <ClCompile Include="Objects\MagicCraft\SpellManager.cpp" />
@@ -315,6 +318,7 @@
     <ClCompile Include="Scenes\TutorialScene.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Scenes\ZPosTestScene.cpp" />
     <ClCompile Include="WinAPI_2504.cpp" />
   </ItemGroup>
   <ItemGroup>

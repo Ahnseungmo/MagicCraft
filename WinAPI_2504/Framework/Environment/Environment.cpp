@@ -9,6 +9,7 @@ Environment::Environment()
 	CreateProjection();
     CreateSamplerState();
 	CreateBlendState();
+	CreateDepthStencilState();
 }
 
 Environment::~Environment()
@@ -96,4 +97,13 @@ void Environment::CreateBlendState()
 
 	float blendFactor[4] = {};
 	DC->OMSetBlendState(alphaBlendState, blendFactor, 0xffffffff);
+}
+void Environment::CreateDepthStencilState() {
+	D3D11_DEPTH_STENCIL_DESC dsDesc = {};
+	dsDesc.DepthEnable = TRUE;
+	dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	DEVICE->CreateDepthStencilState(&dsDesc, &depthState);
+	DC->OMSetDepthStencilState(depthState, 0);
+
 }

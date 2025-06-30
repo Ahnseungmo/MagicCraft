@@ -6,6 +6,7 @@ RenderTarget::RenderTarget(UINT width, UINT height)
     CreateRTVTexture();
     CreateRTV();
     CreateSRV();
+    CreateDSV();
     CreateProjection();
 }
 
@@ -13,16 +14,17 @@ RenderTarget::~RenderTarget()
 {
     rtvTexture->Release();
     rtv->Release();
-
+    if (dsvTexture) dsvTexture->Release();
+    if (dsv) dsv->Release();
     delete projectionBuffer;
 }
 
 void RenderTarget::Set(Float4 clearColor)
 {
-    DC->OMSetRenderTargets(1, &rtv, nullptr);
+    DC->OMSetRenderTargets(1, &rtv, dsv);
 
     DC->ClearRenderTargetView(rtv, (float*)&clearColor);
-
+    DC->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH, 1.0f, 0);//
     Environment::Get()->SetViewport(width, height);
     projectionBuffer->SetVS(2);
 }
@@ -68,4 +70,24 @@ void RenderTarget::CreateProjection()
 
     projectionBuffer = new MatrixBuffer();
     projectionBuffer->Set(orthographic);
+}
+void RenderTarget::CreateDSV()
+{
+    D3D11_TEXTURE2D_DESC depthDesc = {};
+    depthDesc.Width = width;
+    depthDesc.Height = height;
+    depthDesc.MipLevels = 1;
+    depthDesc.ArraySize = 1;
+    depthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    depthDesc.SampleDesc.Count = 1;
+    depthDesc.Usage = D3D11_USAGE_DEFAULT;
+    depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
+    DEVICE->CreateTexture2D(&depthDesc, nullptr, &dsvTexture);
+
+    D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+    dsvDesc.Format = depthDesc.Format;
+    dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+
+    DEVICE->CreateDepthStencilView(dsvTexture, &dsvDesc, &dsv);
 }

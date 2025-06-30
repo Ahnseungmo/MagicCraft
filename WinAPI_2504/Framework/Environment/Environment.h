@@ -20,6 +20,8 @@ private:
 	void CreateSamplerState();
 	void CreateBlendState();
 
+	void CreateDepthStencilState();
+
 private:
 	Camera* mainCamera;
 	MatrixBuffer* projectionBuffer;
@@ -27,4 +29,6 @@ private:
 
 	ID3D11SamplerState* samplerState;
 	ID3D11BlendState* alphaBlendState;	
+
+	ID3D11DepthStencilState* depthState;
 };

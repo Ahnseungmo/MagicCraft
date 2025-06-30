@@ -23,4 +23,7 @@ private:
 
 	IDXGISwapChain* swapChain;//후면 버퍼 관리
 	ID3D11RenderTargetView* renderTargetView;//VRAM 후면버퍼 메모리 관리
+
+	ID3D11Texture2D* depthStencilBuffer = nullptr;
+	ID3D11DepthStencilView* depthStencilView = nullptr;
 };
