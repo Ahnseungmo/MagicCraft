@@ -51,7 +51,7 @@ GameMap::GameMap()
 				objectDatas[y][x]->tile->SetZPos(0.5);
 				objectDatas[y][x]->tile->UpdateWorld();
 				objectDatas[y][x]->tile->SetState(Tile::WALL);
-				objectDatas[y][x]->tile->CalTilesetPos();
+
 
 				SelectWallShape(x, y, objectDatas[y][x]->tile);
 
@@ -63,8 +63,11 @@ GameMap::GameMap()
 	i = 0;
 	for (int y = 0; y < tileCount.y; y++) {
 		for (int x = 0; x < tileCount.x; x++) {
-			if(objectDatas[y][x]->state == Tile::WALL)
-			SelectWallShape(x, y, objectDatas[y][x]->tile);
+			if (objectDatas[y][x]->state == Tile::WALL) {
+				SelectWallShape(x, y, objectDatas[y][x]->tile);
+				objectDatas[y][x]->tile->CalTilesetPos();
+
+			}
 		}
 	}
 
@@ -164,15 +167,30 @@ void GameMap::SelectWallShape(int x, int y, Tile* object)
 {
 	int data = 0;
 	// 8방향 비트 설정
-	if ((x - 1 >= 0 && y - 1 >= 0) && objectDatas[x - 1][y - 1]->state == Tile::WALL) data |= 0b00000001; // ↖
-	if (y - 1 >= 0 && objectDatas[x][y - 1]->state == Tile::WALL) data |= 0b00000010; // ↑
-	if ((x + 1 < tileCount.x && y - 1 >= 0) && objectDatas[x + 1][y - 1]->state == Tile::WALL) data |= 0b00000100; // ↗
-	if (x - 1 >= 0 && objectDatas[x - 1][y]->state == Tile::WALL) data |= 0b00001000; // ←
-	if (x + 1 < tileCount.x && objectDatas[x + 1][y]->state == Tile::WALL) data |= 0b00010000; // →
-	if ((x - 1 >= 0 && y + 1 < tileCount.y) && objectDatas[x - 1][y + 1]->state == Tile::WALL) data |= 0b00100000; // ↙
-	if (y + 1 < tileCount.y && objectDatas[x][y + 1]->state == Tile::WALL) data |= 0b01000000; // ↓
-	if ((x + 1 < tileCount.x && y + 1 < tileCount.y) && objectDatas[x + 1][y + 1]->state == Tile::WALL) data |= 0b10000000; // ↘
-
+	// ↖
+	if ((x - 1 >= 0 && y - 1 >= 0) && objectDatas[y - 1][x - 1]->state == Tile::WALL)
+		data |= 0b00000001;
+	// ↑
+	if (y - 1 >= 0 && objectDatas[y - 1][x]->state == Tile::WALL)
+		data |= 0b00000010;
+	// ↗
+	if ((x + 1 < tileCount.x && y - 1 >= 0) && objectDatas[y - 1][x + 1]->state == Tile::WALL)
+		data |= 0b00000100;
+	// ←
+	if (x - 1 >= 0 && objectDatas[y][x - 1]->state == Tile::WALL)
+		data |= 0b00001000;
+	// →
+	if (x + 1 < tileCount.x && objectDatas[y][x + 1]->state == Tile::WALL)
+		data |= 0b00010000;
+	// ↙
+	if ((x - 1 >= 0 && y + 1 < tileCount.y) && objectDatas[y + 1][x - 1]->state == Tile::WALL)
+		data |= 0b00100000;
+	// ↓
+	if (y + 1 < tileCount.y && objectDatas[y + 1][x]->state == Tile::WALL)
+		data |= 0b01000000;
+	// ↘
+	if ((x + 1 < tileCount.x && y + 1 < tileCount.y) && objectDatas[y + 1][x + 1]->state == Tile::WALL)
+		data |= 0b10000000;
 	int base = ((data & 0b00000010) ? 1 : 0)      // ↑
 		| ((data & 0b01000000) ? 2 : 0)      // ↓
 		| ((data & 0b00001000) ? 4 : 0)      // ←
