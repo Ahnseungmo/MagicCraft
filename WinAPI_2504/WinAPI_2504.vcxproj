@@ -226,6 +226,7 @@
     <ClInclude Include="Scenes\TextureScene.h" />
     <ClInclude Include="Scenes\TileEditScene.h" />
     <ClInclude Include="Scenes\TileGameScene.h" />
+    <ClInclude Include="Scenes\TileMapScene.h" />
     <ClInclude Include="Scenes\TutorialScene.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
@@ -315,6 +316,7 @@
     <ClCompile Include="Scenes\TextureScene.cpp" />
     <ClCompile Include="Scenes\TileEditScene.cpp" />
     <ClCompile Include="Scenes\TileGameScene.cpp" />
+    <ClCompile Include="Scenes\TileMapScene.cpp" />
     <ClCompile Include="Scenes\TutorialScene.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>

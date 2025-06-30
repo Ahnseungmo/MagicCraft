@@ -14,6 +14,9 @@
 #include "Scenes/InstancingMapEditorScene.h"
 #include "Scenes/TestScene.h"
 #include "Scenes/ZPosTestScene.h"
+#include "Scenes/TileMapScene.h"
+
+
 GameManager::GameManager()
 {
 	Create();
@@ -31,7 +34,8 @@ GameManager::GameManager()
 	//SCENE->AddScene("Game", new InstancingScene());
 	//SCENE->AddScene("Game", new InstancingMapEditorScene());
 	//SCENE->AddScene("Game", new TestScene());
-	SCENE->AddScene("Game", new ZPosTestScene());
+	//SCENE->AddScene("Game", new ZPosTestScene());
+	SCENE->AddScene("Game", new TileMapScene());
 	SCENE->ChangeScene("Game");
 }
 

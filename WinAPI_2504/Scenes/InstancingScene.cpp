@@ -24,8 +24,9 @@ InstancingScene::InstancingScene()
 
 	quad = new Quad(L"Resources/Textures/items.png", Vector2(),
 		Vector2(1.0f/10.0f, 1.0f/10.0f));
-	quad->GetMaterial()->SetShader(L"SpriteInstancing.hlsl");
+//	quad->GetMaterial()->SetShader(L"SpriteInstancing.hlsl");
 
+	quad->GetMaterial()->SetShader(L"Instancing.hlsl");
 	instances.resize(SIZE);
 
 	for (InstanceData& instance : instances)
@@ -56,6 +57,7 @@ InstancingScene::~InstancingScene()
 
 void InstancingScene::Update()
 {
+	quad->UpdateWorld();
 }
 
 void InstancingScene::Render()
