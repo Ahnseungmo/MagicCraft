@@ -36,6 +36,17 @@
 #include <algorithm>
 #include <filesystem>
 
+
+
+#include <random>
+#include <ctime>
+#include <cmath>
+#include <queue>
+
+
+
+
+
 #include <d3d11.h>
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
@@ -164,7 +175,7 @@ enum Element {
 #include "Objects/MagicCraft/SpellManager.h"
 
 
-
+#include "Objects/MagicCraft/Map/MapGenerator.h"
 #include "Objects/MagicCraft/Map/Tile.h"
 #include "Objects/MagicCraft/Map/GameMap.h"
 

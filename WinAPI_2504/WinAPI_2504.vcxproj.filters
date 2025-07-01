@@ -282,7 +282,7 @@
     <ClInclude Include="Scenes\ZPosTestScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\MagicCraft\Map\MapData.h">
+    <ClInclude Include="Objects\MagicCraft\Map\MapGenerator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\TileMapScene.h">
@@ -527,7 +527,7 @@
     <ClCompile Include="Scenes\ZPosTestScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\MagicCraft\Map\MapData.cpp">
+    <ClCompile Include="Objects\MagicCraft\Map\MapGenerator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\TileMapScene.cpp">

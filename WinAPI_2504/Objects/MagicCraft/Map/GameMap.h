@@ -50,5 +50,5 @@ private:
 	vector<InstanceData> objectInstances;
 	VertexBuffer* objectInstanceBuffer;
 
-
+	MapGenerator* mapGenerator;
 };

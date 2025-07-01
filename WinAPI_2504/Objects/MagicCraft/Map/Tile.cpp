@@ -61,9 +61,9 @@ void Tile::CalTileData(int data) {
 	}
 	vector<Vector2> pos = {
 		{1,1},
-		{2,1},
 		{1,2},
-		{2,2},
+		{2,1},
+		{2,2}
 	};
 	vector<Vector2> checkPos = {
 	{0,-1},
@@ -77,7 +77,7 @@ void Tile::CalTileData(int data) {
 		int checkData = 0;
 		int check = 0b0001;
 		for (int j = 0;j < 4;j++) {
-			Vector2 target = pos.at(i) + checkPos.at(i);
+			Vector2 target = pos.at(i) + checkPos.at(j);
 			if (quaterData[(int)target.x][(int)target.y]) {
 				checkData |= check;
 			}
@@ -93,8 +93,8 @@ void Tile::UpdateWorld() {
 	for (int x = 0; x < 2;x++) {
 		for (int y = 0; y < 2; y++) {
 			Vector2 halfSize = Size() * 0.5;
-			Vector2 pos = GetLocalPosition() - halfSize*0.5;
-			quaterTilePos[i++] = pos + Vector2{ x * halfSize.x , y * halfSize.y };
+			Vector2 pos = GetLocalPosition() + Vector2(-halfSize.x*0.5, halfSize.y * 0.5);
+			quaterTilePos[i++] = pos + Vector2{ x * halfSize.x , -y * halfSize.y };
 		}
 	}
 }

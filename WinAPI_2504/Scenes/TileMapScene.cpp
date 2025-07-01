@@ -4,7 +4,7 @@
 TileMapScene::TileMapScene()
 {
 	gameMap = new GameMap({ 200,150 });
-//	gameMap = new GameMap({ 5,5 });
+//	gameMap = new GameMap({ 4,4 });
 }
 
 TileMapScene::~TileMapScene()

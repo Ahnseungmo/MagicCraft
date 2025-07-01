@@ -25,10 +25,13 @@ GameMap::GameMap(Vector2 count) : tileCount(count)
 	floorInstances.resize(floors.size()*4);
 	SetInstanceBuffer(floors, floorInstances, floorInstanceBuffer);
 
+	mapGenerator = new MapGenerator(count.x, count.y, 40);
+	mapGenerator->generate();
 	MapGenerate();
 
 	objectInstances.resize(objects.size()*4);
 	SetInstanceBuffer(objects, objectInstances, objectInstanceBuffer);
+
 
 }
 
@@ -115,6 +118,34 @@ void GameMap::MapGenerate()
 		}
 	}
 
+	int c = 0;
+	for (int y = 0; y < tileCount.y; y++) {
+		for (int x = 0; x < tileCount.x; x++) {
+			Tile::State state;
+			switch (mapGenerator->GetMapData().at(y).at(x)) {
+				case 0:
+					state = Tile::FLOOR;
+					break;
+
+				case 1:
+					state = Tile::WALL;
+					break;
+
+				case 2://water
+					state = Tile::WALL;
+					break;
+
+				default:
+					state = Tile::FLOOR;
+					break;
+
+			}
+			if (state != Tile::FLOOR) {
+				tileDatas[c]->state = state;
+			}
+			c++;
+		}
+	}
 	
 	
 	for (int i = 0;i < tileDatas.size();i++) {

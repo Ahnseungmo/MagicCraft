@@ -191,7 +191,7 @@
     <ClInclude Include="Objects\MagicCraft\Characters\Character.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\Player.h" />
     <ClInclude Include="Objects\MagicCraft\Map\GameMap.h" />
-    <ClInclude Include="Objects\MagicCraft\Map\MapData.h" />
+    <ClInclude Include="Objects\MagicCraft\Map\MapGenerator.h" />
     <ClInclude Include="Objects\MagicCraft\Map\Tile.h" />
     <ClInclude Include="Objects\MagicCraft\Spell.h" />
     <ClInclude Include="Objects\MagicCraft\SpellManager.h" />
@@ -285,7 +285,7 @@
     <ClCompile Include="Objects\MagicCraft\Characters\EnemyManager.cpp" />
     <ClCompile Include="Objects\MagicCraft\Characters\Player.cpp" />
     <ClCompile Include="Objects\MagicCraft\Map\GameMap.cpp" />
-    <ClCompile Include="Objects\MagicCraft\Map\MapData.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Map\MapGenerator.cpp" />
     <ClCompile Include="Objects\MagicCraft\Map\Tile.cpp" />
     <ClCompile Include="Objects\MagicCraft\Spell.cpp" />
     <ClCompile Include="Objects\MagicCraft\SpellManager.cpp" />
