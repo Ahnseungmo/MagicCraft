@@ -191,6 +191,7 @@
     <ClInclude Include="Objects\MagicCraft\Characters\Character.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\Player.h" />
     <ClInclude Include="Objects\MagicCraft\Map\GameMap.h" />
+    <ClInclude Include="Objects\MagicCraft\Map\MapAStar.h" />
     <ClInclude Include="Objects\MagicCraft\Map\MapGenerator.h" />
     <ClInclude Include="Objects\MagicCraft\Map\Tile.h" />
     <ClInclude Include="Objects\MagicCraft\Spell.h" />

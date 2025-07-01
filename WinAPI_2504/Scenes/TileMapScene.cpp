@@ -4,6 +4,7 @@
 TileMapScene::TileMapScene()
 {
 	gameMap = new GameMap({ 200,150 });
+	Environment::Get()->GetMainCamera()->SetLocalPosition(gameMap->GetPlayerSpawnPoint() - Vector2(SCREEN_WIDTH,SCREEN_HEIGHT)*0.5);
 //	gameMap = new GameMap({ 4,4 });
 }
 

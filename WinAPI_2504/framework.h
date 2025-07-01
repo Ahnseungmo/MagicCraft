@@ -178,6 +178,7 @@ enum Element {
 #include "Objects/MagicCraft/Map/MapGenerator.h"
 #include "Objects/MagicCraft/Map/Tile.h"
 #include "Objects/MagicCraft/Map/GameMap.h"
+#include "Objects/MagicCraft/Map/MapAStar.h"
 
 #include "Objects/MagicCraft/Characters/Character.h"
 #include "Objects/MagicCraft/Characters/Player.h"

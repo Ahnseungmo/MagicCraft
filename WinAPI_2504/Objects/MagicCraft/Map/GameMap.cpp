@@ -24,9 +24,10 @@ GameMap::GameMap(Vector2 count) : tileCount(count)
 
 	floorInstances.resize(floors.size()*4);
 	SetInstanceBuffer(floors, floorInstances, floorInstanceBuffer);
-
+	
 	mapGenerator = new MapGenerator(count.x, count.y, 40);
 	mapGenerator->generate();
+	
 	MapGenerate();
 
 	objectInstances.resize(objects.size()*4);
@@ -110,14 +111,15 @@ void GameMap::MapGenerate()
 	tileDatas[2]->state = Tile::WALL;
 	tileDatas[3]->state = Tile::WALL;
 	*/
-
+	/*
 	for (int y = tileCount.y - 3; y < tileCount.y; y++) {
 		for (int x = 0; x < 3;x++) {
 			tileDatas[CalTilePos({(float)x,(float)y})]->state = Tile::WALL;
 
 		}
 	}
-
+	*/
+	
 	int c = 0;
 	for (int y = 0; y < tileCount.y; y++) {
 		for (int x = 0; x < tileCount.x; x++) {
@@ -132,9 +134,12 @@ void GameMap::MapGenerate()
 					break;
 
 				case 2://water
-					state = Tile::WALL;
+					state = Tile::WATER;
 					break;
 
+				case 3://playerSpawn
+					state = Tile::PLAYER_SPAWN;
+					break;
 				default:
 					state = Tile::FLOOR;
 					break;
@@ -149,14 +154,18 @@ void GameMap::MapGenerate()
 	
 	
 	for (int i = 0;i < tileDatas.size();i++) {
-		if (tileDatas[i]->state == Tile::WALL) {
+		Tile::State state = tileDatas[i]->state;
+		if (state == Tile::WALL || state == Tile::WATER) {
 
-			tileDatas[i]->object = new Tile(tileSize,Tile::WALL, NeighTileData(i));
+			tileDatas[i]->object = new Tile(tileSize,state, NeighTileData(i));
 			tileDatas[i]->object->SetParent(this);
 			tileDatas[i]->object->SetLocalPosition(floors[i]->GetLocalPosition());
 			tileDatas[i]->object->SetZPos(0.5f);
 			tileDatas[i]->object->UpdateWorld();
 			objects.push_back(tileDatas[i]->object);
+		}
+		else if (state == Tile::PLAYER_SPAWN) {
+			playerSpawnPoint = floors[i]->GetGlobalPosition();
 		}
 	}
 }
@@ -186,10 +195,14 @@ int GameMap::NeighTileData(int index)
 		{0,-1},
 		{0,1},
 		{-1,0},
-		{1,0}
+		{1,0},
+		{-1,-1},
+		{1,-1},
+		{-1,1},
+		{1,1}
 	};
 
-	for (int i = 0;i < 4;i++) {
+	for (int i = 0;i < checkPos.size();i++) {
 		Vector2 target = pos + checkPos.at(i);
 		bool check = target.x < 0 || target.x >= tileCount.x || target.y < 0 || target.y >= tileCount.y;
 		if (check || tileDatas.at(CalTilePos(target))->state == state)

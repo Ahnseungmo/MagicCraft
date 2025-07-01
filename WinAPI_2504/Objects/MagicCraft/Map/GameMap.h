@@ -29,6 +29,7 @@ public:
 	Vector2 CalTilePos(int index);
 	int CalTilePos(Vector2 pos);
 
+	Vector2 GetPlayerSpawnPoint() { return playerSpawnPoint; }
 
 private:
 
@@ -40,6 +41,9 @@ private:
 	Vector2 tileSize = { 32,32 };
 	Vector2 tileCount;
 	
+	Vector2 playerSpawnPoint = {0,0};
+
+
 
 	Quad* quad;
 
