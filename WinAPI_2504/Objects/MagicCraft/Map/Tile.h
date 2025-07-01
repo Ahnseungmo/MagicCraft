@@ -11,7 +11,7 @@ public:
 		WATER
 	};
 
-	Tile(Vector2 size);
+	Tile(Vector2 size,State state = State::FLOOR,int data = 0);
 	~Tile();
 	void SetInstance(InstanceData instance) { this->instance = instance; }
 
@@ -24,15 +24,50 @@ public:
 
 	void SetTileType(int index) { this->tileType = index; }
 
+    void Render();
+
+    void CalTileData(int data);
+
+    void UpdateWorld();
+
+    vector<Vector2> GetQuaterTilePos() { return quaterTilePos; }
+    vector<Vector2> GetQuaterTileShape(){ return quaterTileShape; }
+    Vector2 GetQuaterTilePos(int index) { return quaterTilePos.at(index); }
+    Vector2 GetQuaterTileShape(int index) { return quaterTileShape.at(index); }
+
 private:
 	State state = FLOOR;
 	Vector2 tilesetPos = { 0,0 };
 	InstanceData instance;
 	int tileType;
 
+    vector<Vector2> quaterTilePos = { {0,0}, {0,0}, {0,0}, {0,0}};
+    vector<Vector2> quaterTileShape = { {0,0}, {0,0}, {0,0}, {0,0} };
+    vector<int> quaterTileShapeData = {0,0,0,0};
 
-
-
+    unordered_map<int, Vector2> wallShapePos = {
+        { 0b0101,{3,6} },
+        { 0b0110,{3,4} },
+        { 0b1001,{1,6} },
+        { 0b1010,{1,4} },
+        { 0b1110,{2,4} },
+        { 0b1101,{2,6} },
+        { 0b1011,{1,5} },
+        { 0b0111,{3,5} },
+        { 0b1111,{2,5} }
+    };
+    unordered_map<int, Vector2> floorShapePos = {
+    { 0,{4,8} },
+    { 0b0101,{4,8} },
+    { 0b0110,{4,8} },
+    { 0b1001,{4,8} },
+    { 0b1010,{4,8} },
+    { 0b1110,{4,8} },
+    { 0b1101,{4,8} },
+    { 0b1011,{4,8} },
+    { 0b0111,{4,8} },
+    { 0b1111,{4,8} }
+    };
 	vector<Vector2>wallTileShapePos = {
     {0, 4}, // 0
     {1, 4}, // 1

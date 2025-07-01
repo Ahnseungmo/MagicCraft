@@ -3,4 +3,6 @@
 
 MapData::MapData(Vector2 size) : size(size)
 {
+
+
 }

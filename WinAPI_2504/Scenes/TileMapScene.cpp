@@ -3,7 +3,8 @@
 
 TileMapScene::TileMapScene()
 {
-	gameMap = new GameMap();
+	gameMap = new GameMap({ 200,150 });
+//	gameMap = new GameMap({ 5,5 });
 }
 
 TileMapScene::~TileMapScene()

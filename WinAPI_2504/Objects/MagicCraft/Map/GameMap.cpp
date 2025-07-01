@@ -1,131 +1,43 @@
 #include "framework.h"
 
-GameMap::GameMap()
+GameMap::GameMap(Vector2 count) : tileCount(count)
 {
-
 	quad = new Quad(L"Resources/Textures/MagicCraft/TileMap/BiomeTiles.png", Vector2(),
 		Vector2(1.0f / 30.0f, 1.0f / 16.0f));
 	quad->GetMaterial()->SetShader(L"SpriteInstancing.hlsl");
 
-
-	objectQuad = new Quad(L"Resources/Textures/MagicCraft/TileMap/BiomeTiles.png", Vector2(),
-		Vector2(1.0f / 30.0f, 1.0f / 16.0f));
-	objectQuad->GetMaterial()->SetShader(L"SpriteInstancing.hlsl");
-
-//	quad->GetMaterial()->SetShader(L"Instancing.hlsl");
-
-
-
-	tiles.reserve(tileCount.x * tileCount.y);
-
-
-	float mapLeft = tileSize.x/2 ;
-	float mapBottom = tileSize.y/2 ;
-
-	for (int y = 0; y < tileCount.y; y++) {
-		vector<Tile::State> mapLineData;
-		vector<ObjectDatas*> objectLineData;
-		for (int x = 0; x < tileCount.x; x++) {
-			tiles.push_back(new Tile(tileSize));
-			tiles.back()->SetParent(this);
-			tiles.back()->SetLocalPosition(mapLeft + tileSize.x * x, mapBottom + tileSize.y * y);
-			tiles.back()->SetZPos(0.9);
-			tiles.back()->UpdateWorld();
-			tiles.back()->SetState(Tile::FLOOR);
-			tiles.back()->CalTilesetPos();
-			mapLineData.push_back(Tile::FLOOR);
-			objectLineData.push_back(new ObjectDatas());
-		}
-		mapData.push_back(mapLineData);
-		objectDatas.push_back(objectLineData);
-	}
-	
-	Generate();
-	int i = 0;
-	for (int y = 0; y < tileCount.y; y++) {
-		for (int x = 0; x < tileCount.x; x++) {
-			if (objectDatas[y][x]->state == Tile::WALL) {
-				objectDatas[y][x]->tile = new Tile(tileSize);
-				objectDatas[y][x]->tile->SetParent(this);
-				objectDatas[y][x]->tile->SetLocalPosition(mapLeft + tileSize.x * x, mapBottom + tileSize.y * y);
-				objectDatas[y][x]->tile->SetZPos(0.5);
-				objectDatas[y][x]->tile->UpdateWorld();
-				objectDatas[y][x]->tile->SetState(Tile::WALL);
-
-
-				SelectWallShape(x, y, objectDatas[y][x]->tile);
-
-				objects.push_back(objectDatas[y][x]->tile);
-				objectCount++;
-			}
-		}
-	}
-	i = 0;
-	for (int y = 0; y < tileCount.y; y++) {
-		for (int x = 0; x < tileCount.x; x++) {
-			if (objectDatas[y][x]->state == Tile::WALL) {
-				SelectWallShape(x, y, objectDatas[y][x]->tile);
-				objectDatas[y][x]->tile->CalTilesetPos();
-
-			}
-		}
+	int size = count.x * count.y;
+	tileDatas.reserve(size);
+	floors.reserve(size);
+	for (int i = 0;i < size;i++) {
+		floors.push_back(new Tile(tileSize));
+		float x = (i % ((int)count.x)) * tileSize.x;
+		float y = (i / ((int)count.x)) * tileSize.y;
+		y = (count.y*tileSize.y - tileSize.y/2) - y;
+		x = tileSize.x / 2 + x;
+		floors.back()->SetParent(this);
+		floors.back()->SetLocalPosition({ x,y });
+		floors.back()->SetZPos(0.9f);
+		floors.back()->UpdateWorld();
+		tileDatas.push_back(new TileData());
 	}
 
+	floorInstances.resize(floors.size()*4);
+	SetInstanceBuffer(floors, floorInstances, floorInstanceBuffer);
 
-	i = 0;
-	instances.resize(size);
-	for (InstanceData& instance : instances)
-	{
+	MapGenerate();
 
-		float x = tiles.at(i)->GetGlobalPosition().x;
-		float y = tiles.at(i)->GetGlobalPosition().y;
-		float z = tiles.at(i)->GetZPos();
-		Matrix world = XMMatrixTranslation(x, y, z);
-
-
-		instance.world = XMMatrixTranspose(world);
-		instance.maxFrame = Float2(30, 16);
-		
-		float frameX = tiles.at(i)->GetTilesetPos().x;
-		float frameY = tiles.at(i)->GetTilesetPos().y;
-
-		instance.curFrame = Float2(frameX,frameY);
-		i++;
-	}
-	instanceBuffer = new VertexBuffer(instances.data(), sizeof(InstanceData), size);
-
-	
-	i = 0;
-	objectInstances.resize(objectCount);
-	for (InstanceData& instance : objectInstances)
-	{
-
-		float x = objects.at(i)->GetGlobalPosition().x;
-		float y = objects.at(i)->GetGlobalPosition().y;
-		float z = objects.at(i)->GetZPos();
-		Matrix world = XMMatrixTranslation(x, y, z);
-
-
-		instance.world = XMMatrixTranspose(world);
-		instance.maxFrame = Float2(30, 16);
-
-		float frameX = objects.at(i)->GetTilesetPos().x;
-		float frameY = objects.at(i)->GetTilesetPos().y;
-
-		instance.curFrame = Float2(frameX, frameY);
-		i++;
-	}
-	objectInstanceBuffer = new VertexBuffer(objectInstances.data(), sizeof(InstanceData), objectCount);
-
-
+	objectInstances.resize(objects.size()*4);
+	SetInstanceBuffer(objects, objectInstances, objectInstanceBuffer);
 
 }
 
 GameMap::~GameMap()
 {
-	delete quad;
-	delete objectQuad;
-	delete instanceBuffer;
+	for (auto& floor : floors) {
+		delete floor;
+	}
+	floors.clear();
 }
 
 void GameMap::Update()
@@ -134,80 +46,138 @@ void GameMap::Update()
 
 void GameMap::Render()
 {
-
-	instanceBuffer->Set(1);
+	floorInstanceBuffer->Set(1);
 
 	quad->SetWorld();
 	quad->GetMaterial()->Set();
-	quad->GetMesh()->DrawInstanced(size);
-
+	quad->GetMesh()->DrawInstanced(floorInstances.size());
 
 	objectInstanceBuffer->Set(1);
 
-	objectQuad->SetWorld();
-	objectQuad->GetMaterial()->Set();
-	objectQuad->GetMesh()->DrawInstanced(size);
-
-
+	quad->SetWorld();
+	quad->GetMaterial()->Set();
+	quad->GetMesh()->DrawInstanced(objectInstances.size());
+	
+	/*
+	for (auto& tile : floors) {
+		tile->Render();
+	}
+	*/
 }
 
+void GameMap::Edit()
+{
+}
 
-
-void GameMap::Generate()
+void GameMap::SetInstanceBuffer(vector<Tile*> tiles, vector<InstanceData> instances ,VertexBuffer*& buffer)
 {
 
-	objectDatas[0][0]->state = Tile::WALL;
-	objectDatas[0][1]->state = Tile::WALL;
-	objectDatas[1][0]->state = Tile::WALL;
-	objectDatas[1][1]->state = Tile::WALL;
+	int i = 0;
+	int j = 0;
+	for (InstanceData& instance : instances)
+	{
+		if (j >= 4) {
+			i++;
+			j = 0;
+		}
+		float x = tiles.at(i)->GetQuaterTilePos(j).x;
+		float y = tiles.at(i)->GetQuaterTilePos(j).y;
+		float z = tiles.at(i)->GetZPos();
+		Matrix world = XMMatrixTranslation(x, y, z);
+
+		instance.world = XMMatrixTranspose(world);
+		instance.maxFrame = Float2(30, 16);
+
+		float frameX = tiles.at(i)->GetQuaterTileShape(j).x;
+		float frameY = tiles.at(i)->GetQuaterTileShape(j).y;
+
+		instance.curFrame = Float2(frameX, frameY);
+		j++;
+		
+	}
+	buffer = new VertexBuffer(instances.data(), sizeof(InstanceData), instances.size());
 
 }
 
-void GameMap::SelectWallShape(int x, int y, Tile* object)
+void GameMap::MapGenerate()
+{
+	/*
+	tileDatas[0]->state = Tile::WALL;
+	tileDatas[1]->state = Tile::WALL;
+	tileDatas[2]->state = Tile::WALL;
+	tileDatas[3]->state = Tile::WALL;
+	*/
+
+	for (int y = tileCount.y - 3; y < tileCount.y; y++) {
+		for (int x = 0; x < 3;x++) {
+			tileDatas[CalTilePos({(float)x,(float)y})]->state = Tile::WALL;
+
+		}
+	}
+
+	
+	
+	for (int i = 0;i < tileDatas.size();i++) {
+		if (tileDatas[i]->state == Tile::WALL) {
+
+			tileDatas[i]->object = new Tile(tileSize,Tile::WALL, NeighTileData(i));
+			tileDatas[i]->object->SetParent(this);
+			tileDatas[i]->object->SetLocalPosition(floors[i]->GetLocalPosition());
+			tileDatas[i]->object->SetZPos(0.5f);
+			tileDatas[i]->object->UpdateWorld();
+			objects.push_back(tileDatas[i]->object);
+		}
+	}
+}
+
+int GameMap::NeighTileData(int index)
 {
 	int data = 0;
-	// 8방향 비트 설정
-	// ↖
-	if ((x - 1 >= 0 && y - 1 >= 0) && objectDatas[y - 1][x - 1]->state == Tile::WALL)
-		data |= 0b00000001;
-	// ↑
-	if (y - 1 >= 0 && objectDatas[y - 1][x]->state == Tile::WALL)
-		data |= 0b00000010;
-	// ↗
-	if ((x + 1 < tileCount.x && y - 1 >= 0) && objectDatas[y - 1][x + 1]->state == Tile::WALL)
-		data |= 0b00000100;
-	// ←
-	if (x - 1 >= 0 && objectDatas[y][x - 1]->state == Tile::WALL)
-		data |= 0b00001000;
-	// →
-	if (x + 1 < tileCount.x && objectDatas[y][x + 1]->state == Tile::WALL)
-		data |= 0b00010000;
-	// ↙
-	if ((x - 1 >= 0 && y + 1 < tileCount.y) && objectDatas[y + 1][x - 1]->state == Tile::WALL)
-		data |= 0b00100000;
-	// ↓
-	if (y + 1 < tileCount.y && objectDatas[y + 1][x]->state == Tile::WALL)
-		data |= 0b01000000;
-	// ↘
-	if ((x + 1 < tileCount.x && y + 1 < tileCount.y) && objectDatas[y + 1][x + 1]->state == Tile::WALL)
-		data |= 0b10000000;
-	int base = ((data & 0b00000010) ? 1 : 0)      // ↑
-		| ((data & 0b01000000) ? 2 : 0)      // ↓
-		| ((data & 0b00001000) ? 4 : 0)      // ←
-		| ((data & 0b00010000) ? 8 : 0);     // →
+	int checkData = 0b00000001;
 
-	int tileIndex = base;
+	Vector2 pos = CalTilePos(index);
+	Tile::State state = tileDatas.at(index)->state;
+	/*
+	for (int x = -1; x <= 1; x++) {
+		for (int y = -1; y <= 1; y++) {
+			if (x == 0 && y == 0) continue;
 
-	// 대각선 조건에 따른 확장
-	if (!(data & 0b00000001)) tileIndex = 16; // ↖ 없음
-	if (!(data & 0b00000100)) tileIndex = 17; // ↗ 없음
-	if (!(data & 0b00100000)) tileIndex = 18; // ↙ 없음
-	if (!(data & 0b10000000)) tileIndex = 19; // ↘ 없음
+			Vector2 target = { pos.x + x,pos.y + y };
+			bool check = target.x < 0 || target.x >= tileCount.x || target.y < 0 || target.y >= tileCount.y;
+			if (check || tileDatas.at(CalTilePos(target))->state == state)
+				data |= checkData;
 
-	if (!(data & 0b00000001) && !(data & 0b10000000)) tileIndex = 20; // ↖ + ↘ 없음
-	if (!(data & 0b00000100) && !(data & 0b00100000)) tileIndex = 21; // ↗ + ↙ 없음
+			checkData <<= 1;
+		}
+	}
+	*/
+	vector<Vector2> checkPos = {
+		{0,-1},
+		{0,1},
+		{-1,0},
+		{1,0}
+	};
 
-	object->SetTileType(tileIndex);
+	for (int i = 0;i < 4;i++) {
+		Vector2 target = pos + checkPos.at(i);
+		bool check = target.x < 0 || target.x >= tileCount.x || target.y < 0 || target.y >= tileCount.y;
+		if (check || tileDatas.at(CalTilePos(target))->state == state)
+			data |= checkData;
+		checkData <<= 1;
 
+	}
+	return data;
 }
 
+Vector2 GameMap::CalTilePos(int index) {
+	float x = index % (int)tileCount.x;
+	float y = index / (int)tileCount.x;
+	return { x,y };
+}
+
+int GameMap::CalTilePos(Vector2 pos)
+{
+	float x = pos.x;
+	float y = pos.y * tileCount.x;
+	return x+y;
+}
