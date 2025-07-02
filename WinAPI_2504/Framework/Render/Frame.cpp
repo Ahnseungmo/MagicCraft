@@ -48,10 +48,10 @@ void Frame::MakeMesh(Vector2 startUV, Vector2 endUV, Vector2 pos)
 
 	vector<Vertex>& vertices = mesh->GetVertices();
 
-	vertices.emplace_back(left, top, startUV.x, startUV.y);
-	vertices.emplace_back(right, top, endUV.x, startUV.y);
-	vertices.emplace_back(left, bottom, startUV.x, endUV.y);
-	vertices.emplace_back(right, bottom, endUV.x, endUV.y);
+	vertices.emplace_back(left, top, zPos, startUV.x, startUV.y);
+	vertices.emplace_back(right, top, zPos, endUV.x, startUV.y);
+	vertices.emplace_back(left, bottom, zPos, startUV.x, endUV.y);
+	vertices.emplace_back(right, bottom, zPos, endUV.x, endUV.y);
 
 	vector<UINT>& indices = mesh->GetIndices();
 

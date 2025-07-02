@@ -21,6 +21,7 @@ public:
 
 	void LoadClip(string path, string file, bool isLoop, float speed);
 
+	void UpdateWorld();
 
 protected:
 
@@ -35,5 +36,6 @@ protected:
 	float speed = 100;
 	bool isMove = false;
 
+	GameMap* map;
 
 };

@@ -18,7 +18,30 @@ EnemyManager::~EnemyManager()
 
 void EnemyManager::Update()
 {
+	bool search = false;
+	NodeSearchTimer += DELTA;
+	if (NodeSearchTimer >= NODE_SEARCH_TIME) {
+		NodeSearchTimer -= NODE_SEARCH_TIME;
+		search = true;
+	}
+
 	for (auto& enemy : enemys) {
+		if (!enemy->IsActive()) continue;
+		if (search) {
+			/*
+			int start = aStar->FindCloseNode(enemy->GetGlobalPosition());
+			int end = aStar->FindCloseNode(player->GetGlobalPosition());
+
+			findStart = start;
+			findEnd = end;
+			*/
+			int start = gameMap->CalPosToIndex(enemy->GetGlobalPosition());
+			int end = gameMap->CalPosToIndex(player->GetGlobalPosition());
+			
+			enemy->SetPath(aStar->GetPath(start, end));
+
+		}
+
 		enemy->Update();
 	}
 }
@@ -58,6 +81,8 @@ void EnemyManager::HitCheck(Spell* spell) {
 
 
 void EnemyManager::Edit() {
+
+
 	for (auto& enemy : enemys) {
 		if (enemy->IsActive()) {
 			enemy->Edit();

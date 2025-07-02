@@ -286,6 +286,7 @@
     <ClCompile Include="Objects\MagicCraft\Characters\EnemyManager.cpp" />
     <ClCompile Include="Objects\MagicCraft\Characters\Player.cpp" />
     <ClCompile Include="Objects\MagicCraft\Map\GameMap.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Map\MapAStar.cpp" />
     <ClCompile Include="Objects\MagicCraft\Map\MapGenerator.cpp" />
     <ClCompile Include="Objects\MagicCraft\Map\Tile.cpp" />
     <ClCompile Include="Objects\MagicCraft\Spell.cpp" />

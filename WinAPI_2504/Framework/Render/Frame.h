@@ -13,6 +13,8 @@ public:
 	Vector2 GetSize() { return size; }
 	Material* GetMaterial() { return material; }
 
+	void SetZPos(float zPos) { this->zPos = zPos; }
+	
 private:
 	void MakeMesh(Vector2 startUV = Vector2(), Vector2 endUV = Vector2(1, 1), Vector2 pos = Vector2());
 
@@ -21,4 +23,6 @@ protected:
 	Mesh* mesh;
 
 	Vector2 size;
+
+	float zPos = 0.0f;
 };

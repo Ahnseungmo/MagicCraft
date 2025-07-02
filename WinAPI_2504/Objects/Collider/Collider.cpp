@@ -27,13 +27,14 @@ void Collider::Render()
 {
 	if (!isDraw) return;
     if (!isActive) return;
-
+    float z = zPos;
+    zPos = 0.0f;
     worldBuffer->Set(world);
     worldBuffer->SetVS(0);    
-
     material->Set();
 
     mesh->Draw(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+    zPos = z;
 }
 
 void Collider::MakeMesh()

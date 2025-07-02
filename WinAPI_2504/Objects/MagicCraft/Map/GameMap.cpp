@@ -62,11 +62,11 @@ void GameMap::Render()
 	quad->GetMaterial()->Set();
 	quad->GetMesh()->DrawInstanced(objectInstances.size());
 	
-	
+	/*
 	for (auto& tile : objects) {
 		tile->Render();
 	}
-	
+	*/
 }
 
 void GameMap::Edit()
@@ -160,7 +160,7 @@ void GameMap::MapGenerate()
 			tileDatas[i]->object = new Tile(tileSize,state, NeighTileData(i));
 			tileDatas[i]->object->SetParent(this);
 			tileDatas[i]->object->SetLocalPosition(floors[i]->GetLocalPosition());
-			tileDatas[i]->object->SetZPos(0.5f);
+			tileDatas[i]->object->SetZPos(0.8f);
 			tileDatas[i]->object->UpdateWorld();
 			objects.push_back(tileDatas[i]->object);
 		}
@@ -224,4 +224,38 @@ int GameMap::CalTilePos(Vector2 pos)
 	float x = pos.x;
 	float y = pos.y * tileCount.x;
 	return x+y;
+}
+
+void GameMap::MakeNodes(vector<Node*>& nodes)
+{
+	for (int i = 0;i < floors.size();i++) {
+		Vector2 tilePos = floors.at(i)->GetGlobalPosition();
+		Node* node = new Node(tilePos, nodes.size());
+		Tile::State state = tileDatas.at(i)->state;
+		if (state == Tile::WALL || state == Tile::WATER) {
+			node->SetState(Node::Obstacle);
+		}
+		nodes.push_back(node);
+	
+	}
+
+	/*
+
+	for (Quad* tile : bgTiles)
+	{
+		//Vector2 tilePos = tile->GetGlobalPosition() + Vector2::Up() * tileSize.y * 0.25f;
+		Vector2 tilePos = tile->GetGlobalPosition();
+		Node* node = new Node(tilePos, nodes.size());
+
+		for (GameTile* obj : objTiles)
+		{
+			if (obj->IsPointCollision(tilePos))
+			{
+				node->SetState(Node::Obstacle);
+			}
+		}
+
+		nodes.push_back(node);
+	}
+	*/
 }

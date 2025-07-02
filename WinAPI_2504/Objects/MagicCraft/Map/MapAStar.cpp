@@ -1,18 +1,19 @@
 #include "Framework.h"
 
-AStar::AStar(TileMap* map)
+MapAStar::MapAStar(GameMap* map)
 {
     map->MakeNodes(nodes);
-    
-	tileSize = map->GetTileSize();
-    cols = map->GetCols();
+
+    tileSize = map->GetTileCount();
+    cols = tileSize.y;
 
     SetEdge();
 
     heap = new Heap();
+
 }
 
-AStar::~AStar()
+MapAStar::~MapAStar()
 {
     for (Node* node : nodes)
         delete node;
@@ -20,13 +21,14 @@ AStar::~AStar()
     delete heap;
 }
 
-void AStar::Render()
+
+void MapAStar::Render()
 {
     for (Node* node : nodes)
         node->Render();
 }
 
-int AStar::FindCloseNode(const Vector2& pos)
+int MapAStar::FindCloseNode(const Vector2& pos)
 {
     float minDist = FLT_MAX;
 
@@ -45,8 +47,30 @@ int AStar::FindCloseNode(const Vector2& pos)
 
     return index;
 }
+int MapAStar::FindCloseNodeIndex(const int& index)
+{
+    
+    /*
+    float minDist = FLT_MAX;
 
-void AStar::GetPath(IN const int& start, IN const int& end, OUT vector<Vector2>& path)
+    int index = -1;
+
+    for (int i = 0; i < nodes.size(); i++)
+    {
+        float distance = Vector2::Distance(pos, nodes[i]->GetLocalPosition());
+
+        if (minDist > distance)
+        {
+            minDist = distance;
+            index = i;
+        }
+    }
+    */
+
+    return index;
+}
+
+void MapAStar::GetPath(IN const int& start, IN const int& end, OUT vector<Vector2>& path)
 {
     Reset();
     path.clear();
@@ -89,7 +113,7 @@ void AStar::GetPath(IN const int& start, IN const int& end, OUT vector<Vector2>&
     }
 }
 
-vector<Vector2> AStar::GetPath(const int& start, const int& end)
+vector<Vector2> MapAStar::GetPath(const int& start, const int& end)
 {
     Reset();
     vector<Vector2> path;
@@ -102,7 +126,7 @@ vector<Vector2> AStar::GetPath(const int& start, const int& end)
     nodes[start]->g = G;
     nodes[start]->h = H;
     nodes[start]->via = start;
-    nodes[start]->state = Node::Open;
+//    nodes[start]->state = Node::Open;
 
     //openNodes.push_back(start);
     heap->Insert(nodes[start]);
@@ -110,15 +134,16 @@ vector<Vector2> AStar::GetPath(const int& start, const int& end)
     while (nodes[end]->state != Node::Closed)
     {
         //경로가 막혀있을 경우
-        //if (heap->Empty())
-        //    return path;
+        if (heap->Empty())
+            return path;
 
         //2. 오픈노드 중에서 효율이 가장 좋은 노드 찾기
         int curIndex = GetMinNode();
 
         //3. 찾은 노드와 연결된 노드의 정보 갱신하고 오픈노드에 추가
         Extend(curIndex, end);
-        nodes[curIndex]->state = Node::Closed;
+        if(nodes[curIndex]->state != Node::Obstacle)
+            nodes[curIndex]->state = Node::Closed;
     }
 
     //4. Backtracking
@@ -134,7 +159,7 @@ vector<Vector2> AStar::GetPath(const int& start, const int& end)
     return path;
 }
 
-void AStar::Reset()
+void MapAStar::Reset()
 {
     for (Node* node : nodes)
     {
@@ -146,7 +171,7 @@ void AStar::Reset()
     //openNodes.clear();
 }
 
-float AStar::GetManhattanDistance(int start, int end)
+float MapAStar::GetManhattanDistance(int start, int end)
 {
     Vector2 startPos(nodes[start]->GetGlobalPosition());
     Vector2 endPos(nodes[end]->GetGlobalPosition());
@@ -156,12 +181,12 @@ float AStar::GetManhattanDistance(int start, int end)
     return abs(direction.x) + abs(direction.y);
 }
 
-float AStar::GetDiagonalManhattanDistance(const int& start, const int& end)
+float MapAStar::GetDiagonalManhattanDistance(const int& start, const int& end)
 {
     return 0.0f;
 }
 
-void AStar::Extend(const int& center, const int& end)
+void MapAStar::Extend(const int& center, const int& end)
 {
     for (Node::Edge* edge : nodes[center]->edges)
     {
@@ -199,7 +224,7 @@ void AStar::Extend(const int& center, const int& end)
     }
 }
 
-int AStar::GetMinNode()
+int MapAStar::GetMinNode()
 {
     /*int openIndex = 0;
     int nodeIndex = openNodes[openIndex];
@@ -221,25 +246,35 @@ int AStar::GetMinNode()
 
     return nodeIndex;*/
 
-	return heap->DeleteRoot()->index;
+    return heap->DeleteRoot()->index;
 }
 
-void AStar::SetEdge()
+void MapAStar::SetEdge()
 {
-    for(int i = 0 ; i < nodes.size() ; i++)
+    for (int i = 0; i < nodes.size(); i++)
     {
         if (i % cols != cols - 1)
         {
             nodes[i]->AddEdge(nodes[i + 1]);
             nodes[i + 1]->AddEdge(nodes[i]);
-        }     
+        }
 
         if (i < nodes.size() - cols)
         {
             nodes[i]->AddEdge(nodes[i + cols]);
             nodes[i + cols]->AddEdge(nodes[i]);
 
-
+            int j = cols + i - 1;
+            int k = cols + i + 1;
+            
+            if (j % cols <= (cols + i) % cols) {
+                nodes[i]->AddEdge(nodes[j]);
+                nodes[j]->AddEdge(nodes[i]);
+            }
+            if (k % cols >= (cols + i) % cols) {
+                nodes[i]->AddEdge(nodes[k]);
+                nodes[k]->AddEdge(nodes[i]);
+            }
         }
     }
 }

@@ -42,6 +42,14 @@ void Tank::Render()
 	clips[curState]->Render();
 }
 
+void Tank::UpdateWorld()
+{
+	Transform::UpdateWorld();
+	for (auto& clip : clips) {
+		clip->SetFrameZPos(zPos);
+	}
+}
+
 void Tank::Control()
 {
 	bool isMove = false;

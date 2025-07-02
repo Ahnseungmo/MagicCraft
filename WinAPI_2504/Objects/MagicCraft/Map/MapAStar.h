@@ -10,6 +10,9 @@ public:
 
     int FindCloseNode(const Vector2& pos);
 
+    int FindCloseNodeIndex(const int& index);
+
+
     void GetPath(IN const int& start, IN const int& end, OUT vector<Vector2>& path);
     vector<Vector2> GetPath(const int& start, const int& end);
 

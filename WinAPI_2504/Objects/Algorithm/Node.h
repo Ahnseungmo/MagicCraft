@@ -9,7 +9,7 @@ public:
     {
         None, Open, Closed, Using, Obstacle
     };
-private:
+
     struct Edge
     {
         int index;
@@ -27,6 +27,8 @@ private:
         }
     };
 
+private:
+
 public:
     Node(Vector2 pos, int index);
     ~Node();
@@ -37,8 +39,7 @@ public:
 
     void SetState(State state) { this->state = state; }
     float GetCost() { return f; }
-
-private:
+    float f = 0, g = 0, h = 0;
     State state = None;
 
     int index = 0;
@@ -48,7 +49,9 @@ private:
     //H : 노드부터 목적지까지의 추정 가중치
     //F : G + H
     //Cost
-    float f = 0, g = 0, h = 0;
+
 
     vector<Edge*> edges;
+private:
+
 };

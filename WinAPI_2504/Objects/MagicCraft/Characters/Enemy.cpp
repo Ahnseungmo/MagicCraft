@@ -26,6 +26,9 @@ void Enemy::Update()
 	UpdateWorld();
 	clips.at((int)dir)->Update();
 	*/
+	if (mode == TRACE) {
+		PathControl();
+	}
 	Character::Update();
 }
 
@@ -47,4 +50,26 @@ void Enemy::Edit()
 
 	ImGui::DragFloat("hp", &hp);
 
+}
+
+void Enemy::PathControl()
+{
+	if (path.empty())
+		return;
+
+	Vector2 destPos = path.back();
+
+	velocity = destPos - localPosition;
+
+	if (velocity.Magnitude() < 1.0f)
+	{
+		path.pop_back();
+	}
+	else
+	{
+		velocity.Normalize();
+	}
+
+	localRotation.z = atan2(velocity.y, velocity.x);
+	Translate(velocity * speed * DELTA);
 }

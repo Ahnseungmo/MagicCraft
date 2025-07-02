@@ -13,6 +13,8 @@ Player::Player()
 	cameraTransform->SetParent(this);
 	cameraTransform->SetLocalPosition(-CENTER_X,-CENTER_Y);
 	cameraTransform->UpdateWorld();
+	
+	speed = 200;
 
 }
 

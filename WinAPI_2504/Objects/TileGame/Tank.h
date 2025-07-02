@@ -20,6 +20,7 @@ public:
 	void SetTileMap(TileMap* tileMap) { this->tileMap = tileMap; }
 
 	void SetPath(const vector<Vector2>& path) { this->path = path; }
+	void UpdateWorld();
 
 private:
 	void Control();

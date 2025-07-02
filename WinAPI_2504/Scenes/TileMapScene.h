@@ -12,5 +12,7 @@ public:
 
 private:
 	GameMap* gameMap;
+	MapAStar* aStar;
 
+	Player* player;
 };

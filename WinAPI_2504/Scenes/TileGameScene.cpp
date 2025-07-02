@@ -4,14 +4,17 @@
 TileGameScene::TileGameScene()
 {
 	tileMap = new TileMap("Resources/TextData/Stage1.map");
+
 	tileMap->SetLocalPosition(0, SCREEN_HEIGHT);	
+	tileMap->SetZPos(0.9);
 	tileMap->SetTag("TileMap");
 	tileMap->Load();
 	tileMap->UpdateWorld();
 
 	tank = new Tank();
 	tank->SetTileMap(tileMap);
-
+	tank->SetZPos(0.1);
+	tank->UpdateWorld();
 	aStar = new AStar(tileMap);
 }
 

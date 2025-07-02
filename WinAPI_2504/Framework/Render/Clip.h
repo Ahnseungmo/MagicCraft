@@ -21,6 +21,7 @@ public:
     Frame* GetCurFrame() { return frames[curFrameNum]; }
 
     void DeleteFreames();
+    void SetFrameZPos(float zPos) { for (auto& frame : frames) frame->SetZPos(zPos); }
 
 private:
     vector<Frame*> frames;

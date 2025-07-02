@@ -51,6 +51,7 @@ void Character::Update()
 	UpdateWorld();
 	clips.at((int)dir)->Update();
 
+
 }
 
 void Character::Render()
@@ -114,3 +115,12 @@ void Character::LoadClip(string path, string file, bool isLoop, float speed)
 
 	delete document;
 }
+
+void Character::UpdateWorld()
+{
+	Collider::UpdateWorld();
+	for (auto& clip : clips) {
+		clip->SetFrameZPos(zPos);
+	}
+}
+
