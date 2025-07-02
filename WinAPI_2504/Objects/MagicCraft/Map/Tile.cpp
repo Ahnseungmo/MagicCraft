@@ -65,6 +65,7 @@ void Tile::CalTilesetPos()
 
 void Tile::Render()
 {
+	if (state == FLOOR) return;
 	RectCollider::Render();
 }
 

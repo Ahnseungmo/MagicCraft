@@ -62,11 +62,11 @@ void GameMap::Render()
 	quad->GetMaterial()->Set();
 	quad->GetMesh()->DrawInstanced(objectInstances.size());
 	
-	/*
-	for (auto& tile : floors) {
+	
+	for (auto& tile : objects) {
 		tile->Render();
 	}
-	*/
+	
 }
 
 void GameMap::Edit()
