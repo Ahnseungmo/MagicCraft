@@ -18,7 +18,13 @@ public:
 	Enemy* nearEnemy(Vector2 pos);
 	void SetPlayer(Player* player) { this->player = player; }
 	void SetAStar(MapAStar* aStar) { this->aStar = aStar; }
-	void SetGameMap(GameMap* map) { this->gameMap = map; }
+	void SetGameMap(GameMap* map) {
+		this->gameMap = map; 
+		for (auto& enemy : enemys) {
+			enemy->SetMap(gameMap);
+		}
+
+	}
 
 private:
 	const int ENEMY_POOL = 10;

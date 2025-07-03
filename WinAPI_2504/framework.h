@@ -28,6 +28,7 @@
 #include <windows.h>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <map>
 #include <vector>
 #include <functional>
@@ -182,7 +183,10 @@ enum Element {
 
 #include "Objects/MagicCraft/Characters/Character.h"
 #include "Objects/MagicCraft/Characters/Player.h"
+
 #include "Objects/MagicCraft/Characters/Enemy.h"
+#include "Objects/MagicCraft/Characters/Enemys/Plant1.h"
+
 #include "Objects/MagicCraft/Characters/EnemyManager.h"
 #include "Objects/MagicCraft/Wand.h"
 

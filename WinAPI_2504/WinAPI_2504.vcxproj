@@ -189,6 +189,7 @@
     <ClInclude Include="Objects\Flappy\Bird.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\EnemyManager.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\Character.h" />
+    <ClInclude Include="Objects\MagicCraft\Characters\Enemys\Plant1.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\Player.h" />
     <ClInclude Include="Objects\MagicCraft\Map\GameMap.h" />
     <ClInclude Include="Objects\MagicCraft\Map\MapAStar.h" />
@@ -284,6 +285,7 @@
     <ClCompile Include="Objects\MagicCraft\Characters\Character.cpp" />
     <ClCompile Include="Objects\MagicCraft\Characters\Enemy.cpp" />
     <ClCompile Include="Objects\MagicCraft\Characters\EnemyManager.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Characters\Enemys\Plant1.cpp" />
     <ClCompile Include="Objects\MagicCraft\Characters\Player.cpp" />
     <ClCompile Include="Objects\MagicCraft\Map\GameMap.cpp" />
     <ClCompile Include="Objects\MagicCraft\Map\MapAStar.cpp" />

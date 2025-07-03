@@ -38,8 +38,9 @@ void EnemyManager::Update()
 			int start = gameMap->CalPosToIndex(enemy->GetGlobalPosition());
 			int end = gameMap->CalPosToIndex(player->GetGlobalPosition());
 			
-			enemy->SetPath(aStar->GetPath(start, end));
-
+//			enemy->SetPath(aStar->GetPath(start, end,2));
+			enemy->SetPath(aStar->GetPathToTarget(start, end, 2));
+			
 		}
 
 		enemy->Update();

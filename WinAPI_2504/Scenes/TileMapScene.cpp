@@ -23,6 +23,10 @@ TileMapScene::TileMapScene()
 	EnemyManager::Get()->Spawn(player->GetGlobalPosition());
 //	Collider::SwitchDraw();
 
+	player->SetMap(gameMap);
+
+
+
 }
 
 TileMapScene::~TileMapScene()
@@ -49,5 +53,12 @@ void TileMapScene::Render()
 
 void TileMapScene::GUIRender()
 {
+	int pos[2];
+	Vector2 p = player->GetGlobalPosition();
+	p = gameMap->CalPosToTilePos(p);
+	pos[0] = p.x;
+	pos[1] = p.y;
+	ImGui::InputInt2("pos", pos);
+
 	EnemyManager::Get()->Edit();
 }

@@ -71,6 +71,10 @@ void Player::Update()
 
 	Translate(direction * speed * DELTA);
 	UpdateWorld();
+
+	TileCheck();
+	UpdateWorld();
+
 	cameraTransform->UpdateWorld();
 	clips.at((int)dir)->Update();	
 

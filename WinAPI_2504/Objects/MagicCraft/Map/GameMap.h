@@ -45,6 +45,15 @@ public:
 		int index = (tileCount.y - 1 - (int)cal.y) * tileCount.x + (int)cal.x;  // y축 반전을 고려
 		return index;
 	}
+
+	int CalTilePosToIndex(Vector2 pos) {
+		Vector2 cal = pos;
+		int index = (tileCount.y - 1 - (int)cal.y) * tileCount.x + (int)cal.x;  // y축 반전을 고려
+		return index;
+	}
+
+	TileData* GetTileData(int index) {return tileDatas.at(index); }
+
 private:
 
 	vector<TileData*> tileDatas;

@@ -48,7 +48,12 @@ void Character::Update()
 	}
 
 	//Translate(direction * speed * DELTA);
+
 	UpdateWorld();
+
+	TileCheck();
+	UpdateWorld();
+
 	clips.at((int)dir)->Update();
 
 
@@ -121,5 +126,30 @@ void Character::UpdateWorld()
 	for (auto& clip : clips) {
 		clip->SetFrameZPos(zPos);
 	}
+}
+
+void Character::TileCheck()
+{
+	Vector2 nPos = map->CalPosToTilePos(GetGlobalPosition());
+
+	for (int y = -1; y <= 1;y++) {
+		for (int x = -1; x <= 1;x++) {
+			int checkint = map->CalPosToIndex(nPos);
+			int index = map->CalTilePosToIndex(nPos + Vector2{(float)x,(float)y});
+			Tile::State state = map->GetTileData(index)->state;
+			if (state == Tile::WALL || state == Tile::WATER) {
+				Tile* tile = map->GetTileData(index)->object;
+				if (tile->IsCircleCollision(this)) {
+					Vector2 dir = GetGlobalPosition() - tile->GetGlobalPosition();
+					dir.Normalize();
+					Translate(dir * speed*2 * DELTA);
+//					return;
+				}
+
+			}
+		}
+	}
+
+
 }
 

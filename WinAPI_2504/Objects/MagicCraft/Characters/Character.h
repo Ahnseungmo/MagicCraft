@@ -23,6 +23,9 @@ public:
 
 	void UpdateWorld();
 
+	void TileCheck();
+
+	void SetMap(GameMap* map) { this->map = map; }
 protected:
 
 	float hp=100;
@@ -33,6 +36,8 @@ protected:
 	Direction dir = Down;
 	Vector2 direction = Vector2::Down();
 	vector<Clip*> clips;
+
+
 	float speed = 100;
 	bool isMove = false;
 
