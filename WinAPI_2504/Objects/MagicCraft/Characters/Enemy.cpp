@@ -70,6 +70,6 @@ void Enemy::PathControl()
 		velocity.Normalize();
 	}
 
-	localRotation.z = atan2(velocity.y, velocity.x);
+//]	localRotation.z = atan2(velocity.y, velocity.x);
 	Translate(velocity * speed * DELTA);
 }

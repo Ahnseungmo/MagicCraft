@@ -59,9 +59,8 @@ void Character::Render()
 	if (!isActive) return;
 	worldBuffer->Set(world);
 	worldBuffer->SetVS(0);
-
-	clips.at((int)dir)->Render();
 	CircleCollider::Render();
+	clips.at((int)dir)->Render();
 }
 
 void Character::Spawn(Vector2 pos)
