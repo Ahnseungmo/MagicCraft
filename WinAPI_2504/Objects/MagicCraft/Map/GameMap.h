@@ -17,7 +17,7 @@ public:
 	void Render();
 	void Edit();
 
-	void SetInstanceBuffer(vector<Tile*> tiles, vector<InstanceData> instances, VertexBuffer*& buffer);
+	void SetInstanceBuffer(vector<Tile*> tiles, vector<InstanceData>& instances, VertexBuffer*& buffer);
 
 	//	void SetInsanceBuffer(vector<Tile*&>& tiles, vector<InstanceData&>& instances, VertexBuffer*& buffer);
 
@@ -54,6 +54,8 @@ public:
 
 	TileData* GetTileData(int index) {return tileDatas.at(index); }
 
+	vector<Vector2> GetBiomeBassTilePos() { return biomeBassTilePos; }
+
 private:
 
 	vector<TileData*> tileDatas;
@@ -66,7 +68,7 @@ private:
 	
 	Vector2 playerSpawnPoint = {0,0};
 
-
+	vector<Vector2> biomeBassTilePos;
 
 	Quad* quad;
 

@@ -20,6 +20,8 @@ public:
     void mergeBoundary(const Room& a, const Room& b, int dir);
 
     vector<vector<int>> GetMapData() { return map; }
+
+    vector<Vector2> GetBiomeBaseTilePos() { return biomeBaseTilePos; }
 private:
     const int MAP_WIDTH = 200;
     const int MAP_HEIGHT = 150;
@@ -38,6 +40,7 @@ private:
 
     int width, height, roomCount;
 
+    vector<Vector2> biomeBaseTilePos;
     vector<vector<int>> map;
     vector<vector<int>> room_id_map;
     vector<Room> rooms;

@@ -27,7 +27,7 @@ GameMap::GameMap(Vector2 count) : tileCount(count)
 	
 	mapGenerator = new MapGenerator(count.x, count.y, 40);
 	mapGenerator->generate();
-	
+	biomeBassTilePos = mapGenerator->GetBiomeBaseTilePos();
 	MapGenerate();
 
 	objectInstances.resize(objects.size()*4);
@@ -46,6 +46,10 @@ GameMap::~GameMap()
 
 void GameMap::Update()
 {
+	/*
+	floorInstanceBuffer->Update(floorInstances.data(), 0);
+	objectInstanceBuffer->Update(objectInstances.data(),0);
+	*/
 }
 
 void GameMap::Render()
@@ -73,7 +77,7 @@ void GameMap::Edit()
 {
 }
 
-void GameMap::SetInstanceBuffer(vector<Tile*> tiles, vector<InstanceData> instances ,VertexBuffer*& buffer)
+void GameMap::SetInstanceBuffer(vector<Tile*> tiles, vector<InstanceData>& instances ,VertexBuffer*& buffer)
 {
 
 	int i = 0;
@@ -238,24 +242,6 @@ void GameMap::MakeNodes(vector<Node*>& nodes)
 		nodes.push_back(node);
 	
 	}
-
-	/*
-
-	for (Quad* tile : bgTiles)
-	{
-		//Vector2 tilePos = tile->GetGlobalPosition() + Vector2::Up() * tileSize.y * 0.25f;
-		Vector2 tilePos = tile->GetGlobalPosition();
-		Node* node = new Node(tilePos, nodes.size());
-
-		for (GameTile* obj : objTiles)
-		{
-			if (obj->IsPointCollision(tilePos))
-			{
-				node->SetState(Node::Obstacle);
-			}
-		}
-
-		nodes.push_back(node);
-	}
-	*/
 }
+
+

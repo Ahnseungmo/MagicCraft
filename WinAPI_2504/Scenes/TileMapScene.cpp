@@ -39,6 +39,7 @@ TileMapScene::~TileMapScene()
 
 void TileMapScene::Update()
 {
+	gameMap->Update();
 	player->Update();
 	EnemyManager::Get()->Update();
 }
@@ -59,6 +60,19 @@ void TileMapScene::GUIRender()
 	pos[0] = p.x;
 	pos[1] = p.y;
 	ImGui::InputInt2("pos", pos);
+
+	int pathSize[5];
+	int pr[4];
+	for (int i = 0;i < 5;i++) {
+
+		int start = gameMap->CalPosToIndex(player->GetGlobalPosition());
+		int end = gameMap->CalTilePosToIndex(gameMap->GetBiomeBassTilePos().at(i));
+
+		pathSize[i] = aStar->GetPath(start,end).size();
+		if (i > 0) pr[i - 1] = pathSize[i];
+	}
+	ImGui::InputInt("home", &pathSize[0]);
+	ImGui::InputInt4("Biomes", pr);
 
 	EnemyManager::Get()->Edit();
 }

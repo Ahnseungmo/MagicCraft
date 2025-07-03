@@ -8,6 +8,9 @@ MapGenerator::MapGenerator(int width, int height, int roomCount)
     room_id_map(height, std::vector<int>(width, -1)),
     rng(static_cast<unsigned int>(time(0))),
     room_connections() {
+
+    biomeBaseTilePos.reserve(5);
+
 }
 
 
@@ -531,6 +534,21 @@ void MapGenerator::generateRoomInterior(Room& room, int room_id) {
             else i--;
         }
     }
+
+    //시작방, 보스방 별 biome좌표 설정
+    if (room_id == 0) {
+        Vector2 pos = { (float)(room.x - 1 + rw / 2),(float)(room.y - 1 + rh / 2) };
+        biomeBaseTilePos.push_back(pos);
+    }
+    else if(room_id >= rooms.size() - 4) {
+
+        int layout_h = bossLayouts[room_id - (rooms.size() - 4)].size();
+        int layout_w = bossLayouts[room_id - (rooms.size() - 4)][0].size();
+        Vector2 pos = { (float)(room.x - 1 + layout_w / 2),(float)(room.y - 1 + layout_h / 2) };
+        biomeBaseTilePos.push_back(pos);
+    }
+
+
 
 
     // 맵에 반영
