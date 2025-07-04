@@ -62,3 +62,30 @@ public:
 private:
     int values[4] = {};
 };
+
+struct BiomeData
+{
+    DirectX::XMFLOAT2 base;
+    float _padding0[2]; // 16바이트 정렬 맞춤용
+
+    DirectX::XMFLOAT2 biomePos[5];
+    float _padding1[2]; // 총 크기를 16바이트 배수로 맞춤
+};
+
+class BiomeBuffer : public ConstBuffer
+{
+public:
+    BiomeBuffer() : ConstBuffer(&data, sizeof(BiomeData)) {}
+
+    void SetBase(const Vector2& v) { data.base = { v.x, v.y }; }
+    void SetBiomePos(int index, const Vector2& v)
+    {
+        if (index >= 0 && index < 5)
+            data.biomePos[index] = { v.x, v.y };
+    }
+
+    BiomeData* Get() { return &data; }
+
+private:
+    BiomeData data = {};
+};

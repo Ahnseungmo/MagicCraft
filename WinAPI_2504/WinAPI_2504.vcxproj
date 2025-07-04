@@ -336,6 +336,7 @@
     <Image Include="WinAPI_2504.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\Shaders\SpriteBiomeInstancing.hlsl" />
     <FxCompile Include="Resources\Shaders\Collider.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>

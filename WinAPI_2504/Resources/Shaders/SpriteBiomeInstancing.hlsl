@@ -52,14 +52,47 @@ cbuffer ColorBuffer : register(b0)
     float4 color;
 }
 
+cbuffer BiomeBuffer : register(b0)
+{
+    float2 base;
+    float2 biomePos[5];
+};
+
 Texture2D baseMap : register(t0);
 SamplerState samplerState : register(s0);
 
 float4 PS(Output output) : SV_TARGET
 {
-    float2 uv = output.uv + (output.curFrame / output.maxFrame); // Adjust UV based on current frame
+//    float2 uv = output.uv + (output.curFrame / output.maxFrame); // Adjust UV based on current frame
     
-    float4 baseColor = baseMap.Sample(samplerState, uv);
+
+    float4 baseColors[5] = { 0, };
+    float distance[5] = { 0, };
+    float merge = 0;
+
+    for (int i = 0; i < 5; i++)
+    {
+        float2 uv = output.uv + ((output.curFrame + i * 6) / output.maxFrame); // Adjust UV based on current frame
+        baseColors[i] = baseMap.Sample(samplerState, uv);
+        float2 dif = biomePos[i] - base;
+        distance[i] = sqrt(dif.x * dif.x + dif.y + dif.y);
+        merge += distance[i];
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        baseColors[i].a = distance[i]/merge;
+        
+    }
     
+    float4 baseColor = baseColors[0];
+    for (int i = 1; i < 5; i++)
+    {
+//        baseColor *=     float4 baseColor = baseColors[0];
+
+    }
+    
+    
+      
+   // float4 baseColor = baseMap.Sample(samplerState, uv);
     return baseColor * color;
 }
