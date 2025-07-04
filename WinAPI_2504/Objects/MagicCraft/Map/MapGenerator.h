@@ -10,14 +10,14 @@ struct Room {
 class MapGenerator {
 public:
     MapGenerator(int width, int height, int roomCount);
-    void generate();
-    bool isOverlap(const Room& a, const Room& b);
-    int overlapLen(int a1, int a2, int b1, int b2);
-    void placeRoomsRadially();
-    void carveRoom(const Room& room, int room_id);
-    void generateRoomInterior(Room& room, int room_id);
+    void Generate();
+    bool IsOverlap(const Room& a, const Room& b);
+    int OverlapLen(int a1, int a2, int b1, int b2);
+    void PlaceRoomsRadially();
+    void CarveRoom(const Room& room, int room_id);
+    void GenerateRoomInterior(Room& room, int room_id);
 
-    void mergeBoundary(const Room& a, const Room& b, int dir);
+    void MergeBoundary(const Room& a, const Room& b, int dir);
 
     vector<vector<int>> GetMapData() { return map; }
 

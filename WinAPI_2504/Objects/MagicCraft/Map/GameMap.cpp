@@ -22,17 +22,13 @@ GameMap::GameMap(Vector2 count) : tileCount(count)
 		tileDatas.push_back(new TileData());
 	}
 
-	floorInstances.resize(floors.size()*4);
-	SetInstanceBuffer(floors, floorInstances, floorInstanceBuffer);
+
 	
 	mapGenerator = new MapGenerator(count.x, count.y, 40);
-	mapGenerator->generate();
+	mapGenerator->Generate();
 	biomeBassTilePos = mapGenerator->GetBiomeBaseTilePos();
+
 	MapGenerate();
-
-	objectInstances.resize(objects.size()*4);
-	SetInstanceBuffer(objects, objectInstances, objectInstanceBuffer);
-
 
 }
 
@@ -95,15 +91,35 @@ void GameMap::SetInstanceBuffer(vector<Tile*> tiles, vector<InstanceData>& insta
 
 		instance.world = XMMatrixTranspose(world);
 		instance.maxFrame = Float2(30, 16);
+		/*
+		TileData* data = tileDatas.at(i);
+		Vector2 biomePos = data->biomePos.at(data->biome);
 
+		float frameX = tiles.at(i)->GetQuaterTileShape(j).x + biomePos.x;;
+		float frameY = tiles.at(i)->GetQuaterTileShape(j).y + biomePos.y;;
+
+		*/
 		float frameX = tiles.at(i)->GetQuaterTileShape(j).x;
 		float frameY = tiles.at(i)->GetQuaterTileShape(j).y;
-
 		instance.curFrame = Float2(frameX, frameY);
 		j++;
 		
 	}
 	buffer = new VertexBuffer(instances.data(), sizeof(InstanceData), instances.size());
+
+}
+
+void GameMap::SetInstanceBuffers()
+{
+
+
+
+
+	floorInstances.resize(floors.size() * 4);
+	SetInstanceBuffer(floors, floorInstances, floorInstanceBuffer);
+
+	objectInstances.resize(objects.size() * 4);
+	SetInstanceBuffer(objects, objectInstances, objectInstanceBuffer);
 
 }
 

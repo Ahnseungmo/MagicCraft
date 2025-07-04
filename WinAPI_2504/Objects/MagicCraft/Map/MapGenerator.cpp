@@ -14,33 +14,33 @@ MapGenerator::MapGenerator(int width, int height, int roomCount)
 }
 
 
-void MapGenerator::generate() {
-    placeRoomsRadially();
+void MapGenerator::Generate() {
+    PlaceRoomsRadially();
     for (size_t i = 0; i < rooms.size(); ++i) {
-        generateRoomInterior(rooms[i], i);
+        GenerateRoomInterior(rooms[i], i);
     }
 }
 
-bool MapGenerator::isOverlap(const Room& a, const Room& b) {
+bool MapGenerator::IsOverlap(const Room& a, const Room& b) {
     return !(a.x + a.w <= b.x || b.x + b.w <= a.x ||
         a.y + a.h <= b.y || b.y + b.h <= a.y);
 }
 
 // 두 구간의 겹치는 길이 반환
-int MapGenerator::overlapLen(int a1, int a2, int b1, int b2) {
+int MapGenerator::OverlapLen(int a1, int a2, int b1, int b2) {
     int s = max(a1, b1);
     int e = min(a2, b2);
     return max(0, e - s + 1);
 }
 
-void MapGenerator::placeRoomsRadially() {
+void MapGenerator::PlaceRoomsRadially() {
     uniform_int_distribution<int> sizeDist(ROOM_MIN_SIZE, ROOM_MAX_SIZE);
     int centerX = width / 2;
     int centerY = height / 2;
     // 첫 방 중앙에 배치
     Room first = { centerX - ROOM_MIN_SIZE / 2, centerY - ROOM_MIN_SIZE / 2, ROOM_MIN_SIZE, ROOM_MIN_SIZE };
     rooms.push_back(first);
-    carveRoom(first, 0);
+    CarveRoom(first, 0);
     // 일반 방들 생성 (보스 방 제외)
     for (int i = 1; i < roomCount - 1; ++i) {
         bool placed = false;
@@ -136,23 +136,23 @@ void MapGenerator::placeRoomsRadially() {
             // 겹침 체크
             bool overlap = false;
             for (size_t j = 0; j < rooms.size(); ++j) {
-                if (isOverlap(newRoom, rooms[j])) {
+                if (IsOverlap(newRoom, rooms[j])) {
                     overlap = true;
                     break;
                 }
             }
             // 실제 겹치는 구간이 3칸 이상인지 확인
             if (!overlap) {
-                int overlapW = overlapLen(base.x, base.x + base.w - 1, newRoom.x, newRoom.x + newRoom.w - 1);
-                int overlapH = overlapLen(base.y, base.y + base.h - 1, newRoom.y, newRoom.y + newRoom.h - 1);
+                int overlapW = OverlapLen(base.x, base.x + base.w - 1, newRoom.x, newRoom.x + newRoom.w - 1);
+                int overlapH = OverlapLen(base.y, base.y + base.h - 1, newRoom.y, newRoom.y + newRoom.h - 1);
                 bool valid = false;
                 if (dir == 0 || dir == 1) valid = (overlapW >= MIN_OVERLAP);
                 else if (dir == 2 || dir == 3) valid = (overlapH >= MIN_OVERLAP);
                 else valid = (overlapW >= MIN_OVERLAP && overlapH >= MIN_OVERLAP);
                 if (!valid) continue;
                 rooms.push_back(newRoom);
-                carveRoom(newRoom, rooms.size() - 1);
-                mergeBoundary(base, newRoom, dir);
+                CarveRoom(newRoom, rooms.size() - 1);
+                MergeBoundary(base, newRoom, dir);
                 placed = true;
             }
         }
@@ -234,31 +234,31 @@ void MapGenerator::placeRoomsRadially() {
 
     // 보스 방들을 추가하고 연결
     rooms.push_back(rightBossRoom);
-    carveRoom(rightBossRoom, rooms.size() - 1);
+    CarveRoom(rightBossRoom, rooms.size() - 1);
     if (closestRooms[0] != -1) {
-        mergeBoundary(rooms[closestRooms[0]], rightBossRoom, 3); // 오른쪽 연결
+        MergeBoundary(rooms[closestRooms[0]], rightBossRoom, 3); // 오른쪽 연결
     }
 
     rooms.push_back(leftBossRoom);
-    carveRoom(leftBossRoom, rooms.size() - 1);
+    CarveRoom(leftBossRoom, rooms.size() - 1);
     if (closestRooms[1] != -1) {
-        mergeBoundary(rooms[closestRooms[1]], leftBossRoom, 2); // 왼쪽 연결
+        MergeBoundary(rooms[closestRooms[1]], leftBossRoom, 2); // 왼쪽 연결
     }
 
     rooms.push_back(topBossRoom);
-    carveRoom(topBossRoom, rooms.size() - 1);
+    CarveRoom(topBossRoom, rooms.size() - 1);
     if (closestRooms[2] != -1) {
-        mergeBoundary(rooms[closestRooms[2]], topBossRoom, 0); // 위쪽 연결
+        MergeBoundary(rooms[closestRooms[2]], topBossRoom, 0); // 위쪽 연결
     }
 
     rooms.push_back(bottomBossRoom);
-    carveRoom(bottomBossRoom, rooms.size() - 1);
+    CarveRoom(bottomBossRoom, rooms.size() - 1);
     if (closestRooms[3] != -1) {
-        mergeBoundary(rooms[closestRooms[3]], bottomBossRoom, 1); // 아래쪽 연결
+        MergeBoundary(rooms[closestRooms[3]], bottomBossRoom, 1); // 아래쪽 연결
     }
 }
 
-void MapGenerator::carveRoom(const Room& room, int room_id) {
+void MapGenerator::CarveRoom(const Room& room, int room_id) {
     // map에 바닥을 미리 깔지 않음. room_id_map만 기록
     for (int y = room.y; y < room.y + room.h; ++y) {
         for (int x = room.x; x < room.x + room.w; ++x) {
@@ -267,7 +267,7 @@ void MapGenerator::carveRoom(const Room& room, int room_id) {
     }
 }
 
-void MapGenerator::generateRoomInterior(Room& room, int room_id) {
+void MapGenerator::GenerateRoomInterior(Room& room, int room_id) {
     int rw = room.w, rh = room.h;
     vector<vector<int>> local(rh, vector<int>(rw, WALL));
 
@@ -560,7 +560,7 @@ void MapGenerator::generateRoomInterior(Room& room, int room_id) {
     }
 }
 
-void MapGenerator::mergeBoundary(const Room& a, const Room& b, int dir) {
+void MapGenerator::MergeBoundary(const Room& a, const Room& b, int dir) {
     // a와 b가 붙은 경계선을 바닥으로 강제
     int ax1 = a.x, ay1 = a.y, ax2 = a.x + a.w - 1, ay2 = a.y + a.h - 1;
     int bx1 = b.x, by1 = b.y, bx2 = b.x + b.w - 1, by2 = b.y + b.h - 1;

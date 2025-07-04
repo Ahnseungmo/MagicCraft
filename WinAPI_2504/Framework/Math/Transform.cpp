@@ -13,8 +13,8 @@ void Transform::UpdateWorld()
 {
     S = XMMatrixScaling(localScale.x, localScale.y, 1.0f);
     R = XMMatrixRotationRollPitchYaw(localRotation.x, localRotation.y, localRotation.z);
-	T = XMMatrixTranslation(localPosition.x, localPosition.y, 0.0f);
-//	T = XMMatrixTranslation(localPosition.x, localPosition.y, zPos);
+//	T = XMMatrixTranslation(localPosition.x, localPosition.y, 0.0f);
+	T = XMMatrixTranslation(localPosition.x, localPosition.y, zPos);
 
     P = XMMatrixTranslation(pivot.x, pivot.y, 0.0f);
     IP = XMMatrixInverse(nullptr, P);

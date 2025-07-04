@@ -51,7 +51,7 @@ void Character::Update()
 
 	UpdateWorld();
 
-	TileCheck();
+//	TileCheck();
 	UpdateWorld();
 
 	clips.at((int)dir)->Update();

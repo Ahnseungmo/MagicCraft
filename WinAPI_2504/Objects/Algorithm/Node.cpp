@@ -1,7 +1,7 @@
 #include "Framework.h"
 
 Node::Node(Vector2 pos, int index)
-    : CircleCollider(10), index(index)
+    : index(index)
 {
     localPosition = pos;
     UpdateWorld();
@@ -15,6 +15,7 @@ Node::~Node()
 
 void Node::Render()
 {
+    /*
     switch (state)
     {
     case Node::None:
@@ -38,6 +39,9 @@ void Node::Render()
 
     for (Edge* edge : edges)
         edge->line->Render();
+
+
+    */
 }
 
 void Node::AddEdge(Node* node)

@@ -179,6 +179,7 @@
     <ClInclude Include="Objects\Algorithm\DNode.h" />
     <ClInclude Include="Objects\Algorithm\Heap.h" />
     <ClInclude Include="Objects\Algorithm\Node.h" />
+    <ClInclude Include="Objects\Algorithm\NodeLine.h" />
     <ClInclude Include="Objects\Basic\GameObject.h" />
     <ClInclude Include="Objects\Basic\Quad.h" />
     <ClInclude Include="Objects\Character\Cookie.h" />

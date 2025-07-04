@@ -10,6 +10,8 @@ public:
 	void Render() override;
 	void GUIRender() override;
 
+	void SetGameMapBiome();
+
 private:
 	GameMap* gameMap;
 	MapAStar* aStar;

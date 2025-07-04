@@ -5,12 +5,17 @@ SpellCustomUI::SpellCustomUI() : RectCollider({ 500,500 })
 	isActive = false;
 	backGround = new Quad(L"Resources/Textures/MagicCraft/UI/Book/BookCover.png");
 	backGround->SetParent(this);
+	backGround->SetZPos(0.0);
+
 	pageLeft = new Quad(L"Resources/Textures/MagicCraft/UI/Book/BookPageLeft.png");
 	pageLeft->SetParent(this);
 	pageLeft->SetLocalPosition({ -(pageLeft->GetSize() * 0.5).x ,0 });
+	pageLeft->SetZPos(-0.001);
+
 	pageRight = new Quad(L"Resources/Textures/MagicCraft/UI/Book/BookPageRight.png");
 	pageRight->SetParent(this);
 	pageRight->SetLocalPosition({ (pageRight->GetSize() * 0.5).x ,0 });
+	pageRight->SetZPos(-0.001);
 
 	InitOption();
 	InitSpellSlot();
@@ -35,6 +40,7 @@ SpellCustomUI::SpellCustomUI() : RectCollider({ 500,500 })
 	elementUI = new CircleUI(70);
 	elementUI->SetParent(this);
 	elementUI->SetLocalPosition({ 120,150 });
+	elementUI->SetZPos(-0.002);
 
 	elementUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Fire.png"), Fire);
 	elementUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Water.png"), Water);
@@ -47,6 +53,7 @@ SpellCustomUI::SpellCustomUI() : RectCollider({ 500,500 })
 	shapeUI = new CircleUI(70);
 	shapeUI->SetParent(this);
 	shapeUI->SetLocalPosition({ 300,150 });
+	shapeUI->SetZPos(-0.002);
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Arrow.png"), Arrow);
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Blade.png"), Blade);
 	shapeUI->InsertIndex(new Quad(L"Resources/Textures/MagicCraft/UI/Book/Floor.png"), Floor);
@@ -102,6 +109,7 @@ void SpellCustomUI::InitSpellMarker()
 		marker->SetIntParameter(i);
 		marker->SetParent(spellMarkersTransform);
 		marker->SetLocalPosition({ 0,-(i * 50.0f) });
+		marker->SetZPos(-0.002);
 		marker->UpdateWorld();
 		marker->SetOnClickInt(bind(&SpellCustomUI::MarkerClick,this,placeholders::_1));
 		spellMarkers.push_back(marker);
@@ -124,6 +132,7 @@ void SpellCustomUI::InitSpellSlot()
 		slot->SetParent(spellSlotsTransform);
 		int xposShift = (slot->Size().x + OPTION_SLOT_PADDING) * (OPTION_SLOT_ROW - 1) / 2;
 		slot->SetLocalPosition({ (slot->Size().x + OPTION_SLOT_PADDING) * (i % OPTION_SLOT_ROW) - xposShift, (slot->Size().y + OPTION_SLOT_PADDING) * -(i / OPTION_SLOT_ROW) });
+		slot->SetZPos(-0.002);
 		slot->UpdateWorld();
 		slots.push_back(slot);
 	}
@@ -143,6 +152,7 @@ void SpellCustomUI::InitSpellSampleSlot()
 		slot->SetParent(spellSampleSlotsTransform);
 		int xposShift = (slot->Size().x + OPTION_SLOT_PADDING) * (OPTION_SLOT_ROW - 1) / 2;
 		slot->SetLocalPosition({ -100, (slot->Size().y + OPTION_SLOT_PADDING) * -i });
+		slot->SetZPos(-0.002);
 		slot->UpdateWorld();
 		sampleSlots.push_back(slot);
 	}
@@ -274,9 +284,9 @@ void SpellCustomUI::Render()
 	elementUI->Render();
 	shapeUI->Render();
 //	bookMarker->Render();
-	textBox->Render();
-	textBox1->Render();
-	textBox2->Render();
+//	textBox->Render();
+//	textBox1->Render();
+//	textBox2->Render();
 
 
 }

@@ -4,6 +4,8 @@ UIManager::UIManager()
 {
 	book = new SpellCustomUI();
 	book->SetLocalPosition(CENTER);
+	book->SetZPos(0.2);
+
 	book->UpdateWorld();
 	mouseTransform = new Transform();
 	book->SetActive(false);

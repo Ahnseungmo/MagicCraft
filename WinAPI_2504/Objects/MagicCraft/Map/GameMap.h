@@ -7,6 +7,15 @@ public:
 	struct TileData {
 		Tile::State state = Tile::FLOOR;
 		Tile* object = nullptr;
+		int biome = 0;
+		float biomeXSize = 6;
+		vector<Vector2> biomePos = {
+			{biomeXSize * 0,0},//Normal
+			{biomeXSize * 1,0},//deep forest
+			{biomeXSize * 2,0},//fall
+			{biomeXSize * 3,0},//sahara
+			{biomeXSize * 4,0} //snow
+		};
 	};
 
 
@@ -19,6 +28,7 @@ public:
 
 	void SetInstanceBuffer(vector<Tile*> tiles, vector<InstanceData>& instances, VertexBuffer*& buffer);
 
+	void SetInstanceBuffers();
 	//	void SetInsanceBuffer(vector<Tile*&>& tiles, vector<InstanceData&>& instances, VertexBuffer*& buffer);
 
 	//	void SetInsanceBuffer(VertexBuffer*& buffer);
@@ -52,9 +62,11 @@ public:
 		return index;
 	}
 
-	TileData* GetTileData(int index) {return tileDatas.at(index); }
+	TileData*& GetTileData(int index) {return tileDatas.at(index); }
 
 	vector<Vector2> GetBiomeBassTilePos() { return biomeBassTilePos; }
+	vector<Tile*>& GetFloors() { return floors; }
+
 
 private:
 

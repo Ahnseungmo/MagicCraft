@@ -26,6 +26,10 @@ void Enemy::Update()
 	UpdateWorld();
 	clips.at((int)dir)->Update();
 	*/
+	if (Input::Get()->IsKeyDown(VK_LBUTTON)) {
+		SetLocalPosition(mousePos + Environment::Get()->GetMainCamera()->GetGlobalPosition());
+		UpdateWorld();
+	}
 	if (mode == TRACE) {
 		PathControl();
 	}

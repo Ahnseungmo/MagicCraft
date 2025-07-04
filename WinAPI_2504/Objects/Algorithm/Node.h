@@ -1,6 +1,6 @@
 #pragma once
 
-class Node : public CircleCollider
+class Node : public Transform
 {
 public:
     friend class AStar;
@@ -14,16 +14,15 @@ public:
     {
         int index;
         float cost;
-        LineCollider* line;
-
-        Edge(Vector2 start, Vector2 end)
+        Vector2 start, end;
+  
+        Edge(Vector2 start, Vector2 end) : start(start),end(end)
         {
-            line = new LineCollider(start, end);
-            line->SetColor(1, 1, 0);
+
         }
         ~Edge()
         {
-            delete line;
+ 
         }
     };
 

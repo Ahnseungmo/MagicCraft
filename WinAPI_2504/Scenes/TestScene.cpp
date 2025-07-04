@@ -13,6 +13,7 @@ TestScene::TestScene()
 
 	player = new Player();
 	player->SetLocalPosition(CENTER);
+	player->SetZPos(0.5);
 	player->UpdateWorld();
 	
 	Environment::Get()->GetMainCamera()->SetTarget(player);
@@ -47,7 +48,7 @@ TestScene::TestScene()
 	delete SpellManager::Get()->GetSpellOptionData(1);
 	SpellManager::Get()->SetSpellOptionData(1, data);
 
-	EnemyManager::Get()->Spawn({ 100,CENTER_Y });
+//	EnemyManager::Get()->Spawn({ 100,CENTER_Y });
 
 	/*
 	book = new SpellCustomUI();
@@ -78,7 +79,7 @@ void TestScene::Update()
 		}
 
 		SpellManager::Get()->Update();
-		EnemyManager::Get()->Update();
+//		EnemyManager::Get()->Update();
 		SpellManager::Get()->HitCheck();
 
 	}
@@ -90,11 +91,11 @@ void TestScene::Update()
 void TestScene::Render()
 {
 
+
 	SandBag->Render();
 	player->Render();
-	EnemyManager::Get()->Render();
+//	EnemyManager::Get()->Render();
 	SpellManager::Get()->Render();
-
 }
 
 void TestScene::GUIRender()

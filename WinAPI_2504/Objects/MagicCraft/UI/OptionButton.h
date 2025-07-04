@@ -8,7 +8,7 @@ public:
 	~OptionButton();
 	void Update();
 	void Render();
-	void SetOption(Option* option) { this->option = option; option->SetParent(this); option->Update(); }
+	void SetOption(Option* option) { this->option = option; option->SetParent(this); option->SetZPos(-0.001); option->Update(); }
 	Option* GetOption() { return option; }
 	void DeleteOption() {
 

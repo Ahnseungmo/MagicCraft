@@ -49,7 +49,7 @@ int MapAStar::FindCloseNode(const Vector2& pos)
 }
 int MapAStar::FindCloseNodeIndex(const int& index)
 {
-    
+
     /*
     float minDist = FLT_MAX;
 
@@ -113,7 +113,7 @@ void MapAStar::GetPath(IN const int& start, IN const int& end, OUT vector<Vector
     }
 }
 
-vector<Vector2> MapAStar::GetPath(const int& start, const int& end,int size)
+vector<Vector2> MapAStar::GetPath(const int& start, const int& end, int size)
 {
     Reset();
     vector<Vector2> path;
@@ -126,9 +126,9 @@ vector<Vector2> MapAStar::GetPath(const int& start, const int& end,int size)
     nodes[start]->g = G;
     nodes[start]->h = H;
     nodes[start]->via = start;
-//    nodes[start]->state = Node::Open;
+    //    nodes[start]->state = Node::Open;
 
-    //openNodes.push_back(start);
+        //openNodes.push_back(start);
     heap->Insert(nodes[start]);
 
     while (nodes[end]->state != Node::Closed)
@@ -142,7 +142,7 @@ vector<Vector2> MapAStar::GetPath(const int& start, const int& end,int size)
 
         //3. 찾은 노드와 연결된 노드의 정보 갱신하고 오픈노드에 추가
         Extend(curIndex, end, size);
-        if(nodes[curIndex]->state != Node::Obstacle)
+        if (nodes[curIndex]->state != Node::Obstacle)
             nodes[curIndex]->state = Node::Closed;
     }
 
@@ -194,8 +194,17 @@ void MapAStar::Extend(const int& center, const int& end, int size)
         int index = edge->index;
         if (nodes[index]->state == Node::Closed)
             continue;
+        /*
         if (nodes[index]->state == Node::Obstacle)
             continue;
+        */
+        if (nodes[index]->state == Node::Obstacle) {
+            edge->cost = 10000.0f;
+
+        }
+
+
+
         if (!IsWalkableForSize(index, size))
             continue; // 2x2 몸집이 통과할 수 없으면 무시
 
@@ -206,7 +215,7 @@ void MapAStar::Extend(const int& center, const int& end, int size)
         float cost = edge->cost;
 
         // [추가] 대각선 이동인지 확인
-        Vector2 from = Vector2{ (float)(center % cols), (float)(center/cols) };
+        Vector2 from = Vector2{ (float)(center % cols), (float)(center / cols) };
         Vector2 to = Vector2{ (float)(index % cols), (float)(index / cols) };
         Vector2 diff = to - from;
 
@@ -292,7 +301,7 @@ void MapAStar::SetEdge()
 
             int j = cols + i - 1;
             int k = cols + i + 1;
-            
+
             if (j % cols <= (cols + i) % cols) {
                 nodes[i]->AddEdge(nodes[j]);
                 nodes[j]->AddEdge(nodes[i]);
@@ -427,5 +436,5 @@ vector<Vector2> MapAStar::GetPathToTarget(int start, int targetIndex, int size)
     if (reachableIndex == -1)
         return {};
 
-    return GetPath(start, reachableIndex,size);
+    return GetPath(start, reachableIndex, size);
 }

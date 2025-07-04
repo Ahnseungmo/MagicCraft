@@ -49,7 +49,10 @@ void Player::Update()
 	}
 
 
-	Vector2 focusDirection = mousePos - GetGlobalPosition();
+
+
+	Vector2 focusDirection = (Environment::Get()->GetMainCamera()->GetGlobalPosition() + mousePos) - GetGlobalPosition();
+	focusDirection.Normalize();
 	float angle = atan2(focusDirection.y, focusDirection.x);
 
 
@@ -72,7 +75,7 @@ void Player::Update()
 	Translate(direction * speed * DELTA);
 	UpdateWorld();
 
-	TileCheck();
+	if(map)	TileCheck();
 	UpdateWorld();
 
 	cameraTransform->UpdateWorld();

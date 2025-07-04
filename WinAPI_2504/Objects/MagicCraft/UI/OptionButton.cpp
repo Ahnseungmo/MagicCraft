@@ -9,6 +9,7 @@ OptionButton::OptionButton(bool infinity) : RectCollider({60,60}), infinity(infi
 	backGround->UpdateWorld();
 
 	select->SetParent(this);
+	select->SetZPos(-0.001);
 	select->UpdateWorld();
 	select->SetActive(false);
 }
@@ -37,6 +38,7 @@ void OptionButton::Update()
 //					delete option;
 					option = nullptr;
 					SetOption(new Option(selOption));
+					
 
 				}
 			}
