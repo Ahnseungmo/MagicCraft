@@ -91,16 +91,14 @@ void GameMap::SetInstanceBuffer(vector<Tile*> tiles, vector<InstanceData>& insta
 
 		instance.world = XMMatrixTranspose(world);
 		instance.maxFrame = Float2(30, 16);
-		/*
-		TileData* data = tileDatas.at(i);
+		
+		TileData* data = tileDatas.at(CalPosToIndex(tiles.at(i)->GetGlobalPosition()));
 		Vector2 biomePos = data->biomePos.at(data->biome);
+		
 
 		float frameX = tiles.at(i)->GetQuaterTileShape(j).x + biomePos.x;;
 		float frameY = tiles.at(i)->GetQuaterTileShape(j).y + biomePos.y;;
 
-		*/
-		float frameX = tiles.at(i)->GetQuaterTileShape(j).x;
-		float frameY = tiles.at(i)->GetQuaterTileShape(j).y;
 		instance.curFrame = Float2(frameX, frameY);
 		j++;
 		

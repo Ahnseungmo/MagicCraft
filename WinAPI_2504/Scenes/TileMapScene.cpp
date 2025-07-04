@@ -10,7 +10,7 @@ TileMapScene::TileMapScene()
 	//	Environment::Get()->GetMainCamera()->SetLocalPosition(gameMap->GetPlayerSpawnPoint() - Vector2(SCREEN_WIDTH,SCREEN_HEIGHT)*0.5);
 	aStar = new MapAStar(gameMap);
 
-//	SetGameMapBiome();
+	SetGameMapBiome();
 
 	gameMap->SetInstanceBuffers();
 
