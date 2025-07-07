@@ -17,6 +17,7 @@ public:
 
 	Enemy* nearEnemy(Vector2 pos);
 	void SetPlayer(Player* player) { this->player = player; }
+	Player* GetPlayer() { return player; }
 	void SetAStar(MapAStar* aStar) { this->aStar = aStar; }
 	void SetGameMap(GameMap* map) {
 		this->gameMap = map; 
@@ -25,6 +26,12 @@ public:
 		}
 
 	}
+
+	void InsertSpawners(Vector2 pos) {
+		spawners.push_back(pos);
+	}
+
+	void SetEnemys();
 
 private:
 	const int ENEMY_POOL = 10;
@@ -40,5 +47,7 @@ private:
 
 	int findStart;
 	int findEnd;
+
+	vector<Vector2> spawners;
 
 };

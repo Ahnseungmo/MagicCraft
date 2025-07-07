@@ -66,8 +66,8 @@ float4 PS(Output output) : SV_TARGET
 //    float2 uv = output.uv + (output.curFrame / output.maxFrame); // Adjust UV based on current frame
     
 
-    float4 baseColors[5] = { 0, };
-    float distance[5] = { 0, };
+    float4 baseColors[5];
+    float distance[5] ;
     float merge = 0;
 
     for (int i = 0; i < 5; i++)

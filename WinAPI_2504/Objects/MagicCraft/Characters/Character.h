@@ -5,11 +5,20 @@ class Character : public CircleCollider{
 
 public:
 	enum Direction {
-		Up,
+		Up = 0,
 		Right,
 		Down,
 		Left
 	};
+
+	enum State {
+		Idle = 0,
+		Walk,
+		Run,
+		Hurt,
+		Death
+	};
+
 	Character();
 	~Character();
 
@@ -34,9 +43,13 @@ protected:
 	float hitTimer = HIT_INTERVAL;
 
 	Direction dir = Down;
+	State state = Idle;
+
 	Vector2 direction = Vector2::Down();
 	vector<Clip*> clips;
 
+	unordered_map<State, unordered_map<Direction,Clip*>> motionClips;
+	Transform* clipTransform;
 
 	float speed = 100;
 	bool isMove = false;

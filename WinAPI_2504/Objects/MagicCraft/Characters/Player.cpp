@@ -79,6 +79,7 @@ void Player::Update()
 	UpdateWorld();
 
 	cameraTransform->UpdateWorld();
+	clipTransform->UpdateWorld();
 	clips.at((int)dir)->Update();	
 
 }

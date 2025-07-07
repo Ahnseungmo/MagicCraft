@@ -4,7 +4,7 @@ EnemyManager::EnemyManager()
 {
 	enemys.reserve(ENEMY_POOL);
 	for (int i = 0;i < ENEMY_POOL;i++) {
-		enemys.push_back(new Enemy());
+		enemys.push_back(new Plant1());
 	}
 }
 
@@ -113,6 +113,19 @@ Enemy* EnemyManager::nearEnemy(Vector2 pos)
 		}
 	}
 	return nearEnemy;
+
+}
+void EnemyManager::SetEnemys()
+{
+
+	enemys.reserve(spawners.size());
+
+	for (auto& spawner : spawners) {
+		
+
+		enemys.push_back(new Plant1());
+		enemys.back()->SetSpawner(spawner);
+	}
 
 }
 /*

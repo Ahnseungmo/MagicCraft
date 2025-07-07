@@ -1,14 +1,22 @@
 #include "Framework.h"
-#include "Framework.h"
 
 Character::Character() : CircleCollider(10)
 {
+	/*
 	string path = "Resources/Textures/MagicCraft/Character/Player/";
+
 	LoadClip(path, "Move_Up.xml", true, 1.0f);
 	LoadClip(path, "Move_Right.xml", true, 1.0f);
 	LoadClip(path, "Move_Down.xml", true, 1.0f);
 	LoadClip(path, "Move_Left.xml", true, 1.0f);
+	*/
 
+	clipTransform = new Transform();
+	clipTransform->SetParent(this);
+
+	clipTransform->SetLocalPosition(0,Radius()*3);
+//	clipTransform->SetZPos(-0.1);
+	clipTransform->UpdateWorld();
 }
 
 Character::~Character()
@@ -51,12 +59,16 @@ void Character::Update()
 
 	UpdateWorld();
 
-//	TileCheck();
+	TileCheck();
 	UpdateWorld();
 
-	clips.at((int)dir)->Update();
+	if(!clips.empty())
+		clips.at((int)dir)->Update();
 
+	clipTransform->UpdateWorld();
 
+	if(!motionClips.empty())
+		motionClips[state][dir]->Update();
 }
 
 void Character::Render()
@@ -65,7 +77,13 @@ void Character::Render()
 	worldBuffer->Set(world);
 	worldBuffer->SetVS(0);
 	CircleCollider::Render();
-	clips.at((int)dir)->Render();
+	
+	worldBuffer->Set(clipTransform->GetWorld());
+	worldBuffer->SetVS(0);
+	if (!clips.empty())
+		clips.at((int)dir)->Render();
+	if (!motionClips.empty())
+		motionClips[state][dir]->Render();
 }
 
 void Character::Spawn(Vector2 pos)
