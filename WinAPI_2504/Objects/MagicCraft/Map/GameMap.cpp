@@ -178,7 +178,8 @@ void GameMap::MapGenerate()
 			tileDatas[i]->object = new Tile(tileSize,state, NeighTileData(i));
 			tileDatas[i]->object->SetParent(this);
 			tileDatas[i]->object->SetLocalPosition(floors[i]->GetLocalPosition());
-			tileDatas[i]->object->SetZPos(0.8f);
+			tileDatas[i]->object->SetZPos(0.5f + (floors[i]->GetGlobalPosition().y * 0.0001));
+
 			tileDatas[i]->object->UpdateWorld();
 			objects.push_back(tileDatas[i]->object);
 		}

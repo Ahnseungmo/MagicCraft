@@ -15,6 +15,7 @@ public:
 		Idle = 0,
 		Walk,
 		Run,
+		ATTACK,
 		Hurt,
 		Death
 	};
@@ -35,6 +36,7 @@ public:
 	void TileCheck();
 
 	void SetMap(GameMap* map) { this->map = map; }
+	void SetAStar(MapAStar* aStar) { this->aStar = aStar; }
 protected:
 
 	float hp=100;
@@ -55,5 +57,6 @@ protected:
 	bool isMove = false;
 
 	GameMap* map;
+	MapAStar* aStar;
 
 };

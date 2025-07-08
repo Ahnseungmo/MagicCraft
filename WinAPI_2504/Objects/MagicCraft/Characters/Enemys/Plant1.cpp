@@ -19,6 +19,11 @@ Plant1::Plant1()
 	LoadClip(Run, Left, path,	"Plant1_Run_Left.xml", true, 1.0f);
 	LoadClip(Run, Right, path, "Plant1_Run_Right.xml", true, 1.0f);
 
+	LoadClip(ATTACK, Up, path, "Plant1_Attack_Up.xml", false, 1.0f);
+	LoadClip(ATTACK, Down, path, "Plant1_Attack_Down.xml", false, 1.0f);
+	LoadClip(ATTACK, Left, path, "Plant1_Attack_Left.xml", false, 1.0f);
+	LoadClip(ATTACK, Right, path, "Plant1_Attack_Right.xml", false, 1.0f);
+
 	LoadClip(Hurt, Up, path, "Plant1_Hurt_Up.xml", false, 1.0f);
 	LoadClip(Hurt, Down, path, "Plant1_Hurt_Down.xml", false, 1.0f);
 	LoadClip(Hurt, Left, path, "Plant1_Hurt_Left.xml", false, 1.0f);
@@ -30,6 +35,9 @@ Plant1::Plant1()
 	LoadClip(Death, Left, path, "Plant1_Death_Left.xml", false, 1.0f);
 	LoadClip(Death, Right, path, "Plant1_Death_Right.xml", false, 1.0f);
 
+	for (int i = 0;i < 4;i++) {
+		motionClips[ATTACK][(Direction)i]->SetEvent(bind(&Enemy::EndAttack,this));
+	}
 
 	clipTransform->SetParent(this);
 	float imageY = motionClips[Idle][Up]->GetCurFrame()->GetSize().y;

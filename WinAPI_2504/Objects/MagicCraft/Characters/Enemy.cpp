@@ -22,13 +22,194 @@ void Enemy::Update()
 	UpdateWorld();
 	clips.at((int)dir)->Update();
 	*/
+
+	//µð¹ö±ë¿ë ÁÂÇ¥ÀÌµ¿ 
 	if (Input::Get()->IsKeyDown(VK_LBUTTON)) {
-		SetLocalPosition(mousePos + Environment::Get()->GetMainCamera()->GetGlobalPosition());
+		Vector2 pos = mousePos + Environment::Get()->GetMainCamera()->GetGlobalPosition();
+		SetLocalPosition(pos);
+		spanwer = pos;
+		mode = PATROL;
+		patrolPath.clear();
 		UpdateWorld();
 	}
-	if (mode == TRACE) {
-		PathControl();
+
+	/*
+	Player* player = EnemyManager::Get()->GetPlayer();
+	float distance = Vector2::Distance(GetGlobalPosition(), player->GetGlobalPosition());
+
+	findPlayerTimer += DELTA;
+	int start = map->CalPosToIndex(GetGlobalPosition());
+	int end;
+
+	if (idleTimer >= IDLE_TIME) {
+		if (findPlayerTimer >= FIND_PLAYER_TIME) {
+			mode = PATROL;
+			findPlayerTimer = 0;
+			end = map->CalPosToIndex(player->GetGlobalPosition());
+			path = aStar->GetPathToTarget(start, end, 1);
+
+		}
+
+		if (spanwer.x == 0 && spanwer.y == 0) {
+
+
+		}
+		else if (patrolPath.size() <= 0) {
+			Vector2 pos = map->CalPosToTilePos(spanwer);
+			while (true) {
+				Vector2 searchPos = Vector2{ (float)(rand() % PATROL_RANGE),(float)(rand() % PATROL_RANGE) };
+				Vector2 targetPos = pos + searchPos - Vector2(ceilf(PATROL_RANGE * 0.5), ceilf(PATROL_RANGE * 0.5));
+				int index = map->CalTilePosToIndex(targetPos);
+				if (map->GetTileData(index)->state == Tile::FLOOR) {
+					end = index;
+					patrolPath = aStar->GetPathToTarget(start, end, 1);
+					if(patrolPath.size()< PATROL_RANGE) break;
+				}
+			}
+
+		}
+
 	}
+	else {
+		idleTimer += DELTA;
+		state = Idle;
+	}
+
+	if (mode != ATTACKING && mode != REST) {
+
+		if (distance < 32 * 5) mode = TRACE;
+		if (distance >= 32 * 5) mode = PATROL;
+		if (path.size() <= 1 && distance < 30) {
+			mode = ATTACKING;
+		}
+
+	}
+
+	switch (mode)
+	{
+	case Enemy::TRACE:
+		state = Run;
+		PathControl(path,speed);
+		break;
+	case Enemy::PATROL:
+		state = Walk;
+		PathControl(patrolPath,speed * 0.5);
+		break;
+	case Enemy::ATTACKING:
+		if (state != ATTACK) {
+			state = ATTACK;
+			motionClips[ATTACK][dir]->Play();
+		}
+
+		break;
+
+
+	case Enemy::REST: 
+		idleTimer += DELTA;
+		if (state != Idle) {
+			state = Idle;
+
+		}
+		break;
+
+
+	default:
+		break;
+	}
+
+
+	Character::Update();
+	
+	*/
+
+
+
+	Player* player = EnemyManager::Get()->GetPlayer();
+	float distance = Vector2::Distance(GetGlobalPosition(), player->GetGlobalPosition());
+	Vector2 spawnerPos = map->CalPosToTilePos(spanwer);
+
+	int start = map->CalPosToIndex(GetGlobalPosition());
+	int end;
+
+	switch (mode)
+	{
+	case Enemy::TRACE:
+
+		state = Run;
+
+		findPlayerTimer += DELTA;
+		if (findPlayerTimer >= FIND_PLAYER_TIME) {
+//			mode = PATROL;
+			findPlayerTimer = 0;
+			end = map->CalPosToIndex(player->GetGlobalPosition());
+			path = aStar->GetPathToTarget(start, end, 1);
+
+		}
+
+		PathControl(path, speed);
+
+		if (path.size() <= 1 && distance < 30) {
+			mode = ATTACKING;
+		}
+
+		break;
+	case Enemy::PATROL:
+
+
+		if (spanwer.x == 0 && spanwer.y == 0) {
+
+
+		}
+		else if (patrolPath.size() <= 0) {
+			do{
+				Vector2 searchPos = Vector2{ (float)(rand() % PATROL_RANGE),(float)(rand() % PATROL_RANGE) };
+				Vector2 targetPos = spawnerPos + searchPos - Vector2(ceilf(PATROL_RANGE * 0.5), ceilf(PATROL_RANGE * 0.5));
+				int index = map->CalTilePosToIndex(targetPos);
+				if (map->GetTileData(index)->state == Tile::FLOOR) {
+					end = index;
+					patrolPath = aStar->GetPathToTarget(start, end, 1);
+				}
+				else {
+					continue;
+				}
+			} while (patrolPath.size() > PATROL_RANGE);
+			mode = REST;
+			idleTimer = 0;
+		}
+		else {
+			state = Walk;
+			PathControl(patrolPath, speed * 0.5);
+		}
+
+
+
+
+		if (distance < 32 * 5) mode = TRACE;
+
+		break;
+
+	case Enemy::ATTACKING:
+		if (state != ATTACK) {
+			state = ATTACK;
+			motionClips[ATTACK][dir]->Play();
+		}
+		break;
+
+	case Enemy::REST:
+		if (state != Idle) {
+			state = Idle;
+		}
+		idleTimer += DELTA;
+		if (idleTimer >= IDLE_TIME) {
+			mode = PATROL;
+		}
+		break;
+
+
+	default:
+		break;
+	}
+
 	Character::Update();
 }
 
@@ -57,16 +238,16 @@ void Enemy::MovePatrol()
 
 	int start = map->CalPosToIndex(GetGlobalPosition());
 
-
+	/*
 	int end = map->CalPosToIndex(player->GetGlobalPosition());
 
 
 	//			enemy->SetPath(aStar->GetPath(start, end,2));
 
-	patrolPath = aStar->GetPathToTarget(start, end, 1);
+	patrolPath = aStar->GetPathToTarget(start, end, 1);*/
 }
 
-void Enemy::PathControl()
+void Enemy::PathControl(vector<Vector2>& path,float speed)
 {
 	if (path.empty()) {
 		state = Idle;
@@ -111,6 +292,12 @@ void Enemy::Attack()
 		player->Hit(power);
 	}
 
+}
+
+void Enemy::EndAttack()
+{
+	mode = REST;
+	idleTimer = 0;
 }
 
 void Enemy::LoadClip(State state, Direction direction, string path, string file, bool isLoop, float speed)

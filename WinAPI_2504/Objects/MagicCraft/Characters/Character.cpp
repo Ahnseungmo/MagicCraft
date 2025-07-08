@@ -60,7 +60,12 @@ void Character::Update()
 	UpdateWorld();
 
 	TileCheck();
+
+
+	zPos = 0.5f + (GetGlobalPosition().y * 0.0001);
+
 	UpdateWorld();
+
 
 	if(!clips.empty())
 		clips.at((int)dir)->Update();

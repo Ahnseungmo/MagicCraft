@@ -76,6 +76,10 @@ void Player::Update()
 	UpdateWorld();
 
 	if(map)	TileCheck();
+
+
+	zPos = 0.5f + (GetGlobalPosition().y * 0.0001);
+
 	UpdateWorld();
 
 	cameraTransform->UpdateWorld();

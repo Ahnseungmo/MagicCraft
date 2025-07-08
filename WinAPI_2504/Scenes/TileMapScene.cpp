@@ -25,6 +25,7 @@ TileMapScene::TileMapScene()
 	EnemyManager::Get()->SetAStar(aStar);
 	EnemyManager::Get()->SetPlayer(player);
 	EnemyManager::Get()->SetGameMap(gameMap);
+
 //	EnemyManager::Get()->Spawn(Vector2(32,32));
 	EnemyManager::Get()->Spawn(player->GetGlobalPosition());
 //	Collider::SwitchDraw();

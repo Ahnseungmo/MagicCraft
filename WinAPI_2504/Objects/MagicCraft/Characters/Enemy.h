@@ -7,7 +7,10 @@ class Enemy : public Character {
 public:
 	enum Mode {
 		TRACE,
-		PATROL
+		PATROL,
+		ATTACKING,
+		REST,
+
 	};
 
 	Enemy();
@@ -20,9 +23,12 @@ public:
 
 
 	void MovePatrol();
-	void PathControl();
+	void PathControl(vector<Vector2>& path, float speed);
+//	void PathControl();
 	void SetPath(const vector<Vector2>& path) { this->path = path; }
 	void Attack();
+
+	void EndAttack();
 
 	void LoadClip(State state, Direction direction, string path, string file, bool isLoop, float speed);
 	void SetSpawner(Vector2 spawner) { this->spanwer = spawner; }
@@ -31,9 +37,17 @@ public:
 private:
 	Mode mode = TRACE;
 	Vector2 velocity;
-	vector<Vector2> path;
 
+	vector<Vector2> path;
 	vector<Vector2> patrolPath;
+
+	const int PATROL_RANGE = 5;
+
+	const float FIND_PLAYER_TIME = 0.2;
+	float findPlayerTimer = FIND_PLAYER_TIME;
+
+	const float IDLE_TIME = 1.0f;
+	float idleTimer = IDLE_TIME;
 
 	int power = 10;
 	RectCollider* attackBox;
@@ -42,7 +56,7 @@ private:
 	const float REST_TIME = 1.0f;
 
 //	Transform* spawnPoint;
-	Vector2 spanwer;
+	Vector2 spanwer = {0,0};
 
 
 };

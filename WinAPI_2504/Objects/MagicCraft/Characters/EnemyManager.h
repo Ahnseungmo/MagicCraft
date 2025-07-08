@@ -18,7 +18,7 @@ public:
 	Enemy* nearEnemy(Vector2 pos);
 	void SetPlayer(Player* player) { this->player = player; }
 	Player* GetPlayer() { return player; }
-	void SetAStar(MapAStar* aStar) { this->aStar = aStar; }
+
 	void SetGameMap(GameMap* map) {
 		this->gameMap = map; 
 		for (auto& enemy : enemys) {
@@ -27,6 +27,13 @@ public:
 
 	}
 
+	void SetAStar(MapAStar* aStar) {
+		this->aStar = aStar;
+		for (auto& enemy : enemys) {
+			enemy->SetAStar(aStar);
+		}
+
+	}
 	void InsertSpawners(Vector2 pos) {
 		spawners.push_back(pos);
 	}
