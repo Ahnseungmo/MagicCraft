@@ -62,7 +62,7 @@ void Character::Update()
 	TileCheck();
 
 
-	zPos = 0.5f + (GetGlobalPosition().y * 0.0001);
+	zPos = 0.5f + (GetGlobalPosition().y * 0.000001);
 
 	UpdateWorld();
 

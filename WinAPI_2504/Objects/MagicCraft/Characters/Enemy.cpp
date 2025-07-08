@@ -148,6 +148,7 @@ void Enemy::Update()
 
 		PathControl(path, speed);
 
+		if (distance >= 32 * 5) mode = PATROL;
 		if (path.size() <= 1 && distance < 30) {
 			mode = ATTACKING;
 		}

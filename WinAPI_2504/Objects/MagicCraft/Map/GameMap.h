@@ -67,6 +67,7 @@ public:
 	vector<Vector2> GetBiomeBassTilePos() { return biomeBassTilePos; }
 	vector<Tile*>& GetFloors() { return floors; }
 
+	vector<Vector2>& GetEnemySpanwer() { return enemySpawner; }
 
 private:
 
@@ -79,6 +80,8 @@ private:
 	Vector2 tileCount;
 	
 	Vector2 playerSpawnPoint = {0,0};
+	vector<Vector2> enemySpawner;
+
 
 	vector<Vector2> biomeBassTilePos;
 

@@ -22,12 +22,17 @@ TileMapScene::TileMapScene()
 	Environment::Get()->GetMainCamera()->SetTarget(player);
 	Environment::Get()->GetMainCamera()->SetParent(player->GetCameraTransform());
 
-	EnemyManager::Get()->SetAStar(aStar);
-	EnemyManager::Get()->SetPlayer(player);
+
+
 	EnemyManager::Get()->SetGameMap(gameMap);
+	EnemyManager::Get()->SetPlayer(player);
+	EnemyManager::Get()->SetEnemys();
+
+	EnemyManager::Get()->SetGameMap(gameMap);
+	EnemyManager::Get()->SetAStar(aStar);
 
 //	EnemyManager::Get()->Spawn(Vector2(32,32));
-	EnemyManager::Get()->Spawn(player->GetGlobalPosition());
+//	EnemyManager::Get()->Spawn(player->GetGlobalPosition());
 //	Collider::SwitchDraw();
 
 	player->SetMap(gameMap);

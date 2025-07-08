@@ -2,10 +2,12 @@
 
 EnemyManager::EnemyManager()
 {
+	/*
 	enemys.reserve(ENEMY_POOL);
 	for (int i = 0;i < ENEMY_POOL;i++) {
 		enemys.push_back(new Plant1());
 	}
+	*/
 }
 
 EnemyManager::~EnemyManager()
@@ -27,14 +29,8 @@ void EnemyManager::Update()
 
 	for (auto& enemy : enemys) {
 		if (!enemy->IsActive()) continue;
+		/*
 		if (search) {
-			/*
-			int start = aStar->FindCloseNode(enemy->GetGlobalPosition());
-			int end = aStar->FindCloseNode(player->GetGlobalPosition());
-
-			findStart = start;
-			findEnd = end;
-			*/
 			int start = gameMap->CalPosToIndex(enemy->GetGlobalPosition());
 			int end = gameMap->CalPosToIndex(player->GetGlobalPosition());
 			
@@ -42,7 +38,7 @@ void EnemyManager::Update()
 			enemy->SetPath(aStar->GetPathToTarget(start, end, 1));
 			
 		}
-
+		*/
 		enemy->Update();
 	}
 }
@@ -117,6 +113,12 @@ Enemy* EnemyManager::nearEnemy(Vector2 pos)
 }
 void EnemyManager::SetEnemys()
 {
+	spawners.clear();
+	for (auto& spawnPoint : gameMap->GetEnemySpanwer()) {
+		Vector2 pos = gameMap->GetFloors().at(gameMap->CalTilePosToIndex(spawnPoint))->GetGlobalPosition();
+//		Vector2 pos = spawnPoint * 32;
+		spawners.push_back(pos);
+	}
 
 	enemys.reserve(spawners.size());
 
@@ -125,6 +127,9 @@ void EnemyManager::SetEnemys()
 
 		enemys.push_back(new Plant1());
 		enemys.back()->SetSpawner(spawner);
+		enemys.back()->SetLocalPosition(spawner);
+//		enemys.back()->UpdateWorld();
+		enemys.back()->SetActive(true);
 	}
 
 }

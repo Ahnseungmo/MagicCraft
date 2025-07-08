@@ -38,6 +38,9 @@ GameMap::~GameMap()
 		delete floor;
 	}
 	floors.clear();
+
+
+	enemySpawner.clear();
 }
 
 void GameMap::Update()
@@ -158,6 +161,10 @@ void GameMap::MapGenerate()
 				case 3://playerSpawn
 					state = Tile::PLAYER_SPAWN;
 					break;
+				case 4://enemySpanwer
+					state = Tile::FLOOR;
+					enemySpawner.push_back(Vector2(x,y));
+					break;
 				default:
 					state = Tile::FLOOR;
 					break;
@@ -178,7 +185,7 @@ void GameMap::MapGenerate()
 			tileDatas[i]->object = new Tile(tileSize,state, NeighTileData(i));
 			tileDatas[i]->object->SetParent(this);
 			tileDatas[i]->object->SetLocalPosition(floors[i]->GetLocalPosition());
-			tileDatas[i]->object->SetZPos(0.5f + (floors[i]->GetGlobalPosition().y * 0.0001));
+			tileDatas[i]->object->SetZPos(0.5f + (floors[i]->GetGlobalPosition().y * 0.000001));
 
 			tileDatas[i]->object->UpdateWorld();
 			objects.push_back(tileDatas[i]->object);
@@ -186,6 +193,8 @@ void GameMap::MapGenerate()
 		else if (state == Tile::PLAYER_SPAWN) {
 			playerSpawnPoint = floors[i]->GetGlobalPosition();
 		}
+
+
 	}
 }
 
