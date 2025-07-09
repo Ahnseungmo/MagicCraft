@@ -66,6 +66,43 @@ void TileMapScene::Render()
 
 void TileMapScene::GUIRender()
 {
+	int pos[2];
+	float globalPos[2];
+	Vector2 gp = player->GetGlobalPosition();
+	globalPos[0] = gp.x;
+	globalPos[1] = gp.y;
+	Vector2 p = gameMap->CalPosToTilePos(gp);
+	pos[0] = p.x;
+	pos[1] = p.y;
+	ImGui::InputFloat2("global", globalPos);
+	ImGui::InputInt2("pos", pos);
+
+	vector<Vector2> biomes = gameMap->GetBiomeBassTilePos();
+	float biome1[2] = { biomes[0].x,biomes[1].y };
+	ImGui::InputFloat2("0", biome1);
+	float biome2[2] = { biomes[1].x,biomes[1].y };
+	ImGui::InputFloat2("1", biome2);
+	float biome3[2] = { biomes[2].x,biomes[2].y };
+	ImGui::InputFloat2("2", biome3);
+	float biome4[2] = { biomes[3].x,biomes[3].y };
+	ImGui::InputFloat2("3", biome4);
+	float biome5[2] = { biomes[4].x,biomes[4].y };
+	ImGui::InputFloat2("4", biome5);
+
+	/*
+	float biome1[2] = { biomes[0].x * 32,biomes[1].y * 32 };
+	ImGui::InputFloat2("0", biome1);
+	float biome2[2] = { biomes[1].x*32,biomes[1].y * 32 };
+	ImGui::InputFloat2("1", biome2);
+	float biome3[2] = { biomes[2].x * 32,biomes[2].y * 32 };
+	ImGui::InputFloat2("2", biome3);
+	float biome4[2] = { biomes[3].x * 32,biomes[3].y * 32 };
+	ImGui::InputFloat2("3", biome4);
+	float biome5[2] = { biomes[4].x * 32,biomes[4].y * 32 };
+	ImGui::InputFloat2("4", biome5);
+	
+	*/
+
 	/*
 	int pos[2];
 	Vector2 p = player->GetGlobalPosition();

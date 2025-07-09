@@ -80,8 +80,11 @@ public:
     void SetBase(const Vector2& v) { data.base = { v.x, v.y }; }
     void SetBiomePos(int index, const Vector2& v)
     {
-        if (index >= 0 && index < 5)
-            data.biomePos[index] = { v.x, v.y };
+        if (index >= 0 && index < 5) {
+
+            data.biomePos[index] = DirectX::XMFLOAT2(v.x, v.y);
+        }
+ //           data.biomePos[index] = { v.x, v.y };
     }
 
     BiomeData* Get() { return &data; }

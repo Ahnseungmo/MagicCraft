@@ -146,6 +146,7 @@ void Character::LoadClip(string path, string file, bool isLoop, float speed)
 void Character::UpdateWorld()
 {
 	Collider::UpdateWorld();
+	clipTransform->UpdateWorld();
 	for (auto& clip : clips) {
 		clip->SetFrameZPos(zPos);
 	}

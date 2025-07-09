@@ -46,19 +46,22 @@ public:
 
 	Vector2 CalPosToTilePos(Vector2 pos) {
 //		Vector2 tilebo = Vector2(tileSize.x / 2, tileSize.y / 2);
-		return (pos )/tileSize;
+
+		Vector2 tilePos = (pos) / tileSize;;
+		tilePos.y = (tileCount.y - 1 - (int)tilePos.y);
+
+		return tilePos;
 	}
 
 	int CalPosToIndex(Vector2 pos) {
 		Vector2 cal = CalPosToTilePos(pos);
-//		int index = (tileCount.y-1-cal.y) * tileCount.y + cal.x;
-		int index = (tileCount.y - 1 - (int)cal.y) * tileCount.x + (int)cal.x;  // y축 반전을 고려
-		return index;
+		return CalTilePosToIndex(cal);;
 	}
 
 	int CalTilePosToIndex(Vector2 pos) {
 		Vector2 cal = pos;
-		int index = (tileCount.y - 1 - (int)cal.y) * tileCount.x + (int)cal.x;  // y축 반전을 고려
+
+		int index = (int)cal.y * tileCount.x + (int)cal.x; 
 		return index;
 	}
 
@@ -95,4 +98,7 @@ private:
 	VertexBuffer* objectInstanceBuffer;
 
 	MapGenerator* mapGenerator;
+
+	BiomeBuffer* biomeBuffer;
+	BiomeData biomeData;
 };

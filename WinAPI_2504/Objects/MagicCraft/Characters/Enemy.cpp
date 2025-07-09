@@ -122,6 +122,7 @@ void Enemy::Update()
 	
 	*/
 
+	
 
 
 	Player* player = EnemyManager::Get()->GetPlayer();
@@ -212,6 +213,7 @@ void Enemy::Update()
 	}
 
 	Character::Update();
+	
 }
 
 bool Enemy::HitCheck(Collider* collider) {

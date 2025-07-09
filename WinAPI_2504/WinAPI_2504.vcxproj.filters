@@ -572,5 +572,6 @@
     <FxCompile Include="Resources\Shaders\Outline.hlsl" />
     <FxCompile Include="Resources\Shaders\Instancing.hlsl" />
     <FxCompile Include="Resources\Shaders\SpriteInstancing.hlsl" />
+    <FxCompile Include="Resources\Shaders\SpriteBiomeInstancing.hlsl" />
   </ItemGroup>
 </Project>

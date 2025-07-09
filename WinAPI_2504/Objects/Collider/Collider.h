@@ -26,7 +26,7 @@ public:
 
 protected:
 	Type type;
-
-private:
 	static bool isDraw;
+private:
+
 };

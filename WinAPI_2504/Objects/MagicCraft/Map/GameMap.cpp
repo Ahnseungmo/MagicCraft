@@ -4,7 +4,8 @@ GameMap::GameMap(Vector2 count) : tileCount(count)
 {
 	quad = new Quad(L"Resources/Textures/MagicCraft/TileMap/BiomeTiles.png", Vector2(),
 		Vector2(1.0f / 30.0f, 1.0f / 16.0f));
-	quad->GetMaterial()->SetShader(L"SpriteInstancing.hlsl");
+//	quad->GetMaterial()->SetShader(L"SpriteInstancing.hlsl");
+	quad->GetMaterial()->SetShader(L"SpriteBiomeInstancing.hlsl");
 
 	int size = count.x * count.y;
 	tileDatas.reserve(size);
@@ -30,6 +31,12 @@ GameMap::GameMap(Vector2 count) : tileCount(count)
 
 	MapGenerate();
 
+
+	biomeBuffer = new BiomeBuffer();
+	for (int i = 0;i < biomeBassTilePos.size();i++)
+		biomeBuffer->SetBiomePos(i,floors.at(CalTilePosToIndex(biomeBassTilePos[i]))->GetGlobalPosition());
+	biomeBuffer->SetPS(1);
+
 }
 
 GameMap::~GameMap()
@@ -53,6 +60,8 @@ void GameMap::Update()
 
 void GameMap::Render()
 {
+
+
 	floorInstanceBuffer->Set(1);
 
 	quad->SetWorld();
@@ -98,10 +107,12 @@ void GameMap::SetInstanceBuffer(vector<Tile*> tiles, vector<InstanceData>& insta
 		TileData* data = tileDatas.at(CalPosToIndex(tiles.at(i)->GetGlobalPosition()));
 		Vector2 biomePos = data->biomePos.at(data->biome);
 		
-
-		float frameX = tiles.at(i)->GetQuaterTileShape(j).x + biomePos.x;;
-		float frameY = tiles.at(i)->GetQuaterTileShape(j).y + biomePos.y;;
-
+		/*
+		float frameX = tiles.at(i)->GetQuaterTileShape(j).x + biomePos.x;
+		float frameY = tiles.at(i)->GetQuaterTileShape(j).y + biomePos.y;
+*/
+		float frameX = tiles.at(i)->GetQuaterTileShape(j).x;
+		float frameY = tiles.at(i)->GetQuaterTileShape(j).y;
 		instance.curFrame = Float2(frameX, frameY);
 		j++;
 		
@@ -164,6 +175,7 @@ void GameMap::MapGenerate()
 				case 4://enemySpanwer
 					state = Tile::FLOOR;
 					enemySpawner.push_back(Vector2(x,y));
+
 					break;
 				default:
 					state = Tile::FLOOR;
@@ -184,7 +196,7 @@ void GameMap::MapGenerate()
 
 			tileDatas[i]->object = new Tile(tileSize,state, NeighTileData(i));
 			tileDatas[i]->object->SetParent(this);
-			tileDatas[i]->object->SetLocalPosition(floors[i]->GetLocalPosition());
+			tileDatas[i]->object->SetLocalPosition(floors[i]->GetGlobalPosition());
 			tileDatas[i]->object->SetZPos(0.5f + (floors[i]->GetGlobalPosition().y * 0.000001));
 
 			tileDatas[i]->object->UpdateWorld();
