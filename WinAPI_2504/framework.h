@@ -36,7 +36,7 @@
 #include <assert.h>
 #include <algorithm>
 #include <filesystem>
-
+#include <float.h>  
 
 
 #include <random>
@@ -128,7 +128,9 @@ enum Element {
 #include "Framework/Buffer/VertexBuffer.h"
 #include "Framework/Buffer/IndexBuffer.h"
 #include "Framework/Buffer/ConstBuffer.h"
+#include "Framework/Buffer/StructuredBuffer.h"
 #include "Framework/Buffer/GlobalBffer.h"
+
 
 #include "Framework/Render/Texture.h"
 #include "Framework/Render/Mesh.h"
@@ -186,6 +188,11 @@ enum Element {
 
 #include "Objects/MagicCraft/Characters/Enemy.h"
 #include "Objects/MagicCraft/Characters/Enemys/Plant1.h"
+#include "Objects/MagicCraft/Characters/Enemys/Plant2.h"
+#include "Objects/MagicCraft/Characters/Enemys/Plant3.h"
+#include "Objects/MagicCraft/Characters/Enemys/Orc1.h"
+#include "Objects/MagicCraft/Characters/Enemys/Orc2.h"
+#include "Objects/MagicCraft/Characters/Enemys/Orc3.h"
 
 #include "Objects/MagicCraft/Characters/EnemyManager.h"
 #include "Objects/MagicCraft/Wand.h"

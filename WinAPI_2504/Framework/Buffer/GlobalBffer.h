@@ -63,32 +63,40 @@ private:
     int values[4] = {};
 };
 
-struct BiomeData
+struct BiomePosData
 {
-    DirectX::XMFLOAT2 base;
-    float _padding0[2]; // 16바이트 정렬 맞춤용
-
-    DirectX::XMFLOAT2 biomePos[5];
-    float _padding1[2]; // 총 크기를 16바이트 배수로 맞춤
+    DirectX::XMFLOAT2 biomePos;  // 2D 좌표
 };
 
-class BiomeBuffer : public ConstBuffer
+class BiomeBuffer : public StructuredBuffer
 {
 public:
-    BiomeBuffer() : ConstBuffer(&data, sizeof(BiomeData)) {}
-
-    void SetBase(const Vector2& v) { data.base = { v.x, v.y }; }
-    void SetBiomePos(int index, const Vector2& v)
+    // 생성자: StructuredBuffer 초기화
+    BiomeBuffer(BiomePosData* data, UINT numElements)
+        : StructuredBuffer(data, sizeof(BiomePosData), numElements)
     {
-        if (index >= 0 && index < 5) {
-
-            data.biomePos[index] = DirectX::XMFLOAT2(v.x, v.y);
-        }
- //           data.biomePos[index] = { v.x, v.y };
     }
 
-    BiomeData* Get() { return &data; }
+    // SetBiomePos: 특정 인덱스에 biomePos 값 설정
+    void SetBiomePos(int index, const DirectX::XMFLOAT2& pos)
+    {
+        if (index >= 0 && index < 5) {
+            ((BiomePosData*)data)[index].biomePos = pos;  // biomePos 값을 배열에 설정
+        }
+        
+    }
 
-private:
-    BiomeData data = {};
+    // GetBiomePos: 특정 인덱스의 biomePos 값 반환
+    DirectX::XMFLOAT2 GetBiomePos(int index)
+    {
+        if (index >= 0 && index < 5) {
+            return ((BiomePosData*)data)[index].biomePos;
+        }
+        return DirectX::XMFLOAT2(0.0f, 0.0f);  // 잘못된 인덱스는 기본값 반환
+    }
+
+    void SetPS(UINT slot) {
+        StructuredBuffer::UpdateBuffer();  // 데이터 업데이트
+        StructuredBuffer::SetPS(slot);
+    }
 };

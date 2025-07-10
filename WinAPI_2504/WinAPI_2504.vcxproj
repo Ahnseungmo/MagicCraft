@@ -144,6 +144,7 @@
     <ClInclude Include="Framework\Buffer\ConstBuffer.h" />
     <ClInclude Include="Framework\Buffer\GlobalBffer.h" />
     <ClInclude Include="Framework\Buffer\IndexBuffer.h" />
+    <ClInclude Include="Framework\Buffer\StructuredBuffer.h" />
     <ClInclude Include="Framework\Buffer\VertexBuffer.h" />
     <ClInclude Include="Framework\Buffer\VertexLayouts.h" />
     <ClInclude Include="Framework\Device\Device.h" />
@@ -190,7 +191,12 @@
     <ClInclude Include="Objects\Flappy\Bird.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\EnemyManager.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\Character.h" />
+    <ClInclude Include="Objects\MagicCraft\Characters\Enemys\Orc1.h" />
+    <ClInclude Include="Objects\MagicCraft\Characters\Enemys\Orc2.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\Enemys\Plant1.h" />
+    <ClInclude Include="Objects\MagicCraft\Characters\Enemys\Plant2.h" />
+    <ClInclude Include="Objects\MagicCraft\Characters\Enemys\Plant3.h" />
+    <ClInclude Include="Objects\MagicCraft\Characters\Enemys\Orc3.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\Player.h" />
     <ClInclude Include="Objects\MagicCraft\Map\GameMap.h" />
     <ClInclude Include="Objects\MagicCraft\Map\MapAStar.h" />
@@ -243,6 +249,7 @@
     </ClCompile>
     <ClCompile Include="Framework\Buffer\ConstBuffer.cpp" />
     <ClCompile Include="Framework\Buffer\IndexBuffer.cpp" />
+    <ClCompile Include="Framework\Buffer\StructuredBuffer.cpp" />
     <ClCompile Include="Framework\Buffer\VertexBuffer.cpp" />
     <ClCompile Include="Framework\Device\Device.cpp" />
     <ClCompile Include="Framework\Environment\Camera.cpp" />
@@ -286,7 +293,12 @@
     <ClCompile Include="Objects\MagicCraft\Characters\Character.cpp" />
     <ClCompile Include="Objects\MagicCraft\Characters\Enemy.cpp" />
     <ClCompile Include="Objects\MagicCraft\Characters\EnemyManager.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Characters\Enemys\Orc1.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Characters\Enemys\Orc2.cpp" />
     <ClCompile Include="Objects\MagicCraft\Characters\Enemys\Plant1.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Characters\Enemys\Plant2.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Characters\Enemys\Plant3.cpp" />
+    <ClCompile Include="Objects\MagicCraft\Characters\Enemys\Orc3.cpp" />
     <ClCompile Include="Objects\MagicCraft\Characters\Player.cpp" />
     <ClCompile Include="Objects\MagicCraft\Map\GameMap.cpp" />
     <ClCompile Include="Objects\MagicCraft\Map\MapAStar.cpp" />

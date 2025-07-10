@@ -60,13 +60,15 @@ cbuffer ColorBuffer : register(b0)
 {
     float4 color;
 }
-
+/*
 cbuffer BiomeBuffer : register(b1)
 {
-    float2 base;
     float2 biomePos[5];
 };
+*/
 
+
+StructuredBuffer<float2> biomePos : register(t1); // StructuredBuffer를 t0에 바인딩
 Texture2D baseMap : register(t0);
 SamplerState samplerState : register(s0);
 
@@ -77,13 +79,17 @@ float4 PS(Output output) : SV_TARGET
     
     // 거리 계산을 위한 변수
     float distance[5];
-    float merge = 0;
-
+    
     // 현재 위치를 basePos.xy로 설정 (월드좌표)
     float2 basePos = output.basePos.xy;
-    int i = 0;
+
+    const float MAX_DISTANCE = 1e30f;
+    // 가장 가까운 바이옴을 찾기 위한 변수
+    int closestBiomeIndex = 4;
+    float closestDistance = MAX_DISTANCE; // 아주 큰 값으로 초기화
+
     // 바이옴 색상 및 거리 계산
-    for (i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++)
     {
         // UV 좌표 계산 (현재 프레임을 기준으로)
         float2 uv;
@@ -95,50 +101,18 @@ float4 PS(Output output) : SV_TARGET
 
         // 현재 픽셀 위치와 바이옴 위치 간 거리 계산
         float2 dif = biomePos[i] - basePos;
-        distance[i] = sqrt(dif.x * dif.x + dif.y * dif.y);
+        float dist = dif.x * dif.x + dif.y * dif.y;
 
-        // 전체 거리 합산 (거리가 클수록 색이 덜 적용되게 하기 위함)
-        merge += distance[i];
-    }
-
-    // 가장 가까운 두 바이옴을 찾기 위해 거리를 기준으로 정렬
-    float dis = distance[0];
-    int index = 0;
-    for (i = 1; i < 5; i++)
-    {
-        if (distance[i] <= dis)
+        // 가장 가까운 바이옴을 찾기
+        if (dist < closestDistance)
         {
-            index = i;
-            dis = distance[i];
-        }
-
-    }
-
-    int closest1 = 0, closest2 = 1;
-    if (distance[1] < distance[0]) {
-        closest1 = 1;
-        closest2 = 0;
-    }
-    /*
-
-    for (int i = 2; i < 5; i++)
-    {
-        if (distance[i] < distance[closest1]) {
-            closest2 = closest1;
-            closest1 = i;
-        } else if (distance[i] < distance[closest2]) {
-            closest2 = i;
+            closestDistance = dist;
+            closestBiomeIndex = i;
         }
     }
-    */
 
-    // 두 가장 가까운 바이옴 색상 간 보간
-            float dist1 = distance[closest1] / merge;
-    float dist2 = distance[closest2] / merge;
-    
-    // 색상 보간
- //   float4 finalColor = lerp(baseColors[closest1], baseColors[closest2], dist1 / (dist1 + dist2));
-    float4 finalColor = baseColors[index];
+    // 가장 가까운 바이옴 색상 적용
+    float4 finalColor = baseColors[closestBiomeIndex];
 
     // 결과 색상에 최종 색상을 곱해서 반환
     return finalColor * color;

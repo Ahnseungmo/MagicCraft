@@ -32,9 +32,13 @@ GameMap::GameMap(Vector2 count) : tileCount(count)
 	MapGenerate();
 
 
-	biomeBuffer = new BiomeBuffer();
-	for (int i = 0;i < biomeBassTilePos.size();i++)
-		biomeBuffer->SetBiomePos(i,floors.at(CalTilePosToIndex(biomeBassTilePos[i]))->GetGlobalPosition());
+	biomeBuffer = new BiomeBuffer(biomePos,5);
+
+	for (int i = 0;i < biomeBassTilePos.size();i++) {
+		Vector2 pos = floors.at(CalTilePosToIndex(biomeBassTilePos[i]))->GetGlobalPosition();
+		biomeBuffer->SetBiomePos(i, Float2(pos.x,pos.y));
+	}
+
 	biomeBuffer->SetPS(1);
 
 }

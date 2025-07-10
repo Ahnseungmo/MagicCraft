@@ -122,10 +122,47 @@ void EnemyManager::SetEnemys()
 
 	enemys.reserve(spawners.size());
 
+
 	for (auto& spawner : spawners) {
 		
+		float dis[5];
+		float ldis;
+		int index = 0;
+		for (int i = 0;i < 5;i++) {
+			dis[i] = Vector2::Distance(spawner, gameMap->GetFloors().at(gameMap->CalTilePosToIndex(gameMap->GetBiomeBassTilePos().at(i)))->GetGlobalPosition());
+		}
+		ldis = dis[0];
+		for (int i = 1;i < 5;i++) {
+			if (ldis >= dis[i]) {
+				index = i;
+				ldis = dis[i];
+			}
+		}
 
-		enemys.push_back(new Plant1());
+		switch (index) {
+		case 0:
+			enemys.push_back(new Plant1());
+
+			break;
+		case 1:
+			enemys.push_back(new Plant2());
+			break;
+
+		case 2:
+			enemys.push_back(new Plant3());
+			break;
+		case 3:
+			enemys.push_back(new Orc1());
+			break;
+		case 4:
+			enemys.push_back(new Orc2());
+			break;
+
+
+		}
+
+
+
 		enemys.back()->SetSpawner(spawner);
 		enemys.back()->SetLocalPosition(spawner);
 //		enemys.back()->UpdateWorld();

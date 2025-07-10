@@ -1,0 +1,7 @@
+<TextureAtlas imagePath="Plant1_Hurt_full.png" width="320" height="256">
+    <sprite n="Idle_Down_1.png" x="0" y="64" w="64" h="64"/>
+    <sprite n="Idle_Down_2.png" x="64" y="64" w="64" h="64"/>
+    <sprite n="Idle_Down_3.png" x="128" y="64" w="64" h="64"/>
+    <sprite n="Idle_Down_4.png" x="192" y="64" w="64" h="64"/>
+    <sprite n="Idle_Down_4.png" x="256" y="64" w="64" h="64"/>
+</TextureAtlas>

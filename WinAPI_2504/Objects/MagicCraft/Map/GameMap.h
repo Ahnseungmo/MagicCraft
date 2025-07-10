@@ -100,5 +100,6 @@ private:
 	MapGenerator* mapGenerator;
 
 	BiomeBuffer* biomeBuffer;
-	BiomeData biomeData;
+
+	BiomePosData biomePos[5];
 };
