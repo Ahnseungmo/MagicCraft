@@ -82,7 +82,7 @@ float4 PS(Output output) : SV_TARGET
     float2 basePos = output.basePos.xy;
 
     const float MAX_DISTANCE = 1e30f;
-    
+
     // 가까운 바이옴들을 추적할 변수들
     int closestBiomeIndex = 4;
     float closestDistance = MAX_DISTANCE;
@@ -135,31 +135,25 @@ float4 PS(Output output) : SV_TARGET
         }
     }
 
-    // 가까운 바이옴들이 겹치는 경우 블렌딩 처리
-    float4 finalColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
-    float totalAlpha = 0.0f;
+    // 거리 기반 가중치 계산 (가까운 바이옴에 더 높은 가중치)
+    float weight[5];
+    float totalWeight = 0.0f;
 
-    // 3개까지 가까운 바이옴을 블렌딩
-    if (abs(closestDistance - secondClosestDistance) < 100.0f)
+    // 가까운 바이옴의 가중치 설정 (거리 값이 낮을수록 가중치가 높음)
+    for (int i = 0; i < 5; i++)
     {
-        // 두 바이옴 간 거리 차이를 기준으로 서서히 블렌딩
-        float blendFactor1 = smoothstep(-100.0f, 100.0f, abs(closestDistance - secondClosestDistance)); // 거리 차이가 작을수록 블렌딩 비율 증가
-        float4 blendedColor1 = lerp(baseColors[closestBiomeIndex], baseColors[secondClosestBiomeIndex], blendFactor1);
-        
-        // 세 번째 바이옴과 블렌딩
-        if (abs(secondClosestDistance - thirdClosestDistance) < 100.0f)
-        {
-            float blendFactor2 = smoothstep(-100.0f, 100.0f, abs(secondClosestDistance - thirdClosestDistance));
-            blendedColor1 = lerp(blendedColor1, baseColors[thirdClosestBiomeIndex], blendFactor2);
-        }
-
-        finalColor = blendedColor1;
-    }
-    else
-    {
-        // 가장 가까운 바이옴 색상만 적용
-        finalColor = baseColors[closestBiomeIndex];
+        weight[i] = 1.0f / (distance[i] + 0.001f); // 작은 값을 더해서 0으로 나누는 걸 방지
+        totalWeight += weight[i];
     }
 
-    return finalColor * color; // 최종 색상 반환
+    // 가중치를 통해 색상 블렌딩
+    float4 blendedColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
+    
+    // 각 바이옴의 색상에 가중치를 적용하여 결합
+    for (int i = 0; i < 5; i++)
+    {
+        blendedColor += (baseColors[i] * (weight[i] / totalWeight));
+    }
+
+    return blendedColor;
 }
