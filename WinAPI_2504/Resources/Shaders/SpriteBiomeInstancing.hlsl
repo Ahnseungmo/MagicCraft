@@ -36,12 +36,14 @@ Output VS(Input input)
 {
     Output output;
     
+    float4 worldPos = mul(input.pos, mul(input.transform, world));
+    output.basePos = worldPos.xyz;
     
     matrix transform = mul(input.transform, world);    
     output.pos = mul(input.pos, transform);    
 
-    output.basePos = output.pos.xyz;
-//    output.basePos = output.pos.xyz / output.pos.w;
+//   output.basePos = output.pos.xyz;
+//   output.basePos = output.pos.xyz / output.pos.w;
 
     output.pos = mul(output.pos, view);
     output.pos = mul(output.pos, projection);
@@ -79,9 +81,9 @@ float4 PS(Output output) : SV_TARGET
 
     // 현재 위치를 basePos.xy로 설정 (월드좌표)
     float2 basePos = output.basePos.xy;
-
+    int i = 0;
     // 바이옴 색상 및 거리 계산
-    for (int i = 0; i < 5; i++)
+    for (i = 0; i < 5; i++)
     {
         // UV 좌표 계산 (현재 프레임을 기준으로)
         float2 uv;
@@ -102,7 +104,7 @@ float4 PS(Output output) : SV_TARGET
     // 가장 가까운 두 바이옴을 찾기 위해 거리를 기준으로 정렬
     float dis = distance[0];
     int index = 0;
-    for (int i = 1; i < 5; i++)
+    for (i = 1; i < 5; i++)
     {
         if (distance[i] <= dis)
         {

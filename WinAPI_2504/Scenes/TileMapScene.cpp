@@ -78,6 +78,16 @@ void TileMapScene::GUIRender()
 	ImGui::InputInt2("pos", pos);
 
 	vector<Vector2> biomes = gameMap->GetBiomeBassTilePos();
+
+	Vector2 biomePos;
+
+	for (int i = 0; i < 5; i++) {
+		biomePos = gameMap->GetFloors().at(gameMap->CalTilePosToIndex(gameMap->GetBiomeBassTilePos().at(i)))->GetGlobalPosition();
+		float biome1[2] = { biomePos.x,biomePos.y };
+		ImGui::InputFloat2(to_string(i).c_str(), biome1);
+		
+	}
+	/*
 	float biome1[2] = { biomes[0].x,biomes[1].y };
 	ImGui::InputFloat2("0", biome1);
 	float biome2[2] = { biomes[1].x,biomes[1].y };
@@ -88,7 +98,7 @@ void TileMapScene::GUIRender()
 	ImGui::InputFloat2("3", biome4);
 	float biome5[2] = { biomes[4].x,biomes[4].y };
 	ImGui::InputFloat2("4", biome5);
-
+	*/
 	/*
 	float biome1[2] = { biomes[0].x * 32,biomes[1].y * 32 };
 	ImGui::InputFloat2("0", biome1);
