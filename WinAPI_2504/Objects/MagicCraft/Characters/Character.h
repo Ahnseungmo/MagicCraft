@@ -37,10 +37,13 @@ public:
 
 	void SetMap(GameMap* map) { this->map = map; }
 	void SetAStar(MapAStar* aStar) { this->aStar = aStar; }
+
+	float GetHp() { return hp; }
+	float GetHpMax() { return hpMax; }
 protected:
 
 	float hp=100;
-
+	float hpMax = 100;
 	const float HIT_INTERVAL = 0.3f;
 	float hitTimer = HIT_INTERVAL;
 

@@ -104,7 +104,10 @@ Enemy* EnemyManager::nearEnemy(Vector2 pos)
 			}
 			else {
 				temp = Vector2::Distance(enemy->GetGlobalPosition(), pos);
-				if (minDistance > temp) nearEnemy = enemy;
+				if (minDistance > temp) {
+					minDistance = temp;
+					nearEnemy = enemy;
+				}
 			}
 		}
 	}

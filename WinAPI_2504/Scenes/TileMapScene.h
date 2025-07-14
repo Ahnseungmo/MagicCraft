@@ -17,4 +17,6 @@ private:
 	MapAStar* aStar;
 
 	Player* player;
+
+//	SpellCustomUI* book;
 };

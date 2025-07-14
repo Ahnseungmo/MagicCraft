@@ -183,8 +183,12 @@ enum Element {
 #include "Objects/MagicCraft/Map/GameMap.h"
 #include "Objects/MagicCraft/Map/MapAStar.h"
 
+#include "Objects/MagicCraft/UI/ValueBar.h"
+
 #include "Objects/MagicCraft/Characters/Character.h"
 #include "Objects/MagicCraft/Characters/Player.h"
+
+
 
 #include "Objects/MagicCraft/Characters/Enemy.h"
 #include "Objects/MagicCraft/Characters/Enemys/Plant1.h"
@@ -197,6 +201,8 @@ enum Element {
 #include "Objects/MagicCraft/Characters/EnemyManager.h"
 #include "Objects/MagicCraft/Wand.h"
 
+
+#include "Objects/MagicCraft/UI/PlayerStateUI.h"
 
 #include "Objects/MagicCraft/UI/CircleUI.h"
 #include "Objects/MagicCraft/UI/Button.h"

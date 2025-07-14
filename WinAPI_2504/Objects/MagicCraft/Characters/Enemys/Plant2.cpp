@@ -44,6 +44,10 @@ Plant2::Plant2()
 	clipTransform->SetLocalPosition(0, -Radius() + imageY / 2);
 
 	clipTransform->UpdateWorld();
+
+
+	hpMax = 20;
+	hp = hpMax;
 }
 
 Plant2::~Plant2()

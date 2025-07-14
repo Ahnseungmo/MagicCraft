@@ -2,6 +2,8 @@
 
 Spell::Spell()
 {
+	clipTransform = new Transform;
+
 
 	isActive = false;
 
@@ -114,18 +116,26 @@ void Spell::Update()
 	}
 	clips.at(state)->Update();
 	UpdateWorld();
+
+	clipTransform->SetLocalPosition(Vector2(0,30) + this->GetGlobalPosition());
+	clipTransform->SetLocalRotation(GetLocalRotation());
+	clipTransform->SetLocalScale(GetLocalScale());
+	clipTransform->SetZPos(zPos);
+	clipTransform->UpdateWorld();
 //	image->UpdateWorld();
 }
 
 void Spell::Render()
 {
 	if (!isActive) return;
-	worldBuffer->Set(world);
-	worldBuffer->SetVS(0);
-	clips.at(state)->Render();
-//	image->Render();
+
+
 	RectCollider::Render();
 
+	worldBuffer->Set(clipTransform->GetWorld());
+	worldBuffer->SetVS(0);
+	clips.at(state)->Render();
+	//	image->Render();
 }
 /*
 void Spell::Spawn(Vector2 pos,Vector2 dir,Vector2 size)

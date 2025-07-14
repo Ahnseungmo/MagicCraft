@@ -15,6 +15,10 @@ public:
 
 	void SetPause(bool isPause) { this->isPause = isPause; }
 	bool IsPause() { return isPause; }
+	void SetPlayer(Player* player) { this->player = player; playerStateUI->SetPlayer(player); }
+	Player* GetPlayer() {return player; }
+
+
 private:
 	const float BOOK_POSITION_TIMER = 0.2f;
 	bool isPause = false;
@@ -26,5 +30,9 @@ private:
 	SpellCustomUI* book;
 	vector<Vector2> bookPosition = { CENTER - Vector2{0,700.0f}, {CENTER} };
 	float bookPositionTime = 0;
+
+	Player* player;
+
+	PlayerStateUI* playerStateUI;
 
 };

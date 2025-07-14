@@ -11,10 +11,16 @@ public:
 	void Update();
 
 	void Edit();
-	Transform* GetCameraTransform() { return cameraTransform; };
+	Transform* GetCameraTransform() { return cameraTransform; }
+
+	float GetMp() { return mp; }
+	float GetMpMax() { return mpMax; }
+	
 
 private:
 	Transform* cameraTransform ;
 
+	float mpMax = 100;
+	float mp = mpMax;
 
 };

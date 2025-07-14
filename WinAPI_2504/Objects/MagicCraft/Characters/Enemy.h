@@ -17,6 +17,7 @@ public:
 	~Enemy();
 
 	void Update();
+	void Render();
 
 	bool HitCheck(Collider* collider);
 	void Edit();
@@ -58,5 +59,6 @@ private:
 //	Transform* spawnPoint;
 	Vector2 spanwer = {0,0};
 
-
+protected:
+	ValueBar* hpBar;
 };

@@ -25,9 +25,6 @@ public:
 	static const unordered_map<string, Shape> StringToShape;
 	static const unordered_map<string, Element> StringToElement;
 
-	void LoadShapeDatas();
-	void LoadElementDatas();
-
 	void SetOptionShape(SpellOptionData* data, Shape shape);
 	void SetOptionElement(SpellOptionData* data, Element element);
 

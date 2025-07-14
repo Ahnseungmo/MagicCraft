@@ -59,17 +59,13 @@ SamplerState samplerState : register(s0);
 float4 PS(Output output) : SV_TARGET
 {
     float2 uv = output.uv;
-    //uv.y += amount;
-    
+
+    // 체력 영역 바깥이면 투명
+    if (uv.x > amount)
+        return float4(0, 0, 0, 0);
+
+    // 체력 영역 출력
     float4 baseColor = baseMap.Sample(samplerState, uv);
-    
-    //float2 dir = output.uv - float2(0.5f, 0.5f);    
-    //float angle = atan2(dir.y, dir.x);
-    //
-    //if(angle > amount)
-    //{
-    //    return secondMap.Sample(samplerState, output.uv);
-    //}
-    
-    return baseColor * color + addColor;
+
+    return baseColor;
 }

@@ -44,6 +44,10 @@ Orc3::Orc3()
 	clipTransform->SetLocalPosition(0, -Radius() + imageY / 2);
 
 	clipTransform->UpdateWorld();
+
+
+	hpMax = 45;
+	hp = hpMax;
 }
 
 Orc3::~Orc3()

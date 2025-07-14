@@ -5,6 +5,10 @@ Enemy::Enemy()
 {
 	isActive = false;
 
+	hpBar = new ValueBar(L"Resources/Textures/MagicCraft/Character/Enemys/ValueRed_32x8.png");
+	hpBar->SetParent(this);
+	hpBar->SetLocalPosition(0,50);
+
 
 }
 
@@ -22,7 +26,7 @@ void Enemy::Update()
 	UpdateWorld();
 	clips.at((int)dir)->Update();
 	*/
-
+	/*
 	//µð¹ö±ë¿ë ÁÂÇ¥ÀÌµ¿ 
 	if (Input::Get()->IsKeyDown(VK_LBUTTON)) {
 		Vector2 pos = mousePos + Environment::Get()->GetMainCamera()->GetGlobalPosition();
@@ -32,7 +36,7 @@ void Enemy::Update()
 		patrolPath.clear();
 		UpdateWorld();
 	}
-
+	*/
 	/*
 	Player* player = EnemyManager::Get()->GetPlayer();
 	float distance = Vector2::Distance(GetGlobalPosition(), player->GetGlobalPosition());
@@ -214,6 +218,8 @@ void Enemy::Update()
 
 	Character::Update();
 	
+	hpBar->UpdateWorld();
+//	hpBar->SetZPos(GetZPos());
 }
 
 bool Enemy::HitCheck(Collider* collider) {
@@ -288,6 +294,18 @@ void Enemy::PathControl(vector<Vector2>& path,float speed)
 	Translate(velocity * speed * DELTA);
 }
 
+void Enemy::Render() {
+
+	Character::Render();
+/*
+	worldBuffer->Set(hpBarTransform->GetWorld());
+	worldBuffer->SetVS(0);
+
+	*/
+	hpBar->SetValue(hp / hpMax);
+	hpBar->Render();
+
+}
 void Enemy::Attack()
 {
 	Player* player = EnemyManager::Get()->GetPlayer();

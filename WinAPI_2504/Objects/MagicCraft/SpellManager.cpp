@@ -11,6 +11,7 @@ SpellManager::SpellManager()
 	spells.reserve(SPELL_POOL);
 	for (int i = 0; i < SPELL_POOL; i++) {
 		spells.push_back(new Spell());
+		spells.back()->SetZPos(0.7);
 	}
 
 }

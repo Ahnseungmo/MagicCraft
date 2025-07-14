@@ -209,7 +209,9 @@
     <ClInclude Include="Objects\MagicCraft\UI\CircleUI.h" />
     <ClInclude Include="Objects\MagicCraft\UI\Option.h" />
     <ClInclude Include="Objects\MagicCraft\UI\OptionButton.h" />
+    <ClInclude Include="Objects\MagicCraft\UI\PlayerStateUI.h" />
     <ClInclude Include="Objects\MagicCraft\UI\TextBox.h" />
+    <ClInclude Include="Objects\MagicCraft\UI\ValueBar.h" />
     <ClInclude Include="Objects\MagicCraft\Wand.h" />
     <ClInclude Include="Objects\MagicCraft\Characters\Enemy.h" />
     <ClInclude Include="Objects\MagicCraft\UI\SpellCustomUI.h" />
@@ -311,8 +313,10 @@
     <ClCompile Include="Objects\MagicCraft\UI\CircleUI.cpp" />
     <ClCompile Include="Objects\MagicCraft\UI\Option.cpp" />
     <ClCompile Include="Objects\MagicCraft\UI\OptionButton.cpp" />
+    <ClCompile Include="Objects\MagicCraft\UI\PlayerStateUI.cpp" />
     <ClCompile Include="Objects\MagicCraft\UI\SpellCustomUI.cpp" />
     <ClCompile Include="Objects\MagicCraft\UI\TextBox.cpp" />
+    <ClCompile Include="Objects\MagicCraft\UI\ValueBar.cpp" />
     <ClCompile Include="Objects\Manger\DataManager.cpp" />
     <ClCompile Include="Objects\Manger\EventManager.cpp" />
     <ClCompile Include="Objects\Shooting\Bullet.cpp" />

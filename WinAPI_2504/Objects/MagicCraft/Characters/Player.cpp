@@ -75,10 +75,9 @@ void Player::Update()
 	Translate(direction * speed * DELTA);
 	UpdateWorld();
 
-	if(Collider::isDraw && map)	TileCheck();
+	if(!Collider::isDraw && map) TileCheck();
 
-
-	zPos = 0.5f + (GetGlobalPosition().y * 0.000001);
+	zPos = 0.7f + (GetGlobalPosition().y * 0.000001);
 	UpdateWorld();
 	
 

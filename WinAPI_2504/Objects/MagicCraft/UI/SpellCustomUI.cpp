@@ -10,12 +10,12 @@ SpellCustomUI::SpellCustomUI() : RectCollider({ 500,500 })
 	pageLeft = new Quad(L"Resources/Textures/MagicCraft/UI/Book/BookPageLeft.png");
 	pageLeft->SetParent(this);
 	pageLeft->SetLocalPosition({ -(pageLeft->GetSize() * 0.5).x ,0 });
-	pageLeft->SetZPos(-0.001);
+	pageLeft->SetZPos(-0.000001);
 
 	pageRight = new Quad(L"Resources/Textures/MagicCraft/UI/Book/BookPageRight.png");
 	pageRight->SetParent(this);
 	pageRight->SetLocalPosition({ (pageRight->GetSize() * 0.5).x ,0 });
-	pageRight->SetZPos(-0.001);
+	pageRight->SetZPos(-0.000001);
 
 	InitOption();
 	InitSpellSlot();
@@ -71,12 +71,48 @@ SpellCustomUI::SpellCustomUI() : RectCollider({ 500,500 })
 	ImGuiIO& io = ImGui::GetIO();
 //	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\malgun.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesKorean());
 	ImFont* font1 = io.Fonts->AddFontFromFileTTF("Resources/Font/DNFBitBitv2.ttf", 16.0f, NULL, io.Fonts->GetGlyphRangesKorean());
-	textBox = new TextBox();
-	textBox->SetFont(font1);
-	textBox->SetParent(this);
-	textBox->SetText(u8"텍스트박스 중앙 정렬 테스트");
-	textBox->SetLocalPosition({0,0});
 
+
+	textBoxPiercing = new TextBox();
+	textBoxPiercing->SetFont(font1);
+	textBoxPiercing->SetAlign(TextBox::Left);
+	textBoxPiercing->SetParent(sampleSlots.at(0));
+	textBoxPiercing->SetText(u8"피어싱\n몬스터를 관통하며 지난간다.");
+	textBoxPiercing->SetLocalPosition({70,0});
+	
+	textBoxHoming = new TextBox();
+	textBoxHoming->SetFont(font1);
+	textBoxHoming->SetAlign(TextBox::Left);
+	textBoxHoming->SetParent(sampleSlots.at(1));
+	textBoxHoming->SetText(u8"호밍\n가까운 적을 자동으로 추적한다.");
+	textBoxHoming->SetLocalPosition({ 70,0 });
+
+
+	textBoxDuplication = new TextBox();
+	textBoxDuplication->SetFont(font1);
+	textBoxDuplication->SetAlign(TextBox::Left);
+	textBoxDuplication->SetParent(sampleSlots.at(2));
+	textBoxDuplication->SetText(u8"복제\n투사체를 복제한다.");
+	textBoxDuplication->SetLocalPosition({ 70,0 });
+
+
+	textBoxUpScale = new TextBox();
+	textBoxUpScale->SetFont(font1);
+	textBoxUpScale->SetAlign(TextBox::Left);
+	textBoxUpScale->SetParent(sampleSlots.at(3));
+	textBoxUpScale->SetText(u8"사이즈업\n투사체의 크기가 증가한다.");
+	textBoxUpScale->SetLocalPosition({ 70,0 });
+
+
+	textBoxReflect = new TextBox();
+	textBoxReflect->SetFont(font1);
+	textBoxReflect->SetAlign(TextBox::Left);
+	textBoxReflect->SetParent(sampleSlots.at(4));
+	textBoxReflect->SetText(u8"반사\n적에게 충돌하고 반사된다.");
+	textBoxReflect->SetLocalPosition({ 70,0 });
+
+
+	/*
 	textBox1 = new TextBox();
 	textBox1->SetFont(font1);
 	textBox1->SetParent(this);
@@ -92,7 +128,7 @@ SpellCustomUI::SpellCustomUI() : RectCollider({ 500,500 })
 	textBox2->SetText(u8"텍스트박스2 중앙 정렬 테스트");
 	textBox2->SetLocalPosition({ 0,-200 });
 
-
+	*/
 }
 
 void SpellCustomUI::InitSpellMarker()
@@ -254,8 +290,13 @@ void SpellCustomUI::Update()
 		spellMarkers.at(i)->Update();
 	}
 //	textBox->Update();
+
+
 	elementUI->Update();
 	shapeUI->Update();
+
+	textBoxPiercing->Update();
+
 }
 
 void SpellCustomUI::Render()
@@ -287,7 +328,11 @@ void SpellCustomUI::Render()
 //	textBox->Render();
 //	textBox1->Render();
 //	textBox2->Render();
-
+	textBoxPiercing->Render();
+	textBoxDuplication->Render();
+	textBoxHoming->Render();
+	textBoxReflect->Render();
+	textBoxUpScale->Render();
 
 }
 

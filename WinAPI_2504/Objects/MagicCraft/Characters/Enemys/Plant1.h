@@ -6,4 +6,6 @@ public:
 	Plant1();
 	~Plant1();
 
+
+
 };

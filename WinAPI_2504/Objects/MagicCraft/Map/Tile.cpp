@@ -18,8 +18,7 @@ Tile::~Tile()
 
 void Tile::CalTilesetPos()
 {
-	if (state == WALL) {
-//		SetTilesetPos(wallTileShapePos.at(tileType));	
+	if (state == WALL) {	
 		for (int i = 0; i < 4; i++) {
 
 			try {
@@ -37,7 +36,6 @@ void Tile::CalTilesetPos()
 		}
 	}
 	else if (state == WATER) {
-		//		SetTilesetPos(wallTileShapePos.at(tileType));	
 		for (int i = 0; i < 4; i++) {
 
 			try {
@@ -55,9 +53,7 @@ void Tile::CalTilesetPos()
 		}
 	}
 
-
 	else {
-//		SetTilesetPos(floorTileShapePos.at(4));
 		for (int i = 0;i < 4;i++)
 			quaterTileShape.at(i) = floorShapePos.at(0);
 	}

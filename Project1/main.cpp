@@ -9,9 +9,9 @@
 #include <string>
 
 using namespace std;
-const int MAP_WIDTH = 200;
-const int MAP_HEIGHT = 150;
-const int ROOM_MAX = 40;
+const int MAP_WIDTH = 100;
+const int MAP_HEIGHT = 100;
+const int ROOM_MAX = 10;
 const int ROOM_MIN_SIZE = 12;
 const int ROOM_MAX_SIZE = 20;
 const int MIN_OVERLAP = 3; // 방이 붙을 때 최소 겹치는 칸 수
@@ -56,7 +56,7 @@ public:
         : width(width), height(height), roomCount(roomCount),
         map(height, std::vector<int>(width, WALL)),
         room_id_map(height, std::vector<int>(width, -1)),
-        rng(static_cast<unsigned int>(time(0))),
+        rng(static_cast<unsigned int>(0)),
         room_connections() {
     }
 

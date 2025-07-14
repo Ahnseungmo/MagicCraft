@@ -61,5 +61,6 @@ private:
 	int pierce = 0;
 	float lifeTime = 0;
 
+	Transform* clipTransform;
 
 };

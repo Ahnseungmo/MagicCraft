@@ -80,7 +80,10 @@ private:
 //	SpellSlotData* 
 	vector<SpellSlotData*> spellSlotDatas;
 
-	TextBox* textBox;
-	TextBox* textBox1;
-	TextBox* textBox2;
+	TextBox* textBoxPiercing;
+	TextBox* textBoxDuplication;
+	TextBox* textBoxHoming;
+	TextBox* textBoxReflect;
+	TextBox* textBoxUpScale;
+
 };

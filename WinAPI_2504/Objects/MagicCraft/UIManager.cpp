@@ -4,12 +4,18 @@ UIManager::UIManager()
 {
 	book = new SpellCustomUI();
 	book->SetLocalPosition(CENTER);
-	book->SetZPos(0.2);
+//	book->SetZPos(0.000001);
+	book->SetZPos(-0.3);
 
 	book->UpdateWorld();
 	mouseTransform = new Transform();
 	book->SetActive(false);
 	bookState = false;
+
+
+	playerStateUI = new PlayerStateUI;
+	playerStateUI->SetZPos(-0.32);
+	playerStateUI->SetLocalPosition(100,700);
 
 }
 
@@ -23,6 +29,8 @@ UIManager::~UIManager()
 
 void UIManager::Update()
 {
+
+
 	mouseTransform->SetLocalPosition(mousePos);
 	
 	if (Input::Get()->IsKeyDown(VK_TAB)) {
@@ -53,11 +61,18 @@ void UIManager::Update()
 
 	if (Input::Get()->IsKeyUp(VK_LBUTTON)) SetSelectOption(nullptr);
 	
-	if (selectOption != nullptr) selectOption->Update();
+	if (selectOption != nullptr) {
+		selectOption->SetZPos(book->GetZPos() -0.004);
+		selectOption->Update();
+	}
+
+	playerStateUI->Update();
 }
 
 void UIManager::Render()
 {
 	book->Render();
 	if (selectOption != nullptr) selectOption->Render();
+
+	playerStateUI->Render();
 }

@@ -110,11 +110,7 @@ void GameMap::SetInstanceBuffer(vector<Tile*> tiles, vector<InstanceData>& insta
 		
 		TileData* data = tileDatas.at(CalPosToIndex(tiles.at(i)->GetGlobalPosition()));
 		Vector2 biomePos = data->biomePos.at(data->biome);
-		
-		/*
-		float frameX = tiles.at(i)->GetQuaterTileShape(j).x + biomePos.x;
-		float frameY = tiles.at(i)->GetQuaterTileShape(j).y + biomePos.y;
-*/
+
 		float frameX = tiles.at(i)->GetQuaterTileShape(j).x;
 		float frameY = tiles.at(i)->GetQuaterTileShape(j).y;
 		instance.curFrame = Float2(frameX, frameY);
@@ -127,9 +123,6 @@ void GameMap::SetInstanceBuffer(vector<Tile*> tiles, vector<InstanceData>& insta
 
 void GameMap::SetInstanceBuffers()
 {
-
-
-
 
 	floorInstances.resize(floors.size() * 4);
 	SetInstanceBuffer(floors, floorInstances, floorInstanceBuffer);
@@ -201,7 +194,7 @@ void GameMap::MapGenerate()
 			tileDatas[i]->object = new Tile(tileSize,state, NeighTileData(i));
 			tileDatas[i]->object->SetParent(this);
 			tileDatas[i]->object->SetLocalPosition(floors[i]->GetGlobalPosition());
-			tileDatas[i]->object->SetZPos(0.5f + (floors[i]->GetGlobalPosition().y * 0.000001));
+			tileDatas[i]->object->SetZPos(0.7f + (floors[i]->GetGlobalPosition().y * 0.000001));
 
 			tileDatas[i]->object->UpdateWorld();
 			objects.push_back(tileDatas[i]->object);
@@ -221,20 +214,7 @@ int GameMap::NeighTileData(int index)
 
 	Vector2 pos = CalTilePos(index);
 	Tile::State state = tileDatas.at(index)->state;
-	/*
-	for (int x = -1; x <= 1; x++) {
-		for (int y = -1; y <= 1; y++) {
-			if (x == 0 && y == 0) continue;
 
-			Vector2 target = { pos.x + x,pos.y + y };
-			bool check = target.x < 0 || target.x >= tileCount.x || target.y < 0 || target.y >= tileCount.y;
-			if (check || tileDatas.at(CalTilePos(target))->state == state)
-				data |= checkData;
-
-			checkData <<= 1;
-		}
-	}
-	*/
 	vector<Vector2> checkPos = {
 		{0,-1},
 		{0,1},

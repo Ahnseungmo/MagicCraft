@@ -4,6 +4,8 @@
 TileMapScene::TileMapScene()
 {
 
+
+
 //	gameMap = new GameMap({ 200,150 });
 //	gameMap = new GameMap({ 100,100 });
 	gameMap = new GameMap({ 200,200 });
@@ -16,7 +18,7 @@ TileMapScene::TileMapScene()
 
 	player = new Player();
 	player->SetLocalPosition(gameMap->GetPlayerSpawnPoint());
-	player->SetZPos(0.2f);
+//	player->SetZPos(0.2f);
 	player->UpdateWorld();
 
 	Environment::Get()->GetMainCamera()->SetTarget(player);
@@ -37,8 +39,41 @@ TileMapScene::TileMapScene()
 
 	player->SetMap(gameMap);
 
+	/////////////////////////////////
+
+	SpellManager::Get();
+	DataManager::Get()->LoadFrames("Resources/Textures/MagicCraft/Spell");
 
 
+	SpellOptionData* data = new SpellOptionData();
+	//	SpellManager::Get()->SetOptionShape(data, Arrow);
+	SpellManager::Get()->SetOptionShape(data, Blade);
+	SpellManager::Get()->SetOptionElement(data, Fire);
+	SpellManager::Get()->SetOptionHoming(data);
+	SpellManager::Get()->SetOptionHoming(data);
+
+
+	delete SpellManager::Get()->GetSpellOptionData(0);
+	SpellManager::Get()->SetSpellOptionData(0, data);
+
+	data = new SpellOptionData();
+	SpellManager::Get()->SetOptionShape(data, Arrow);
+	SpellManager::Get()->SetOptionElement(data, Water);
+	SpellManager::Get()->SetOptionUpScale(data);
+	SpellManager::Get()->SetOptionUpScale(data);
+	SpellManager::Get()->SetOptionUpScale(data);
+	SpellManager::Get()->SetOptionPierce(data);
+	SpellManager::Get()->SetOptionPierce(data);
+	SpellManager::Get()->SetOptionPierce(data);
+	SpellManager::Get()->SetOptionPierce(data);
+	SpellManager::Get()->SetOptionPierce(data);
+	SpellManager::Get()->SetOptionPierce(data);
+	SpellManager::Get()->SetOptionPierce(data);
+
+	delete SpellManager::Get()->GetSpellOptionData(1);
+	SpellManager::Get()->SetSpellOptionData(1, data);
+
+	UIManager::Get()->SetPlayer(player);
 }
 
 TileMapScene::~TileMapScene()
@@ -47,13 +82,41 @@ TileMapScene::~TileMapScene()
 	delete aStar;
 	delete player;
 	EnemyManager::Get()->Delete();
+
+
+//	delete book;
+	UIManager::Get()->Delete();
 }
 
 void TileMapScene::Update()
 {
-	gameMap->Update();
-	player->Update();
-	EnemyManager::Get()->Update();
+
+
+	if (!UIManager::Get()->IsPause()) {
+		gameMap->Update();
+		EnemyManager::Get()->Update();
+		player->Update();
+
+
+		Vector2 playerPos = player->GetGlobalPosition();
+		Vector2 targetPos = mousePos + player->GetCameraTransform()->GetGlobalPosition();
+		if (Input::Get()->IsKeyDown(VK_LBUTTON)) {
+			SpellManager::Get()->Spawn(playerPos, ((targetPos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(0));
+		}
+		if (Input::Get()->IsKeyDown(VK_RBUTTON)) {
+			SpellManager::Get()->Spawn(playerPos, ((targetPos)-playerPos).GetNormalized(), SpellManager::Get()->GetSpellOptionData(1));
+		}
+
+		SpellManager::Get()->Update();
+		//		EnemyManager::Get()->Update();
+		SpellManager::Get()->HitCheck();
+
+	}
+
+
+	UIManager::Get()->Update();
+
+
 }
 
 void TileMapScene::Render()
@@ -62,10 +125,12 @@ void TileMapScene::Render()
 //	aStar->Render();
 	player->Render();
 	EnemyManager::Get()->Render();
+	SpellManager::Get()->Render();
 }
 
 void TileMapScene::GUIRender()
 {
+	UIManager::Get()->Render();
 	int pos[2];
 	float globalPos[2];
 	Vector2 gp = player->GetGlobalPosition();
